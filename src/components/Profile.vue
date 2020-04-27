@@ -3,7 +3,7 @@
 
         <div class="info-container">
 
-            <img class="info-image">
+            <img class="info-image" v-bind:src="profileImage">
 
             <h3>{{ profileName }}</h3>
 
@@ -29,6 +29,7 @@
 <script>
     import Post from './Post';
     import WriteModal from './WriteModal';
+    import profileImage from '../assets/profile.png';
 
     async function getProfileInfo() {
 
@@ -37,6 +38,20 @@
             const profileResult = await this.$request.getProfile(this.profileId);
 
             this.profileName = profileResult.name;
+
+            const profileImage = profileResult.image;
+            if(profileImage !== null) {
+
+                const image = await this.$request.getProfileImageFile(this.profileId);
+
+                if(image instanceof ArrayBuffer) {
+
+                    const imageBase64 = Buffer.from(image).toString('base64');
+                    this.profileImage = 'data:image/png;base64, ' + imageBase64;
+
+                }
+
+            }
 
         } catch(error) {
 
@@ -79,6 +94,7 @@
         data() {
             return {
                 profileName: '',
+                profileImage: profileImage,
                 postTotal: 0,
                 postList: [],
                 showModal: false

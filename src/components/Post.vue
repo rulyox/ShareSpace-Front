@@ -2,20 +2,22 @@
     <div class="post-container" v-bind:id="'post-' + postId">
 
         <div class="post-header">
-            <img class="post-user" src="../assets/logo.png">
-            {{this.userName}}
+            <img class="post-user" v-bind:src="userProfile">
+            {{userName}}
         </div>
 
-        <img class="post-image" v-bind:src="image[0]">
+        <img class="post-image" v-bind:src="imageList[0]">
 
         <div class="post-content">
-            {{this.text}}
+            {{text}}
         </div>
 
     </div>
 </template>
 
 <script>
+    import profileImage from '../assets/profile.png';
+
     async function getPostData(postId) {
 
         const thisElement = document.getElementById('post-' + postId);
@@ -33,30 +35,46 @@
 
                 const postData = postDataResult.data;
 
+                this.userId = postData.user;
                 this.userName = postData.name;
                 this.text = postData.text;
 
                 // show element
                 thisElement.style.display = 'block';
 
-                const imageList = postData.image;
+                // get profile image
+                const profileImage = postData.profile;
+                if(profileImage !== null) {
 
-                // save base64 image to list
+                    const image = await this.$request.getProfileImageFile(this.userId);
+
+                    if(image instanceof ArrayBuffer) {
+
+                        const imageBase64 = Buffer.from(image).toString('base64');
+                        this.userProfile = 'data:image/png;base64, ' + imageBase64;
+
+                    }
+
+                }
+
+                // get images
+                const imageList = postData.image;
                 for(let i = 0; i < imageList.length; i++) {
 
+                    // save base64 image to list
                     const image = await this.$request.getImageFile(token, postId, imageList[i]);
 
                     if(image instanceof ArrayBuffer) {
 
                         const imageBase64 = Buffer.from(image).toString('base64');
-                        this.image.push('data:image/png;base64, ' + imageBase64);
+                        this.imageList.push('data:image/png;base64, ' + imageBase64);
 
                     }
 
                 }
 
                 // show image
-                if(this.image.length > 0) thisElement.getElementsByClassName('post-image')[0].style.display = 'block';
+                if(this.imageList.length > 0) thisElement.getElementsByClassName('post-image')[0].style.display = 'block';
 
             }
 
@@ -75,9 +93,11 @@
 
         data() {
             return {
+                userId: 0,
                 userName: '',
+                userProfile: profileImage,
                 text: '',
-                image: []
+                imageList: []
             };
         },
 
@@ -100,6 +120,8 @@
         margin-bottom: 50px;
         background-color: #FAFAFA;
 
+        cursor: pointer;
+
         display: flex;
         flex-direction: column;
 
@@ -112,7 +134,10 @@
     }
 
     .post-header {
+        height: 40px;
         padding: 15px;
+
+        font-weight: 700;
 
         display: flex;
         flex-direction: row;

@@ -47,13 +47,7 @@ const getProfile = (profileId) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/user/data/' + profileId)
-            .then((response) => {
-
-                resolve({
-                    name: response.data.name
-                });
-
-            })
+            .then((response) => { resolve(response.data); })
             .catch((error) => { reject(error); });
 
     });
@@ -74,9 +68,7 @@ const writePost = (token, text, imageList) => {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            .then(() => {
-                resolve();
-            })
+            .then(() => { resolve(); })
             .catch((error) => { reject(error); });
 
     });
@@ -144,11 +136,20 @@ const getFeed = (token, start) => {
             {
                 headers: {token: token}
             })
-            .then((response) => {
+            .then((response) => { resolve(response.data); })
+            .catch((error) => { reject(error); });
 
-                resolve(response.data);
+    });
+};
 
+const getProfileImageFile = (id) => {
+    return new Promise((resolve, reject) => {
+
+        axios.get(config.server + '/user/image/' + id,
+            {
+                responseType: 'arraybuffer'
             })
+            .then((response) => { resolve(response.data); })
             .catch((error) => { reject(error); });
 
     });
@@ -162,5 +163,6 @@ export default {
     getPostByUser,
     getPostData,
     getImageFile,
-    getFeed
+    getFeed,
+    getProfileImageFile
 };

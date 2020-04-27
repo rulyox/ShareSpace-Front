@@ -25,7 +25,7 @@
 
             const feedResult = await this.$request.getFeed(token, 0);
 
-            for(let i = 0; i < feedResult.length; i++) this.postList.push(feedResult[i].post);
+            for(let i = 0; i < feedResult.post.length; i++) this.postList.push(feedResult.post[i]);
 
         } catch(error) {
 
