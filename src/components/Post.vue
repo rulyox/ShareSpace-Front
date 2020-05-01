@@ -2,15 +2,13 @@
     <div class="post-container" v-bind:id="'post-' + postId">
 
         <div class="post-header">
-            <img class="post-user" v-bind:src="userProfile">
+            <img class="post-user" v-bind:src="userImage" alt="user image">
             {{userName}}
         </div>
 
-        <img class="post-image" v-bind:src="imageList[0]">
+        <img class="post-image" v-bind:src="imageList[0]" alt="post image">
 
-        <div class="post-content">
-            {{text}}
-        </div>
+        <div class="post-content">{{text}}</div>
 
     </div>
 </template>
@@ -27,9 +25,7 @@
 
         try {
 
-            const token = this.$store.getters.token;
-
-            const postDataResult = await this.$request.getPostData(token, postId);
+            const postDataResult = await this.$request.getPostData(this.token, postId);
 
             if(postDataResult.result === 101) { // OK
 
@@ -51,7 +47,7 @@
                     if(image instanceof ArrayBuffer) {
 
                         const imageBase64 = Buffer.from(image).toString('base64');
-                        this.userProfile = 'data:image/png;base64, ' + imageBase64;
+                        this.userImage = 'data:image/png;base64, ' + imageBase64;
 
                     }
 
@@ -62,7 +58,7 @@
                 for(let i = 0; i < imageList.length; i++) {
 
                     // save base64 image to list
-                    const image = await this.$request.getImageFile(token, postId, imageList[i]);
+                    const image = await this.$request.getImageFile(this.token, postId, imageList[i]);
 
                     if(image instanceof ArrayBuffer) {
 
@@ -95,10 +91,14 @@
             return {
                 userId: 0,
                 userName: '',
-                userProfile: profileImage,
+                userImage: profileImage,
                 text: '',
                 imageList: []
             };
+        },
+
+        computed: {
+            token() { return this.$store.getters.token; },
         },
 
         mounted() {

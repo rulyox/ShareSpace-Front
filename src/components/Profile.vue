@@ -3,7 +3,7 @@
 
         <div class="info-container">
 
-            <img class="info-image" v-bind:src="profileImage">
+            <img class="info-image" v-bind:src="profileImage" alt="user image">
 
             <h3>{{ profileName }}</h3>
 
@@ -67,9 +67,7 @@
 
         try {
 
-            const token = this.$store.getters.token;
-
-            const postResult = await this.$request.getPostByUser(token, this.profileId, 0);
+            const postResult = await this.$request.getPostByUser(this.token, this.profileId, 0);
 
             if(postResult.result === 101) { // OK
 
@@ -99,6 +97,10 @@
                 postList: [],
                 showModal: false
             };
+        },
+
+        computed: {
+            token() { return this.$store.getters.token; },
         },
 
         mounted() {

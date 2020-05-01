@@ -5,7 +5,7 @@
 
         <el-dropdown id="header-profile" trigger="click">
 
-            <img class="el-dropdown-link" id="header-profile-image">
+            <img class="el-dropdown-link" id="header-profile-image" v-bind:src="profileImage" alt="profile image">
 
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item icon="el-icon-user-solid" v-on:click.native="clickProfile">My Profile</el-dropdown-item>
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+    import profileImage from '../assets/profile.png';
+
     function clickHome() {
 
         const path = '/';
@@ -27,18 +29,53 @@
 
     function clickProfile() {
 
-        const userData = this.$store.getters.userData;
-        const userId = userData.id;
-
-        const path = '/profile/' + userId;
+        const path = '/profile/' + this.userId;
         if(this.$router.currentRoute.path !== path) this.$router.push(path);
 
     }
 
+    async function getUserData() {
+
+        try {
+
+            // get profile image
+            const image = await this.$request.getProfileImageFile(this.userId);
+
+            if(image instanceof ArrayBuffer) {
+
+                const imageBase64 = Buffer.from(image).toString('base64');
+                this.profileImage = 'data:image/png;base64, ' + imageBase64;
+
+            }
+
+        } catch(error) {
+
+            console.log(error);
+
+        }
+
+    }
+
     export default {
+        data() {
+            return {
+                profileImage: profileImage
+            }
+        },
+
+        computed: {
+            userData() { return this.$store.getters.userData; },
+            userId() { return this.userData.id }
+        },
+
+        mounted() {
+            this.getUserData();
+        },
+
         methods: {
             clickHome,
-            clickProfile
+            clickProfile,
+            getUserData
         }
     };
 </script>
