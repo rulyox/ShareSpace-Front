@@ -8,7 +8,7 @@
 
         <img class="post-image" v-bind:src="imageList[0]" alt="post image">
 
-        <div class="post-content">{{text}}</div>
+        <div class="post-content" v-html="showText"></div>
 
     </div>
 </template>
@@ -99,6 +99,7 @@
 
         computed: {
             token() { return this.$store.getters.token; },
+            showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); }
         },
 
         mounted() {
@@ -156,6 +157,8 @@
         width: 500px;
         height: 500px;
         background-color: black;
+        border-top: 1px solid #DDDDDD;
+        border-bottom: 1px solid #DDDDDD;
 
         display: none;
     }

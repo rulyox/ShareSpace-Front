@@ -21,7 +21,7 @@
 
         <a class="add-button" v-on:click="showModal = true"><i class="el-icon-plus"></i></a>
 
-        <WriteModal v-if="showModal" v-on:close="showModal = false" />
+        <WriteModal v-if="showModal" v-on:close="[showModal = false, getPosts()]" />
 
     </div>
 </template>
@@ -64,6 +64,9 @@
     }
 
     async function getPosts() {
+
+        this.postTotal = 0;
+        this.postList = [];
 
         try {
 

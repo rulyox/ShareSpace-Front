@@ -58,8 +58,7 @@ const writePost = (token, text, imageList) => {
 
         const formData = new FormData();
         formData.append('text', text);
-        formData.append('file1', imageList[0]);
-        formData.append('file2', imageList[0]);
+        for(let i = 0; i < imageList.length; i++) formData.append('file_' + i, imageList[i]);
 
         axios.post(config.server + '/post', formData,
             {
