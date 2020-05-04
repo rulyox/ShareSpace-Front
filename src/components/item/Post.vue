@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import profileImage from '../assets/profile.png';
+    import profileImage from '../../assets/profile.png';
 
     async function getPostData(postId) {
 

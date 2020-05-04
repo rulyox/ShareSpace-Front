@@ -27,9 +27,9 @@
 </template>
 
 <script>
-    import Post from './Post';
-    import WriteModal from './WriteModal';
-    import profileImage from '../assets/profile.png';
+    import Post from '../item/Post';
+    import WriteModal from '../modal/WriteModal';
+    import profileImage from '../../assets/profile.png';
 
     async function getProfileInfo() {
 

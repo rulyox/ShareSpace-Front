@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import Post from './Post';
+    import Post from '../item/Post';
 
     async function getFeed() {
 

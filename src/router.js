@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import LoginComponent from './components/Login';
-import HomeComponent from './components/Home';
-import FeedComponent from './components/Feed';
-import ProfileComponent from './components/Profile';
+import LoginComponent from './components/screen/Login';
+import HomeComponent from './components/screen/Home';
+import FeedComponent from './components/screen/Feed';
+import ProfileComponent from './components/screen/Profile';
 import request from './request';
 import store from './store';
 
