@@ -1,34 +1,32 @@
 <template>
-    <div class="post-container" v-bind:id="'post-' + postId">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
 
-        <div v-on:click="showModal = true">
+                    <i id="modal-close" class="el-icon-close" v-on:click="$emit('close')"></i>
 
-            <div class="post-header">
-                <img class="post-user" v-bind:src="userImage" alt="user image">
-                {{userName}}
+                    <div class="modal-content">
+
+                        <div class="post-header">
+                            <img class="post-user" v-bind:src="userImage" alt="user image">
+                            {{userName}}
+                        </div>
+
+                        <div class="post-content" v-html="showText"></div>
+
+                    </div>
+
+                </div>
             </div>
-
-            <img class="post-image" v-bind:src="imageList[0]" alt="post image">
-
-            <div class="post-content" v-html="showText"></div>
-
         </div>
-
-        <PostModal v-if="showModal" v-on:close="showModal = false" v-bind:postId="postId" />
-
-    </div>
+    </transition>
 </template>
 
 <script>
-    import PostModal from '../modal/PostModal';
     import profileImage from '../../assets/profile.png';
 
     async function getPostData(postId) {
-
-        const thisElement = document.getElementById('post-' + postId);
-
-        // hide element
-        thisElement.style.display = 'none';
 
         try {
 
@@ -41,9 +39,6 @@
                 this.userId = postData.user;
                 this.userName = postData.name;
                 this.text = postData.text;
-
-                // show element
-                thisElement.style.display = 'block';
 
                 // get profile image
                 const profileImage = postData.profile;
@@ -76,9 +71,6 @@
 
                 }
 
-                // show image
-                if(this.imageList.length > 0) thisElement.getElementsByClassName('post-image')[0].style.display = 'block';
-
             }
 
         } catch(error) {
@@ -100,9 +92,8 @@
                 userName: '',
                 userImage: profileImage,
                 text: '',
-                imageList: [],
-                showModal: false
-            };
+                imageList: []
+            }
         },
 
         computed: {
@@ -116,29 +107,24 @@
 
         methods: {
             getPostData
-        },
-
-        components: {
-            PostModal
         }
-    }
+    };
 </script>
 
 <style scoped>
-    .post-container {
-        width: 500px;
-        border-radius: 10px;
-        margin-bottom: 50px;
-        background-color: #FAFAFA;
+    #modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
 
-        cursor: pointer;
-
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        font-size: 20px;
     }
 
-    .post-container:hover {
-        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    .modal-content {
+        padding: 50px 50px;
+
+        display: flex;
+        flex-direction: column;
     }
 
     .post-header {
@@ -160,17 +146,58 @@
         background-color: black;
     }
 
-    .post-image {
-        width: 500px;
-        height: 500px;
-        background-color: black;
-        border-top: 1px solid #DDDDDD;
-        border-bottom: 1px solid #DDDDDD;
+    .modal-container {
+        position: relative;
 
-        display: none;
+        width: 700px;
+        margin: 0 auto;
+
+        background-color: #FAFAFA;
+        border-radius: 20px;
+
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+        transition: all .3s ease;
     }
 
-    .post-content {
-        padding: 15px;
+    /* Below are default settings */
+
+    .modal-mask {
+        position: fixed;
+        z-index: 9998;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        display: table;
+        transition: opacity .3s ease;
+    }
+
+    .modal-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    /*
+     * The following styles are auto-applied to elements with
+     * transition="modal" when their visibility is toggled
+     * by Vue.js.
+     *
+     * You can easily play with the modal transition by editing
+     * these styles.
+     */
+
+    .modal-enter {
+        opacity: 0;
+    }
+
+    .modal-leave-active {
+        opacity: 0;
+    }
+
+    .modal-enter .modal-container,
+    .modal-leave-active .modal-container {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
     }
 </style>
