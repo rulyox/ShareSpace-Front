@@ -8,8 +8,8 @@
             <img class="el-dropdown-link" id="header-profile-image" v-bind:src="profileImage" alt="profile image">
 
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-user-solid" v-on:click.native="clickProfile">My Profile</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-circle-plus">Action 2</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-user" v-on:click.native="clickProfile">My Profile</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-switch-button" v-on:click.native="clickLogout">Logout</el-dropdown-item>
             </el-dropdown-menu>
 
         </el-dropdown>
@@ -30,6 +30,15 @@
     function clickProfile() {
 
         const path = '/profile/' + this.userId;
+        if(this.$router.currentRoute.path !== path) this.$router.push(path);
+
+    }
+
+    function clickLogout() {
+
+        localStorage.removeItem('token');
+
+        const path = '/login';
         if(this.$router.currentRoute.path !== path) this.$router.push(path);
 
     }
@@ -75,7 +84,8 @@
         methods: {
             clickHome,
             clickProfile,
-            getUserData
+            getUserData,
+            clickLogout
         }
     };
 </script>
