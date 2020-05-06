@@ -7,7 +7,7 @@ const store = new Vuex.Store({
 
     state: {
         token: null,
-        userId: null,
+        userAccess: null,
         userEmail: null,
         userName: null
     },
@@ -18,7 +18,7 @@ const store = new Vuex.Store({
         },
         userData: state => {
             return {
-                id: state.userId,
+                access: state.userAccess,
                 email: state.userEmail,
                 name: state.userName
             };
@@ -32,11 +32,11 @@ const store = new Vuex.Store({
         deleteToken(state) {
             state.token = null;
         },
-        setId(state, id) {
-            state.userId = id;
+        setAccess(state, access) {
+            state.userAccess = access;
         },
-        deleteId(state) {
-            state.userId = null;
+        deleteAccess(state) {
+            state.userAccess = null;
         },
         setEmail(state, email) {
             state.userEmail = email;
@@ -55,13 +55,13 @@ const store = new Vuex.Store({
     actions: {
         initialize(context, data) {
             context.commit('setToken', data.token);
-            context.commit('setId', data.id);
+            context.commit('setAccess', data.access);
             context.commit('setEmail', data.email);
             context.commit('setName', data.name);
         },
         reset(context) {
             context.commit('deleteToken');
-            context.commit('deleteId');
+            context.commit('deleteAccess');
             context.commit('deleteEmail');
             context.commit('deleteName');
         }

@@ -25,7 +25,7 @@ const router = new VueRouter({
                     },
                 },
                 {
-                    path: '/profile/:profileId',
+                    path: '/profile/:profileAccess',
                     components: {
                         'homeContent': ProfileComponent
                     },
@@ -63,7 +63,7 @@ router.beforeEach(async (to, from, next) => {
             // save data to vuex
             await store.dispatch('initialize', {
                 token: token,
-                id: loginResult.id,
+                access: loginResult.access,
                 email: loginResult.email,
                 name: loginResult.name
             });

@@ -32,7 +32,7 @@ const login = (token) => {
             .then((response) => {
 
                 resolve({
-                    id: response.data.id,
+                    access: response.data.access,
                     email: response.data.email,
                     name: response.data.name
                 });
@@ -43,10 +43,10 @@ const login = (token) => {
     });
 };
 
-const getProfile = (profileId) => {
+const getProfile = (profileAccess) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/user/data/' + profileId)
+        axios.get(config.server + '/user/data/' + profileAccess)
             .then((response) => { resolve(response.data); })
             .catch((error) => { reject(error); });
 
@@ -94,10 +94,10 @@ const getPostByUser = (token, user, start) => {
     });
 };
 
-const getPostData = (token, id) => {
+const getPostData = (token, access) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/post/data/' + id,
+        axios.get(config.server + '/post/data/' + access,
             {
                 headers: {token: token}
             })
@@ -141,10 +141,10 @@ const getFeed = (token, start) => {
     });
 };
 
-const getProfileImageFile = (id) => {
+const getProfileImageFile = (access) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/user/image/' + id,
+        axios.get(config.server + '/user/image/' + access,
             {
                 responseType: 'arraybuffer'
             })

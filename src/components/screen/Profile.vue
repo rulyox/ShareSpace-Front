@@ -13,7 +13,7 @@
 
             <div class="post-list">
 
-                <Post v-for="post in this.postList" v-bind:key="post" v-bind:postId="post"></Post>
+                <Post v-for="post in this.postList" v-bind:key="post" v-bind:postAccess="post"></Post>
 
             </div>
 
@@ -35,14 +35,14 @@
 
         try {
 
-            const profileResult = await this.$request.getProfile(this.profileId);
+            const profileResult = await this.$request.getProfile(this.profileAccess);
 
             this.profileName = profileResult.name;
 
             const profileImage = profileResult.image;
             if(profileImage !== null) {
 
-                const image = await this.$request.getProfileImageFile(this.profileId);
+                const image = await this.$request.getProfileImageFile(this.profileAccess);
 
                 if(image instanceof ArrayBuffer) {
 
@@ -70,7 +70,7 @@
 
         try {
 
-            const postResult = await this.$request.getPostByUser(this.token, this.profileId, 0);
+            const postResult = await this.$request.getPostByUser(this.token, this.profileAccess, 0);
 
             if(postResult.result === 101) { // OK
 
@@ -89,7 +89,7 @@
 
     export default {
         props: {
-            profileId: String
+            profileAccess: String
         },
 
         data() {
@@ -112,7 +112,7 @@
         },
 
         watch: {
-            profileId() { this.getProfileInfo(); }
+            profileAccess() { this.getProfileInfo(); }
         },
 
         methods: {

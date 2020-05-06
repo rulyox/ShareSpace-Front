@@ -9,8 +9,8 @@
             <el-input class="dialog-input" placeholder="Enter password" v-model="password" show-password />
 
             <div class="dialog-button">
-                <el-button v-on:click.prevent="clickLogin" type="primary">Login</el-button>
-                <el-button v-on:click.prevent="clickLogin" type="primary">Sign Up</el-button>
+                <el-button v-on:click.prevent="clickLogin">Login</el-button>
+                <el-button>Sign Up</el-button>
             </div>
 
         </div>
@@ -74,7 +74,7 @@
     .login-container {
         height: 100%;
         width: 100%;
-        background-color: #253B80;
+        background-color: #FAFAFA;
 
         display: flex;
         flex-direction: column;
@@ -85,7 +85,7 @@
     .login-dialog {
         width: 500px;
         height: 350px;
-        background-color: #FAFAFA;
+        background-color: #253B80;
         border-radius: 30px;
 
         display: flex;
@@ -93,13 +93,13 @@
         align-items: center;
         justify-content: center;
 
-        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
     }
 
     .dialog-title {
         font-size: 30px;
         font-weight: bolder;
-        color: #253B80;
+        color: #FAFAFA;
         margin-bottom: 30px;
     }
 

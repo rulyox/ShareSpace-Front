@@ -29,7 +29,7 @@
 
     function clickProfile() {
 
-        const path = '/profile/' + this.userId;
+        const path = '/profile/' + this.userAccess;
         if(this.$router.currentRoute.path !== path) this.$router.push(path);
 
     }
@@ -48,9 +48,9 @@
         try {
 
             // get profile image
-            const image = await this.$request.getProfileImageFile(this.userId);
+            const image = await this.$request.getProfileImageFile(this.userAccess);
 
-            if(image instanceof ArrayBuffer) {
+            if(image instanceof ArrayBuffer && image.byteLength !== 0) {
 
                 const imageBase64 = Buffer.from(image).toString('base64');
                 this.profileImage = 'data:image/png;base64, ' + imageBase64;
@@ -74,7 +74,7 @@
 
         computed: {
             userData() { return this.$store.getters.userData; },
-            userId() { return this.userData.id }
+            userAccess() { return this.userData.access }
         },
 
         mounted() {

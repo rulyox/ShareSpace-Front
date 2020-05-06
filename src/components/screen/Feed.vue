@@ -5,7 +5,7 @@
 
             <div class="post-list">
 
-                <Post v-for="post in this.postList" v-bind:key="post" v-bind:postId="post"></Post>
+                <Post v-for="post in this.postList" v-bind:key="post" v-bind:postAccess="post"></Post>
 
             </div>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="post-container" v-bind:id="'post-' + postId">
+    <div class="post-container" v-bind:id="'post-' + postAccess">
 
         <div v-on:click="showModal = true">
 
@@ -14,7 +14,7 @@
 
         </div>
 
-        <PostModal v-if="showModal" v-on:close="showModal = false" v-bind:postId="postId" />
+        <PostModal v-if="showModal" v-on:close="showModal = false" v-bind:postAccess="postAccess" />
 
     </div>
 </template>
@@ -23,22 +23,22 @@
     import PostModal from '../modal/PostModal';
     import profileImage from '../../assets/profile.png';
 
-    async function getPostData(postId) {
+    async function getPostData(postAccess) {
 
-        const thisElement = document.getElementById('post-' + postId);
+        const thisElement = document.getElementById('post-' + postAccess);
 
         // hide element
         thisElement.style.display = 'none';
 
         try {
 
-            const postDataResult = await this.$request.getPostData(this.token, postId);
+            const postDataResult = await this.$request.getPostData(this.token, postAccess);
 
             if(postDataResult.result === 101) { // OK
 
                 const postData = postDataResult.data;
 
-                this.userId = postData.user;
+                this.userAccess = postData.user;
                 this.userName = postData.name;
                 this.text = postData.text;
 
@@ -49,7 +49,7 @@
                 const profileImage = postData.profile;
                 if(profileImage !== null) {
 
-                    const image = await this.$request.getProfileImageFile(this.userId);
+                    const image = await this.$request.getProfileImageFile(this.userAccess);
 
                     if(image instanceof ArrayBuffer) {
 
@@ -65,7 +65,7 @@
                 for(let i = 0; i < imageList.length; i++) {
 
                     // save base64 image to list
-                    const image = await this.$request.getImageFile(this.token, postId, imageList[i]);
+                    const image = await this.$request.getImageFile(this.token, postAccess, imageList[i]);
 
                     if(image instanceof ArrayBuffer) {
 
@@ -91,12 +91,12 @@
 
     export default {
         props: {
-            postId: Number
+            postAccess: String
         },
 
         data() {
             return {
-                userId: 0,
+                userAccess: 0,
                 userName: '',
                 userImage: profileImage,
                 text: '',
@@ -111,7 +111,7 @@
         },
 
         mounted() {
-            this.getPostData(this.postId);
+            this.getPostData(this.postAccess);
         },
 
         methods: {
