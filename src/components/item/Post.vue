@@ -50,13 +50,7 @@
                 if(profileImage !== null) {
 
                     const image = await this.$request.getProfileImageFile(this.userAccess);
-
-                    if(image instanceof ArrayBuffer) {
-
-                        const imageBase64 = Buffer.from(image).toString('base64');
-                        this.userImage = 'data:image/png;base64, ' + imageBase64;
-
-                    }
+                    this.userImage = this.$utility.imageToBase64(image);
 
                 }
 
@@ -66,13 +60,7 @@
 
                     // save base64 image to list
                     const image = await this.$request.getImageFile(this.token, postAccess, imageList[i]);
-
-                    if(image instanceof ArrayBuffer) {
-
-                        const imageBase64 = Buffer.from(image).toString('base64');
-                        this.imageList.push('data:image/png;base64, ' + imageBase64);
-
-                    }
+                    this.imageList.push(this.$utility.imageToBase64(image));
 
                 }
 

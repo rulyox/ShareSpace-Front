@@ -43,13 +43,7 @@
             if(profileImage !== null) {
 
                 const image = await this.$request.getProfileImageFile(this.profileAccess);
-
-                if(image instanceof ArrayBuffer) {
-
-                    const imageBase64 = Buffer.from(image).toString('base64');
-                    this.profileImage = 'data:image/png;base64, ' + imageBase64;
-
-                }
+                this.profileImage = this.$utility.imageToBase64(image);
 
             }
 

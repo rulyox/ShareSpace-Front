@@ -8,12 +8,14 @@
 
                     <div class="modal-content">
 
-                        <div class="post-header">
-                            <img class="post-user" v-bind:src="userImage" alt="user image">
+                        <div class="post-modal-header">
+                            <img class="post-modal-user" v-bind:src="userImage" alt="user image">
                             {{userName}}
                         </div>
 
-                        <div class="post-content" v-html="showText"></div>
+                        <img class="post-modal-image" v-bind:src="imageList[0]" alt="post image">
+
+                        <div class="post-modal-content" v-html="showText"></div>
 
                     </div>
 
@@ -45,13 +47,7 @@
                 if(profileImage !== null) {
 
                     const image = await this.$request.getProfileImageFile(this.userAccess);
-
-                    if(image instanceof ArrayBuffer) {
-
-                        const imageBase64 = Buffer.from(image).toString('base64');
-                        this.userImage = 'data:image/png;base64, ' + imageBase64;
-
-                    }
+                    this.userImage = this.$utility.imageToBase64(image);
 
                 }
 
@@ -61,15 +57,12 @@
 
                     // save base64 image to list
                     const image = await this.$request.getImageFile(this.token, postAccess, imageList[i]);
-
-                    if(image instanceof ArrayBuffer) {
-
-                        const imageBase64 = Buffer.from(image).toString('base64');
-                        this.imageList.push('data:image/png;base64, ' + imageBase64);
-
-                    }
+                    this.imageList.push(this.$utility.imageToBase64(image));
 
                 }
+
+                // show image
+                if(this.imageList.length > 0) document.getElementsByClassName('post-modal-image')[0].style.display = 'block';
 
             }
 
@@ -127,7 +120,7 @@
         flex-direction: column;
     }
 
-    .post-header {
+    .post-modal-header {
         height: 40px;
         padding: 15px;
 
@@ -138,12 +131,27 @@
         align-items: center;
     }
 
-    .post-user {
+    .post-modal-user {
         width: 40px;
         height: 40px;
         border-radius: 20px;
         margin-right: 15px;
         background-color: black;
+    }
+
+    .post-modal-image {
+        display: none;
+        align-self: center;
+
+        width: 500px;
+        height: 500px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .post-modal-content {
+        margin-left: 15px;
+        margin-right: 15px;
     }
 
     .modal-container {
