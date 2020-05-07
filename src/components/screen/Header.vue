@@ -51,11 +51,7 @@
             const image = await this.$request.getProfileImageFile(this.userAccess);
             this.profileImage = this.$utility.imageToBase64(image);
 
-        } catch(error) {
-
-            console.log(error);
-
-        }
+        } catch(error) { console.log(error); }
 
     }
 

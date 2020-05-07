@@ -37,17 +37,15 @@
 
         try {
 
+            // add to list
             const imageFile = this.$refs.image.files[0];
             this.imageList.push(imageFile);
 
-            const imageBase64 = await fileToBase64(imageFile);
+            // add to preview
+            const imageBase64 = await this.$utility.fileToBase64(imageFile);
             this.imagePreviewList.push(imageBase64);
 
-        } catch(error) {
-
-            console.log(error);
-
-        }
+        } catch(error) { console.log(error); }
 
     }
 
@@ -60,23 +58,8 @@
             // close modal
             this.$emit('close');
 
-        } catch(error) {
+        } catch(error) { console.log(error); }
 
-            console.log(error);
-
-        }
-
-    }
-
-    function fileToBase64(file) {
-        return new Promise((resolve, reject) => {
-
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => { resolve(reader.result); };
-            reader.onerror = (error) => { reject(error); };
-
-        });
     }
 
     export default {

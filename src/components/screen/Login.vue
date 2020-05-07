@@ -32,27 +32,17 @@
 
             if(tokenResult.result === 101) { // OK
 
+                // save token
                 const token = tokenResult.token;
-
                 localStorage.setItem('token', token);
 
                 // go to home
                 await this.$router.push('/');
 
-            } else if(tokenResult.result === 201) { // Wrong email or password
+            } else if(tokenResult.result === 201) alert('Login failed. Check email or password!'); // Wrong email or password
 
-                alert('Login failed. Check email or password!');
 
-                this.email = '';
-                this.password = '';
-
-            }
-
-        } catch(error) {
-
-            console.log(error);
-
-        }
+        } catch(error) { console.log(error); }
 
     }
 

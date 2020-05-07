@@ -23,16 +23,14 @@
     import PostModal from '../modal/PostModal';
     import profileImage from '../../assets/profile.png';
 
-    async function getPostData(postAccess) {
-
-        const thisElement = document.getElementById('post-' + postAccess);
+    async function getPostData() {
 
         // hide element
-        thisElement.style.display = 'none';
+        this.element.style.display = 'none';
 
         try {
 
-            const postDataResult = await this.$request.getPostData(this.token, postAccess);
+            const postDataResult = await this.$request.getPostData(this.token, this.postAccess);
 
             if(postDataResult.result === 101) { // OK
 
@@ -43,37 +41,41 @@
                 this.text = postData.text;
 
                 // show element
-                thisElement.style.display = 'block';
+                this.element.style.display = 'block';
 
                 // get profile image
                 const profileImage = postData.profile;
-                if(profileImage !== null) {
-
-                    const image = await this.$request.getProfileImageFile(this.userAccess);
-                    this.userImage = this.$utility.imageToBase64(image);
-
-                }
+                if(profileImage !== null) await this.getProfileImage();
 
                 // get images
                 const imageList = postData.image;
-                for(let i = 0; i < imageList.length; i++) {
-
-                    // save base64 image to list
-                    const image = await this.$request.getImageFile(this.token, postAccess, imageList[i]);
-                    this.imageList.push(this.$utility.imageToBase64(image));
-
-                }
-
-                // show image
-                if(this.imageList.length > 0) thisElement.getElementsByClassName('post-image')[0].style.display = 'block';
+                await this.getImages(imageList);
 
             }
 
-        } catch(error) {
+        } catch(error) { console.log(error); }
 
-            console.log(error);
+    }
+
+    async function getProfileImage() {
+
+        const image = await this.$request.getProfileImageFile(this.userAccess);
+        this.userImage = this.$utility.imageToBase64(image);
+
+    }
+
+    async function getImages(imageList) {
+
+        for(let i = 0; i < imageList.length; i++) {
+
+            // save base64 image to list
+            const image = await this.$request.getImageFile(this.token, this.postAccess, imageList[i]);
+            this.imageList.push(this.$utility.imageToBase64(image));
 
         }
+
+        // show image element
+        if(this.imageList.length > 0) this.element.getElementsByClassName('post-image')[0].style.display = 'block';
 
     }
 
@@ -95,15 +97,18 @@
 
         computed: {
             token() { return this.$store.getters.token; },
-            showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); }
+            showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
+            element() { return document.getElementById('post-' + this.postAccess); }
         },
 
         mounted() {
-            this.getPostData(this.postAccess);
+            this.getPostData();
         },
 
         methods: {
-            getPostData
+            getPostData,
+            getProfileImage,
+            getImages
         },
 
         components: {

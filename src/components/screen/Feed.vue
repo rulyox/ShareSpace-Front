@@ -21,17 +21,11 @@
 
         try {
 
-            const token = this.$store.getters.token;
-
-            const feedResult = await this.$request.getFeed(token, 0);
+            const feedResult = await this.$request.getFeed(this.token, 0);
 
             for(let i = 0; i < feedResult.post.length; i++) this.postList.push(feedResult.post[i]);
 
-        } catch(error) {
-
-            console.log(error);
-
-        }
+        } catch(error) { console.log(error); }
 
     }
 
@@ -41,6 +35,10 @@
                 postTotal: 0,
                 postList: []
             };
+        },
+
+        computed: {
+            token() { return this.$store.getters.token; }
         },
 
         mounted() {

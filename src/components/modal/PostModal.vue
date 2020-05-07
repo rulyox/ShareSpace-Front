@@ -28,11 +28,11 @@
 <script>
     import profileImage from '../../assets/profile.png';
 
-    async function getPostData(postAccess) {
+    async function getPostData() {
 
         try {
 
-            const postDataResult = await this.$request.getPostData(this.token, postAccess);
+            const postDataResult = await this.$request.getPostData(this.token, this.postAccess);
 
             if(postDataResult.result === 101) { // OK
 
@@ -44,33 +44,37 @@
 
                 // get profile image
                 const profileImage = postData.profile;
-                if(profileImage !== null) {
-
-                    const image = await this.$request.getProfileImageFile(this.userAccess);
-                    this.userImage = this.$utility.imageToBase64(image);
-
-                }
+                if(profileImage !== null) await this.getProfileImage();
 
                 // get images
                 const imageList = postData.image;
-                for(let i = 0; i < imageList.length; i++) {
-
-                    // save base64 image to list
-                    const image = await this.$request.getImageFile(this.token, postAccess, imageList[i]);
-                    this.imageList.push(this.$utility.imageToBase64(image));
-
-                }
-
-                // show image
-                if(this.imageList.length > 0) document.getElementsByClassName('post-modal-image')[0].style.display = 'block';
+                await this.getImages(imageList);
 
             }
 
-        } catch(error) {
+        } catch(error) { console.log(error); }
 
-            console.log(error);
+    }
+
+    async function getProfileImage() {
+
+        const image = await this.$request.getProfileImageFile(this.userAccess);
+        this.userImage = this.$utility.imageToBase64(image);
+
+    }
+
+    async function getImages(imageList) {
+
+        for(let i = 0; i < imageList.length; i++) {
+
+            // save base64 image to list
+            const image = await this.$request.getImageFile(this.token, this.postAccess, imageList[i]);
+            this.imageList.push(this.$utility.imageToBase64(image));
 
         }
+
+        // show image
+        if(this.imageList.length > 0) document.getElementsByClassName('post-modal-image')[0].style.display = 'block';
 
     }
 
@@ -95,11 +99,13 @@
         },
 
         mounted() {
-            this.getPostData(this.postAccess);
+            this.getPostData();
         },
 
         methods: {
-            getPostData
+            getPostData,
+            getProfileImage,
+            getImages
         }
     };
 </script>

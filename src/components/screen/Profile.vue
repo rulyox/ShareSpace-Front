@@ -37,28 +37,27 @@
 
             const profileResult = await this.$request.getProfile(this.profileAccess);
 
+            // set profile name
             this.profileName = profileResult.name;
 
+            // get profile image
             const profileImage = profileResult.image;
-            if(profileImage !== null) {
+            if(profileImage !== null) await this.getProfileImage();
 
-                const image = await this.$request.getProfileImageFile(this.profileAccess);
-                this.profileImage = this.$utility.imageToBase64(image);
+        } catch(error) { console.log(error); }
 
-            }
+    }
 
-        } catch(error) {
+    async function getProfileImage() {
 
-            console.log(error);
-
-            await this.$router.push('/');
-
-        }
+        const image = await this.$request.getProfileImageFile(this.profileAccess);
+        this.profileImage = this.$utility.imageToBase64(image);
 
     }
 
     async function getPosts() {
 
+        // reset posts
         this.postTotal = 0;
         this.postList = [];
 
@@ -73,11 +72,7 @@
 
             }
 
-        } catch(error) {
-
-            console.log(error);
-
-        }
+        } catch(error) { console.log(error); }
 
     }
 
@@ -111,6 +106,7 @@
 
         methods: {
             getProfileInfo,
+            getProfileImage,
             getPosts
         },
 
