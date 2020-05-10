@@ -4,18 +4,18 @@
             <div class="modal-wrapper">
                 <div class="modal-container">
 
-                    <i id="modal-close" class="el-icon-close" v-on:click="$emit('close')"></i>
+                    <i id="post-modal-close" class="el-icon-close" v-on:click="$emit('close')"></i>
 
-                    <div class="modal-content">
+                    <div id="post-modal-content">
 
-                        <div class="post-modal-header">
-                            <img class="post-modal-user" v-bind:src="userImage" alt="user image">
+                        <div id="post-modal-header">
+                            <img id="post-modal-user" v-bind:src="userImage" alt="user image">
                             {{userName}}
                         </div>
 
-                        <img class="post-modal-image" v-bind:src="imageList[0]" alt="post image">
+                        <img id="post-modal-image" v-bind:src="imageList[0]" alt="post image">
 
-                        <div class="post-modal-content" v-html="showText"></div>
+                        <div id="post-modal-text" v-html="showText"></div>
 
                     </div>
 
@@ -74,7 +74,7 @@
         }
 
         // show image
-        if(this.imageList.length > 0) document.getElementsByClassName('post-modal-image')[0].style.display = 'block';
+        if(this.imageList.length > 0) this.imageElement.style.display = 'block';
 
     }
 
@@ -95,7 +95,8 @@
 
         computed: {
             token() { return this.$store.getters.token; },
-            showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); }
+            showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
+            imageElement() { return document.getElementById('post-modal-image'); }
         },
 
         mounted() {
@@ -111,7 +112,7 @@
 </script>
 
 <style scoped>
-    #modal-close {
+    #post-modal-close {
         position: absolute;
         top: 15px;
         right: 15px;
@@ -119,14 +120,14 @@
         font-size: 20px;
     }
 
-    .modal-content {
+    #post-modal-content {
         padding: 50px 50px;
 
         display: flex;
         flex-direction: column;
     }
 
-    .post-modal-header {
+    #post-modal-header {
         height: 40px;
         padding: 15px;
 
@@ -137,7 +138,7 @@
         align-items: center;
     }
 
-    .post-modal-user {
+    #post-modal-user {
         width: 40px;
         height: 40px;
         border-radius: 20px;
@@ -145,7 +146,7 @@
         background-color: black;
     }
 
-    .post-modal-image {
+    #post-modal-image {
         display: none;
         align-self: center;
 
@@ -155,7 +156,7 @@
         margin-bottom: 30px;
     }
 
-    .post-modal-content {
+    #post-modal-text {
         margin-left: 15px;
         margin-right: 15px;
     }

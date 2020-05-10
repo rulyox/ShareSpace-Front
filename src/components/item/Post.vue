@@ -1,5 +1,5 @@
 <template>
-    <div class="post-container" v-bind:id="'post-' + postAccess">
+    <div class="post-container" v-bind:id="`post-${postAccess}`">
 
         <div v-on:click="showModal = true">
 
@@ -8,7 +8,7 @@
                 {{userName}}
             </div>
 
-            <img class="post-image" v-bind:src="imageList[0]" alt="post image">
+            <img class="post-image" v-bind:id="`post-${postAccess}-image`" v-bind:src="image" alt="post image">
 
             <div class="post-content" v-html="showText"></div>
 
@@ -30,7 +30,7 @@
 
         try {
 
-            const postDataResult = await this.$request.getPostData(this.token, this.postAccess);
+            const postDataResult = await this.$request.getPostPreview(this.token, this.postAccess);
 
             if(postDataResult.result === 101) { // OK
 
@@ -48,8 +48,8 @@
                 if(profileImage !== null) await this.getProfileImage();
 
                 // get images
-                const imageList = postData.image;
-                await this.getImages(imageList);
+                const image = postData.image;
+                if(image !== null) await this.getImage(image);
 
             }
 
@@ -64,18 +64,13 @@
 
     }
 
-    async function getImages(imageList) {
+    async function getImage(imageName) {
 
-        for(let i = 0; i < imageList.length; i++) {
-
-            // save base64 image to list
-            const image = await this.$request.getImageFile(this.token, this.postAccess, imageList[i]);
-            this.imageList.push(this.$utility.imageToBase64(image));
-
-        }
+        const imageFile = await this.$request.getImageFile(this.token, this.postAccess, imageName);
+        this.image = this.$utility.imageToBase64(imageFile);
 
         // show image element
-        if(this.imageList.length > 0) this.element.getElementsByClassName('post-image')[0].style.display = 'block';
+        this.imageElement.style.display = 'block';
 
     }
 
@@ -90,7 +85,7 @@
                 userName: '',
                 userImage: profileImage,
                 text: '',
-                imageList: [],
+                image: '',
                 showModal: false
             };
         },
@@ -98,7 +93,8 @@
         computed: {
             token() { return this.$store.getters.token; },
             showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
-            element() { return document.getElementById('post-' + this.postAccess); }
+            element() { return document.getElementById(`post-${this.postAccess}`); },
+            imageElement() { return document.getElementById(`post-${this.postAccess}-image`) }
         },
 
         mounted() {
@@ -108,7 +104,7 @@
         methods: {
             getPostData,
             getProfileImage,
-            getImages
+            getImage
         },
 
         components: {
