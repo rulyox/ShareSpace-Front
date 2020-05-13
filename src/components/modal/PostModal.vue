@@ -10,10 +10,17 @@
 
                         <div id="post-modal-header">
                             <img id="post-modal-user" v-bind:src="userImage" alt="user image">
-                            {{userName}}
+                            <span>{{userName}}</span>
                         </div>
 
-                        <img id="post-modal-image" v-bind:src="imageList[0]" alt="post image">
+                        <div id="post-modal-image-container">
+                            <img id="post-modal-image" v-bind:src="currentImageFile" alt="post image">
+                            <div>
+                                <el-button id="post-modal-image-shift-left" icon="el-icon-arrow-left" circle v-bind:disabled="currentImageIndex <= 0" v-on:click="clickImageShift(-1)"></el-button>
+                                <span id="post-modal-image-counter">{{currentImageIndex + 1}} / {{imageList.length}}</span>
+                                <el-button id="post-modal-image-shift-right" icon="el-icon-arrow-right" circle v-bind:disabled="currentImageIndex >= imageList.length-1" v-on:click="clickImageShift(1)"></el-button>
+                            </div>
+                        </div>
 
                         <div id="post-modal-text" v-html="showText"></div>
 
@@ -27,6 +34,14 @@
 
 <script>
     import profileImage from '../../assets/profile.png';
+
+    function clickImageShift(move) {
+
+        const targetIndex = this.currentImageIndex + move;
+
+        if(targetIndex >= 0 && targetIndex < this.imageList.length) this.currentImageIndex = targetIndex;
+
+    }
 
     async function getPostData() {
 
@@ -74,7 +89,7 @@
         }
 
         // show image
-        if(this.imageList.length > 0) this.imageElement.style.display = 'block';
+        if(this.imageList.length > 0) this.imageElement.style.display = 'flex';
 
     }
 
@@ -89,14 +104,16 @@
                 userName: '',
                 userImage: profileImage,
                 text: '',
-                imageList: []
+                imageList: [],
+                currentImageIndex: 0
             }
         },
 
         computed: {
             token() { return this.$store.getters.token; },
             showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
-            imageElement() { return document.getElementById('post-modal-image'); }
+            imageElement() { return document.getElementById('post-modal-image-container'); },
+            currentImageFile() { return this.imageList[this.currentImageIndex]; }
         },
 
         mounted() {
@@ -106,7 +123,8 @@
         methods: {
             getPostData,
             getProfileImage,
-            getImages
+            getImages,
+            clickImageShift
         }
     };
 </script>
@@ -146,14 +164,29 @@
         background-color: black;
     }
 
-    #post-modal-image {
-        display: none;
+    #post-modal-image-container {
         align-self: center;
-
-        width: 500px;
-        height: 500px;
         margin-top: 30px;
         margin-bottom: 30px;
+
+        display: none;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #post-modal-image {
+        width: 500px;
+        height: 500px;
+        margin-bottom: 15px;
+
+        background-color: black;
+        border: 1px solid #DDDDDD;
+        border-radius: 10px;
+    }
+
+    #post-modal-image-counter {
+        margin-left: 15px;
+        margin-right: 15px;
     }
 
     #post-modal-text {

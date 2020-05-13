@@ -5,7 +5,7 @@
 
             <div class="post-header">
                 <img class="post-user" v-bind:src="userImage" alt="user image">
-                {{userName}}
+                <span>{{userName}}</span>
             </div>
 
             <img class="post-image" v-bind:id="`post-${postAccess}-image`" v-bind:src="image" alt="post image">
