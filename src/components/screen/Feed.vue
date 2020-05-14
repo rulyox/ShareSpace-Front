@@ -1,9 +1,9 @@
 <template>
-    <div class="feed-container">
+    <div id="feed-container">
 
-        <div class="post-list-container">
+        <div id="feed-post-list-container">
 
-            <div class="post-list">
+            <div id="feed-post-list">
 
                 <Post v-for="post in this.postList" v-bind:key="post" v-bind:postAccess="post"></Post>
 
@@ -21,32 +21,48 @@
 
         try {
 
-            const feedResult = await this.$request.getFeed(this.token, 0);
+            const feedResult = await this.$request.getFeed(this.token, this.postNumber);
 
-            for(let i = 0; i < feedResult.post.length; i++) this.postList.push(feedResult.post[i]);
+            this.postNumber += feedResult.post.length;
+            for(const post of feedResult.post) this.postList.push(post);
 
         } catch(error) { console.log(error); }
+
+    }
+
+    function watchScroll(element) {
+
+        element.onscroll = () => {
+
+            let reachedBottom = element.scrollTop + element.offsetHeight === element.scrollHeight;
+
+            if(reachedBottom) this.getFeed();
+
+        };
 
     }
 
     export default {
         data() {
             return {
-                postTotal: 0,
+                postNumber: 0,
                 postList: []
             };
         },
 
         computed: {
-            token() { return this.$store.getters.token; }
+            token() { return this.$store.getters.token; },
+            postListElement() { return document.getElementById('feed-post-list-container'); }
         },
 
         mounted() {
             this.getFeed();
+            this.watchScroll(this.postListElement);
         },
 
         methods: {
-            getFeed
+            getFeed,
+            watchScroll
         },
 
         components: {
@@ -56,7 +72,7 @@
 </script>
 
 <style scoped>
-    .feed-container{
+    #feed-container{
         flex: 1;
 
         background-color: #F5F5F5;
@@ -65,12 +81,12 @@
         flex-direction: column;
     }
 
-    .post-list-container {
+    #feed-post-list-container {
         flex: 1;
         overflow: auto;
     }
 
-    .post-list {
+    #feed-post-list {
         margin: 50px;
 
         display: flex;

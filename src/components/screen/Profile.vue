@@ -1,17 +1,17 @@
 <template>
-    <div class="profile-container">
+    <div id="profile-container">
 
-        <div class="info-container">
+        <div id="profile-info-container">
 
-            <img class="info-image" v-bind:src="profileImage" alt="user image">
+            <img id="profile-info-image" v-bind:src="profileImage" alt="user image">
 
             <h3>{{ profileName }}</h3>
 
         </div>
 
-        <div class="post-list-container">
+        <div id="profile-post-list-container">
 
-            <div class="post-list">
+            <div id="profile-post-list">
 
                 <Post v-for="post in this.postList" v-bind:key="post" v-bind:postAccess="post"></Post>
 
@@ -19,7 +19,7 @@
 
         </div>
 
-        <a class="add-button" v-on:click="showModal = true"><i class="el-icon-plus"></i></a>
+        <a id="add-button" v-on:click="showModal = true"><i class="el-icon-plus"></i></a>
 
         <WriteModal v-if="showModal" v-on:close="[showModal = false, getPosts()]" />
 
@@ -59,6 +59,7 @@
 
         // reset posts
         this.postTotal = 0;
+        this.postNumber = 0;
         this.postList = [];
 
         try {
@@ -68,11 +69,44 @@
             if(postResult.result === 101) { // OK
 
                 this.postTotal = postResult.total;
-                this.postList = this.postList.concat(postResult.list);
+                this.postNumber += postResult.list.length;
+                for(const post of postResult.list) this.postList.push(post);
 
             }
 
         } catch(error) { console.log(error); }
+
+    }
+
+    async function getMorePosts() {
+
+        // if all posts are loaded
+        if(this.postTotal <= this.postNumber) return;
+
+        try {
+
+            const postResult = await this.$request.getPostByUser(this.token, this.profileAccess, this.postNumber);
+
+            if(postResult.result === 101) { // OK
+
+                this.postNumber += postResult.list.length;
+                for(const post of postResult.list) this.postList.push(post);
+
+            }
+
+        } catch(error) { console.log(error); }
+
+    }
+
+    function watchScroll(element) {
+
+        element.onscroll = () => {
+
+            let reachedBottom = element.scrollTop + element.offsetHeight === element.scrollHeight;
+
+            if(reachedBottom) this.getMorePosts();
+
+        };
 
     }
 
@@ -86,6 +120,7 @@
                 profileName: '',
                 profileImage: profileImage,
                 postTotal: 0,
+                postNumber: 0,
                 postList: [],
                 showModal: false
             };
@@ -93,21 +128,21 @@
 
         computed: {
             token() { return this.$store.getters.token; },
+            postListElement() { return document.getElementById('profile-post-list-container'); }
         },
 
         mounted() {
             this.getProfileInfo();
             this.getPosts();
-        },
-
-        watch: {
-            profileAccess() { this.getProfileInfo(); }
+            this.watchScroll(this.postListElement);
         },
 
         methods: {
             getProfileInfo,
             getProfileImage,
-            getPosts
+            getPosts,
+            getMorePosts,
+            watchScroll
         },
 
         components: {
@@ -118,7 +153,7 @@
 </script>
 
 <style scoped>
-    .profile-container {
+    #profile-container {
         flex: 1;
 
         background-color: #F5F5F5;
@@ -127,7 +162,7 @@
         flex-direction: row;
     }
 
-    .info-container {
+    #profile-info-container {
         padding: 30px;
         background-color: #FAFAFA;
 
@@ -136,7 +171,7 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     }
 
-    .info-image {
+    #profile-info-image {
         width: 300px;
         height: 300px;
         border-radius: 30px;
@@ -144,12 +179,12 @@
         background-color: black;
     }
 
-    .post-list-container {
+    #profile-post-list-container {
         flex: 1;
         overflow: auto;
     }
 
-    .post-list {
+    #profile-post-list {
         margin: 50px;
 
         display: flex;
@@ -157,7 +192,7 @@
         align-items: center;
     }
 
-    .add-button {
+    #add-button {
         position: fixed;
 
         width: 60px;
@@ -178,7 +213,7 @@
         transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     }
 
-    .add-button:hover {
+    #add-button:hover {
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 </style>
