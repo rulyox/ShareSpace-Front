@@ -9,7 +9,8 @@ const store = new Vuex.Store({
         token: null,
         userAccess: null,
         userEmail: null,
-        userName: null
+        userName: null,
+        loadingPostNumber: 0
     },
 
     getters: {
@@ -22,6 +23,9 @@ const store = new Vuex.Store({
                 email: state.userEmail,
                 name: state.userName
             };
+        },
+        loadingPostNumber: state => {
+            return state.loadingPostNumber;
         }
     },
 
@@ -49,6 +53,12 @@ const store = new Vuex.Store({
         },
         deleteName(state) {
             state.userName = null;
+        },
+        increaseLoadingNumber(state) {
+            state.loadingPostNumber += 1;
+        },
+        decreaseLoadingNumber(state) {
+            state.loadingPostNumber -= 1;
         }
     },
 

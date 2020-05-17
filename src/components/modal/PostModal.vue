@@ -8,7 +8,7 @@
 
                     <div id="post-modal-content">
 
-                        <div id="post-modal-header">
+                        <div id="post-modal-header" v-on:click="clickHeader">
                             <img id="post-modal-user" v-bind:src="userImage" alt="user image">
                             <span>{{userName}}</span>
                         </div>
@@ -40,6 +40,13 @@
         const targetIndex = this.currentImageIndex + move;
 
         if(targetIndex >= 0 && targetIndex < this.imageList.length) this.currentImageIndex = targetIndex;
+
+    }
+
+    function clickHeader() {
+
+        const path = '/profile/' + this.userAccess;
+        if(this.$router.currentRoute.path !== path) this.$router.push(path);
 
     }
 
@@ -124,7 +131,8 @@
             getPostData,
             getProfileImage,
             getImages,
-            clickImageShift
+            clickImageShift,
+            clickHeader
         }
     };
 </script>

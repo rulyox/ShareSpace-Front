@@ -40,8 +40,9 @@
                 this.userName = postData.name;
                 this.text = postData.text;
 
-                // show element
-                this.element.style.display = 'block';
+                // loading done
+                this.element.style.display = 'block'; // show element
+                this.$store.commit('decreaseLoadingNumber'); // commit to store
 
                 // get profile image
                 const profileImage = postData.profile;

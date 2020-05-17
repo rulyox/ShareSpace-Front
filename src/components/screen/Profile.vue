@@ -15,6 +15,8 @@
 
                 <Post v-for="post in this.postList" v-bind:key="post" v-bind:postAccess="post"></Post>
 
+                <div v-if="isLoadingPost" class="loading-indicator"></div>
+
             </div>
 
         </div>
@@ -62,6 +64,8 @@
         this.postNumber = 0;
         this.postList = [];
 
+        this.isGettingPost = true;
+
         try {
 
             const postResult = await this.$request.getPostByUser(this.token, this.profileAccess, 0);
@@ -70,11 +74,14 @@
 
                 this.postTotal = postResult.total;
                 this.postNumber += postResult.list.length;
-                for(const post of postResult.list) this.postList.push(post);
+
+                this.addToPostList(postResult.list);
 
             }
 
         } catch(error) { console.log(error); }
+
+        this.isGettingPost = false;
 
     }
 
@@ -83,6 +90,8 @@
         // if all posts are loaded
         if(this.postTotal <= this.postNumber) return;
 
+        this.isGettingPost = true;
+
         try {
 
             const postResult = await this.$request.getPostByUser(this.token, this.profileAccess, this.postNumber);
@@ -90,11 +99,26 @@
             if(postResult.result === 101) { // OK
 
                 this.postNumber += postResult.list.length;
-                for(const post of postResult.list) this.postList.push(post);
+
+                this.addToPostList(postResult.list);
 
             }
 
         } catch(error) { console.log(error); }
+
+        this.isGettingPost = false;
+
+    }
+
+    function addToPostList(postList) {
+
+        for(const post of postList) {
+
+            // post loading start
+            this.$store.commit('increaseLoadingNumber'); // commit to store
+            this.postList.push(post);
+
+        }
 
     }
 
@@ -104,7 +128,7 @@
 
             let reachedBottom = element.scrollTop + element.offsetHeight === element.scrollHeight;
 
-            if(reachedBottom) this.getMorePosts();
+            if(reachedBottom && !this.isGettingPost) this.getMorePosts();
 
         };
 
@@ -119,6 +143,7 @@
             return {
                 profileName: '',
                 profileImage: profileImage,
+                isGettingPost: false,
                 postTotal: 0,
                 postNumber: 0,
                 postList: [],
@@ -128,7 +153,8 @@
 
         computed: {
             token() { return this.$store.getters.token; },
-            postListElement() { return document.getElementById('profile-post-list-container'); }
+            postListElement() { return document.getElementById('profile-post-list-container'); },
+            isLoadingPost() { return (this.$store.getters.loadingPostNumber > 0); }
         },
 
         mounted() {
@@ -137,11 +163,19 @@
             this.watchScroll(this.postListElement);
         },
 
+        watch: {
+            profileAccess() {
+                this.getProfileInfo();
+                this.getPosts();
+            }
+        },
+
         methods: {
             getProfileInfo,
             getProfileImage,
             getPosts,
             getMorePosts,
+            addToPostList,
             watchScroll
         },
 
@@ -215,5 +249,53 @@
 
     #add-button:hover {
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    }
+
+    .loading-indicator:before,
+    .loading-indicator:after,
+    .loading-indicator {
+        border-radius: 50%;
+        animation-fill-mode: both;
+        animation: loading-indicator 1.8s infinite ease-in-out;
+    }
+
+    .loading-indicator {
+        position: relative;
+        top: -2em;
+        width: 2em;
+        height: 2em;
+
+        vertical-align: middle;
+        pointer-events: none;
+
+        color: #253B80;
+        animation-delay: -0.16s;
+    }
+
+    .loading-indicator:before {
+        right: 150%;
+        animation-delay: -0.32s;
+    }
+
+    .loading-indicator:after {
+        left: 150%;
+    }
+
+    .loading-indicator:before,
+    .loading-indicator:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: inherit;
+        height: inherit;
+    }
+
+    @keyframes loading-indicator {
+        0%, 80%, 100% {
+            box-shadow: 0 2em 0 -2em;
+        }
+        40% {
+            box-shadow: 0 2em 0 -0.4em;
+        }
     }
 </style>
