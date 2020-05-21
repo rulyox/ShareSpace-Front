@@ -5,11 +5,14 @@
 
             <img id="profile-info-image" v-bind:src="profileImage" alt="user image">
 
-            <h3>{{ profileName }}</h3>
+            <div id="profile-info-name">{{ profileName }}</div>
+
+            <el-button class="profile-info-follow-button" type="primary" v-on:click="clickFollowing">Following {{followingList.length}}</el-button>
+            <el-button class="profile-info-follow-button" type="primary" v-on:click="clickFollower">Followers {{followerList.length}}</el-button>
 
         </div>
 
-        <div id="profile-post-list-container">
+        <div id="profile-post-container">
 
             <div id="profile-post-list">
 
@@ -33,6 +36,18 @@
     import WriteModal from '../modal/WriteModal';
     import profileImage from '../../assets/profile.png';
 
+    function clickFollowing() {
+
+        console.log(this.followingList);
+
+    }
+
+    function clickFollower() {
+
+        console.log(this.followerList);
+
+    }
+
     async function getProfileInfo() {
 
         try {
@@ -45,6 +60,14 @@
             // get profile image
             const profileImage = profileResult.image;
             if(profileImage !== null) await this.getProfileImage();
+
+            //get following list
+            const followingResult = await this.$request.getFollowing(this.profileAccess);
+            this.followingList = followingResult.user;
+
+            //get follower list
+            const followerResult = await this.$request.getFollower(this.profileAccess);
+            this.followerList = followerResult.user;
 
         } catch(error) { console.log(error); }
 
@@ -143,6 +166,8 @@
             return {
                 profileName: '',
                 profileImage: profileImage,
+                followingList: [],
+                followerList: [],
                 isGettingPost: false,
                 postTotal: 0,
                 postNumber: 0,
@@ -153,7 +178,7 @@
 
         computed: {
             token() { return this.$store.getters.token; },
-            postListElement() { return document.getElementById('profile-post-list-container'); },
+            postListElement() { return document.getElementById('profile-post-container'); },
             isLoadingPost() { return (this.$store.getters.loadingPostNumber > 0); }
         },
 
@@ -171,6 +196,8 @@
         },
 
         methods: {
+            clickFollowing,
+            clickFollower,
             getProfileInfo,
             getProfileImage,
             getPosts,
@@ -200,7 +227,9 @@
         padding: 30px;
         background-color: #FAFAFA;
 
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     }
@@ -210,10 +239,22 @@
         height: 300px;
         border-radius: 30px;
         margin-bottom: 30px;
-        background-color: black;
     }
 
-    #profile-post-list-container {
+    #profile-info-name {
+        font-size: 25px;
+        font-weight: 700;
+
+        margin-bottom: 30px;
+    }
+
+    .profile-info-follow-button {
+        width: 200px;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    #profile-post-container {
         flex: 1;
         overflow: auto;
     }
