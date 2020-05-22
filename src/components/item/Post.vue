@@ -45,8 +45,7 @@
                 this.$store.commit('decreaseLoadingNumber'); // commit to store
 
                 // get profile image
-                const profileImage = postData.profile;
-                if(profileImage !== null) await this.getProfileImage();
+                if(postData.profile !== null) await this.getProfileImage();
 
                 // get images
                 const image = postData.image;

@@ -7,8 +7,8 @@
 
             <div id="profile-info-name">{{ profileName }}</div>
 
-            <el-button class="profile-info-follow-button" type="primary" v-on:click="clickFollowing">Following {{followingList.length}}</el-button>
-            <el-button class="profile-info-follow-button" type="primary" v-on:click="clickFollower">Followers {{followerList.length}}</el-button>
+            <el-button class="profile-info-follow-button" type="primary" v-on:click="[showFollowModal = true, followModalList = followingList]">Following {{followingList.length}}</el-button>
+            <el-button class="profile-info-follow-button" type="primary" v-on:click="[showFollowModal = true, followModalList = followerList]">Followers {{followerList.length}}</el-button>
 
         </div>
 
@@ -24,9 +24,11 @@
 
         </div>
 
-        <a id="add-button" v-on:click="showModal = true"><i class="el-icon-plus"></i></a>
+        <a id="add-button" v-on:click="showWriteModal = true"><i class="el-icon-plus"></i></a>
 
-        <WriteModal v-if="showModal" v-on:close="[showModal = false, getPosts()]" />
+        <WriteModal v-if="showWriteModal" v-on:close="[showWriteModal = false, getPosts()]" />
+
+        <FollowModal v-if="showFollowModal" v-on:close="showFollowModal = false" v-bind:list="followModalList" />
 
     </div>
 </template>
@@ -34,19 +36,8 @@
 <script>
     import Post from '../item/Post';
     import WriteModal from '../modal/WriteModal';
+    import FollowModal from '../modal/FollowModal';
     import profileImage from '../../assets/profile.png';
-
-    function clickFollowing() {
-
-        console.log(this.followingList);
-
-    }
-
-    function clickFollower() {
-
-        console.log(this.followerList);
-
-    }
 
     async function getProfileInfo() {
 
@@ -58,8 +49,7 @@
             this.profileName = profileResult.name;
 
             // get profile image
-            const profileImage = profileResult.image;
-            if(profileImage !== null) await this.getProfileImage();
+            if(profileResult.image !== null) await this.getProfileImage();
 
             //get following list
             const followingResult = await this.$request.getFollowing(this.profileAccess);
@@ -82,34 +72,6 @@
 
     async function getPosts() {
 
-        // reset posts
-        this.postTotal = 0;
-        this.postNumber = 0;
-        this.postList = [];
-
-        this.isGettingPost = true;
-
-        try {
-
-            const postResult = await this.$request.getPostByUser(this.token, this.profileAccess, 0);
-
-            if(postResult.result === 101) { // OK
-
-                this.postTotal = postResult.total;
-                this.postNumber += postResult.list.length;
-
-                this.addToPostList(postResult.list);
-
-            }
-
-        } catch(error) { console.log(error); }
-
-        this.isGettingPost = false;
-
-    }
-
-    async function getMorePosts() {
-
         // if all posts are loaded
         if(this.postTotal <= this.postNumber) return;
 
@@ -121,6 +83,7 @@
 
             if(postResult.result === 101) { // OK
 
+                this.postTotal = postResult.total;
                 this.postNumber += postResult.list.length;
 
                 this.addToPostList(postResult.list);
@@ -151,9 +114,19 @@
 
             let reachedBottom = element.scrollTop + element.offsetHeight === element.scrollHeight;
 
-            if(reachedBottom && !this.isGettingPost) this.getMorePosts();
+            if(reachedBottom && !this.isGettingPost) this.getPosts();
 
         };
+
+    }
+
+    function reset() {
+
+        // reset all data
+        Object.assign(this.$data, this.$options.data());
+
+        this.getProfileInfo();
+        this.getPosts();
 
     }
 
@@ -168,11 +141,13 @@
                 profileImage: profileImage,
                 followingList: [],
                 followerList: [],
+                followModalList: [],
                 isGettingPost: false,
-                postTotal: 0,
+                postTotal: 1, // to be bigger than postNumber
                 postNumber: 0,
                 postList: [],
-                showModal: false
+                showWriteModal: false,
+                showFollowModal: false
             };
         },
 
@@ -189,26 +164,22 @@
         },
 
         watch: {
-            profileAccess() {
-                this.getProfileInfo();
-                this.getPosts();
-            }
+            profileAccess() { this.reset(); }
         },
 
         methods: {
-            clickFollowing,
-            clickFollower,
             getProfileInfo,
             getProfileImage,
             getPosts,
-            getMorePosts,
             addToPostList,
-            watchScroll
+            watchScroll,
+            reset
         },
 
         components: {
             Post,
-            WriteModal
+            WriteModal,
+            FollowModal
         }
     };
 </script>

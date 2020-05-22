@@ -147,7 +147,7 @@
     }
 
     #post-modal-content {
-        padding: 50px 50px;
+        padding: 50px;
 
         display: flex;
         flex-direction: column;
