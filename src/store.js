@@ -59,6 +59,9 @@ const store = new Vuex.Store({
         },
         decreaseLoadingNumber(state) {
             state.loadingPostNumber -= 1;
+        },
+        resetLoadingNumber(state) {
+            state.loadingPostNumber = 0;
         }
     },
 

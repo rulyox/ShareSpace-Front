@@ -75,6 +75,9 @@
         // if all posts are loaded
         if(this.postTotal <= this.postNumber) return;
 
+        // reset loadingPostNumber
+        this.$store.commit('resetLoadingNumber');
+
         this.isGettingPost = true;
 
         try {
@@ -86,6 +89,7 @@
                 this.postTotal = postResult.total;
                 this.postNumber += postResult.list.length;
 
+                // post loading start
                 this.addToPostList(postResult.list);
 
             }
@@ -100,8 +104,7 @@
 
         for(const post of postList) {
 
-            // post loading start
-            this.$store.commit('increaseLoadingNumber'); // commit to store
+            this.$store.commit('increaseLoadingNumber'); // increase loadingPostNumber
             this.postList.push(post);
 
         }
@@ -112,9 +115,9 @@
 
         element.onscroll = () => {
 
-            let reachedBottom = element.scrollTop + element.offsetHeight === element.scrollHeight;
+            const reachedBottom = element.scrollTop + element.offsetHeight === element.scrollHeight;
 
-            if(reachedBottom && !this.isGettingPost) this.getPosts();
+            if(reachedBottom && !this.isGettingPost && !this.isLoadingPost) this.getPosts();
 
         };
 
