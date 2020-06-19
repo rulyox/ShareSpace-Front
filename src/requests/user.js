@@ -9,14 +9,7 @@ const getToken = (email, pw) => {
                 email: email,
                 pw: pw
             })
-            .then((response) => {
-
-                resolve({
-                    result: response.data.result,
-                    token: response.data.token
-                });
-
-            })
+            .then((response) => resolve(response.data))
             .catch((error) => reject(error));
 
     });
@@ -29,16 +22,8 @@ const login = (token) => {
             {
                 headers: {token: token}
             })
-            .then((response) => {
-
-                resolve({
-                    access: response.data.access,
-                    email: response.data.email,
-                    name: response.data.name
-                });
-
-            })
-            .catch((error) => { reject(error); });
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
 
     });
 };
@@ -47,8 +32,8 @@ const getProfile = (profileAccess) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/user/data/' + profileAccess)
-            .then((response) => { resolve(response.data); })
-            .catch((error) => { reject(error); });
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
 
     });
 };
@@ -60,8 +45,8 @@ const getProfileImageFile = (access) => {
             {
                 responseType: 'arraybuffer'
             })
-            .then((response) => { resolve(response.data); })
-            .catch((error) => { reject(error); });
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
 
     });
 };

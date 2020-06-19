@@ -25,7 +25,7 @@
 
         try {
 
-            const userResult = await this.$request.getProfile(this.userAccess);
+            const userResult = (await this.$request.getProfile(this.userAccess)).result;
 
             // set profile name
             this.userName = userResult.name;

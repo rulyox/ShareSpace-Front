@@ -30,10 +30,16 @@
 
             const feedResult = await this.$request.getFeed(this.token, this.postNumber);
 
-            this.postNumber += feedResult.post.length;
+            if(feedResult.code === 101) {
 
-            // post loading start
-            this.addToPostList(feedResult.post);
+                const result = feedResult.result;
+
+                this.postNumber += result.post.length;
+
+                // post loading start
+                this.addToPostList(result.post);
+
+            }
 
         } catch(error) { console.log(error); }
 

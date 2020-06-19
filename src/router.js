@@ -60,12 +60,14 @@ router.beforeEach(async (to, from, next) => {
 
             const loginResult = await request.login(token);
 
+            const result = loginResult.result;
+
             // save data to vuex
             await store.dispatch('initialize', {
                 token: token,
-                access: loginResult.access,
-                email: loginResult.email,
-                name: loginResult.name
+                access: result.access,
+                email: result.email,
+                name: result.name
             });
 
             if(to.path === '/login') next( {path: '/'} );

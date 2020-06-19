@@ -56,20 +56,20 @@
 
             const postDataResult = await this.$request.getPostData(this.token, this.postAccess);
 
-            if(postDataResult.result === 101) { // OK
+            if(postDataResult.code === 101) { // OK
 
-                const postData = postDataResult.data;
+                const result = postDataResult.result;
 
-                this.userAccess = postData.user;
-                this.userName = postData.name;
-                this.text = postData.text;
+                this.userAccess = result.user;
+                this.userName = result.name;
+                this.text = result.text;
 
                 // get profile image
-                const profileImage = postData.profile;
+                const profileImage = result.profile;
                 if(profileImage !== null) await this.getProfileImage();
 
                 // get images
-                const imageList = postData.image;
+                const imageList = result.image;
                 await this.getImages(imageList);
 
             }

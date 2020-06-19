@@ -43,7 +43,7 @@
 
         try {
 
-            const profileResult = await this.$request.getProfile(this.profileAccess);
+            const profileResult = (await this.$request.getProfile(this.profileAccess)).result;
 
             // set profile name
             this.profileName = profileResult.name;
@@ -52,11 +52,11 @@
             if(profileResult.image !== null) await this.getProfileImage();
 
             //get following list
-            const followingResult = await this.$request.getFollowing(this.profileAccess);
+            const followingResult = (await this.$request.getFollowing(this.profileAccess)).result;
             this.followingList = followingResult.user;
 
             //get follower list
-            const followerResult = await this.$request.getFollower(this.profileAccess);
+            const followerResult = (await this.$request.getFollower(this.profileAccess)).result;
             this.followerList = followerResult.user;
 
         } catch(error) { console.log(error); }
@@ -84,13 +84,15 @@
 
             const postResult = await this.$request.getPostByUser(this.token, this.profileAccess, this.postNumber);
 
-            if(postResult.result === 101) { // OK
+            if(postResult.code === 101) { // OK
 
-                this.postTotal = postResult.total;
-                this.postNumber += postResult.list.length;
+                const result = postResult.result;
+
+                this.postTotal = result.total;
+                this.postNumber += result.list.length;
 
                 // post loading start
-                this.addToPostList(postResult.list);
+                this.addToPostList(result.list);
 
             }
 

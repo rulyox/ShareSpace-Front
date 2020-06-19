@@ -32,23 +32,23 @@
 
             const postDataResult = await this.$request.getPostPreview(this.token, this.postAccess);
 
-            if(postDataResult.result === 101) { // OK
+            if(postDataResult.code === 101) { // OK
 
-                const postData = postDataResult.data;
+                const result = postDataResult.result;
 
-                this.userAccess = postData.user;
-                this.userName = postData.name;
-                this.text = postData.text;
+                this.userAccess = result.user;
+                this.userName = result.name;
+                this.text = result.text;
 
                 // loading done
                 this.element.style.display = 'block'; // show element
                 this.$store.commit('decreaseLoadingNumber'); // decrease loadingPostNumber
 
                 // get profile image
-                if(postData.profile !== null) await this.getProfileImage();
+                if(result.profile !== null) await this.getProfileImage();
 
                 // get images
-                const image = postData.image;
+                const image = result.image;
                 if(image !== null) await this.getImage(image);
 
             }

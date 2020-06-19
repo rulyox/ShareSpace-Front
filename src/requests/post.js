@@ -15,8 +15,8 @@ const writePost = (token, text, imageList) => {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            .then(() => { resolve(); })
-            .catch((error) => { reject(error); });
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
 
     });
 };
@@ -28,16 +28,8 @@ const getPostByUser = (token, user, start) => {
             {
                 headers: {token: token}
             })
-            .then((response) => {
-
-                resolve({
-                    result: response.data.result,
-                    total: response.data.total,
-                    list: response.data.list
-                });
-
-            })
-            .catch((error) => { reject(error); });
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
 
     });
 };
@@ -49,15 +41,8 @@ const getPostData = (token, access) => {
             {
                 headers: {token: token}
             })
-            .then((response) => {
-
-                resolve({
-                    result: response.data.result,
-                    data: response.data.data
-                });
-
-            })
-            .catch((error) => { reject(error); });
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
 
     });
 };
@@ -69,15 +54,8 @@ const getPostPreview = (token, access) => {
             {
                 headers: {token: token}
             })
-            .then((response) => {
-
-                resolve({
-                    result: response.data.result,
-                    data: response.data.data
-                });
-
-            })
-            .catch((error) => { reject(error); });
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
 
     });
 };
@@ -90,8 +68,8 @@ const getImageFile = (token, post, image) => {
                 responseType: 'arraybuffer',
                 headers: {token: token}
             })
-            .then((response) => { resolve(response.data); })
-            .catch((error) => { reject(error); });
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
 
     });
 };
@@ -103,8 +81,8 @@ const getFeed = (token, start) => {
             {
                 headers: {token: token}
             })
-            .then((response) => { resolve(response.data); })
-            .catch((error) => { reject(error); });
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
 
     });
 };
