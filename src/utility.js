@@ -1,4 +1,4 @@
-const imageToBase64 = (image) => {
+export const imageToBase64 = (image) => {
 
     if(image instanceof ArrayBuffer && image.byteLength > 0) {
         const imageBase64 = Buffer.from(image).toString('base64');
@@ -9,7 +9,7 @@ const imageToBase64 = (image) => {
 
 }
 
-const fileToBase64 = (file) => {
+export const fileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
 
         const reader = new FileReader();
@@ -19,8 +19,3 @@ const fileToBase64 = (file) => {
 
     });
 }
-
-export default {
-    imageToBase64,
-    fileToBase64
-};

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../config.json';
 
-const writePost = (token, text, imageList) => {
+export const writePost = (token, text, imageList) => {
     return new Promise((resolve, reject) => {
 
         const formData = new FormData();
@@ -21,7 +21,7 @@ const writePost = (token, text, imageList) => {
     });
 };
 
-const getPostByUser = (token, user, start) => {
+export const getPostByUser = (token, user, start) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/post/user/' + user + '?start=' + start + '&count=10',
@@ -34,7 +34,7 @@ const getPostByUser = (token, user, start) => {
     });
 };
 
-const getPostData = (token, access) => {
+export const getPostData = (token, access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/post/data/' + access,
@@ -47,7 +47,7 @@ const getPostData = (token, access) => {
     });
 };
 
-const getPostPreview = (token, access) => {
+export const getPostPreview = (token, access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/post/preview/' + access,
@@ -60,7 +60,7 @@ const getPostPreview = (token, access) => {
     });
 };
 
-const getImageFile = (token, post, image) => {
+export const getImageFile = (token, post, image) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/post/image/' + post + '/' + image,
@@ -74,7 +74,7 @@ const getImageFile = (token, post, image) => {
     });
 };
 
-const getFeed = (token, start) => {
+export const getFeed = (token, start) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/post/feed?start=' + start + '&count=10',
@@ -87,7 +87,7 @@ const getFeed = (token, start) => {
     });
 };
 
-const getLike = (token, access) => {
+export const getLike = (token, access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/post/like/' + access,
@@ -100,7 +100,7 @@ const getLike = (token, access) => {
     });
 };
 
-const getComment = (token, access) => {
+export const getComment = (token, access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/post/comment/' + access,
@@ -111,15 +111,4 @@ const getComment = (token, access) => {
             .catch((error) => reject(error));
 
     });
-};
-
-export default {
-    writePost,
-    getPostByUser,
-    getPostData,
-    getPostPreview,
-    getImageFile,
-    getFeed,
-    getLike,
-    getComment
 };

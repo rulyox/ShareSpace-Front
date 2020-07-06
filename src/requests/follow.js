@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../config.json';
 
-const getFollowing = (access) => {
+export const getFollowing = (access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/follow/ing/' + access)
@@ -11,7 +11,7 @@ const getFollowing = (access) => {
     });
 }
 
-const getFollower = (access) => {
+export const getFollower = (access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/follow/er/' + access)
@@ -20,8 +20,3 @@ const getFollower = (access) => {
 
     });
 }
-
-export default {
-    getFollowing,
-    getFollower
-};

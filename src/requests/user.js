@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../config.json';
 
-const getToken = (email, pw) => {
+export const getToken = (email, pw) => {
     return new Promise((resolve, reject) => {
 
         axios.post(config.server + '/user/token',
@@ -15,7 +15,7 @@ const getToken = (email, pw) => {
     });
 };
 
-const login = (token) => {
+export const login = (token) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/user',
@@ -28,7 +28,7 @@ const login = (token) => {
     });
 };
 
-const getProfile = (profileAccess) => {
+export const getProfile = (profileAccess) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/user/data/' + profileAccess)
@@ -38,7 +38,7 @@ const getProfile = (profileAccess) => {
     });
 };
 
-const getProfileImageFile = (access) => {
+export const getProfileImageFile = (access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(config.server + '/user/image/' + access,
@@ -49,11 +49,4 @@ const getProfileImageFile = (access) => {
             .catch((error) => reject(error));
 
     });
-};
-
-export default {
-    getToken,
-    login,
-    getProfile,
-    getProfileImageFile
 };

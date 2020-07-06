@@ -4,7 +4,7 @@ import LoginComponent from './components/screen/Login';
 import HomeComponent from './components/screen/Home';
 import FeedComponent from './components/screen/Feed';
 import ProfileComponent from './components/screen/Profile';
-import request from './request';
+import * as request from './requests';
 import store from './store';
 
 Vue.use(VueRouter);
