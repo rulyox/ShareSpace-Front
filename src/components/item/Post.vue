@@ -12,6 +12,13 @@
 
             <div class="post-content" v-html="showText"></div>
 
+            <div class="post-footer">
+                <i class="el-icon-star-off" style="margin-right: 5px;"></i>
+                <span style="margin-right: 15px;">{{likeList.length}}</span>
+                <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
+                <span>{{commentList.length}}</span>
+            </div>
+
         </div>
 
         <PostModal v-if="showModal" v-on:close="showModal = false" v-bind:postAccess="postAccess" />
@@ -53,6 +60,26 @@
 
             }
 
+            const likeResult = await this.$request.getLike(this.token, this.postAccess);
+
+            if(likeResult.code === 101) { // OK
+
+                const result = likeResult.result;
+
+                this.likeList = result.user;
+
+            }
+
+            const commentResult = await this.$request.getComment(this.token, this.postAccess);
+
+            if(commentResult.code === 101) { // OK
+
+                const result = commentResult.result;
+
+                this.commentList = result.comment;
+
+            }
+
         } catch(error) { console.log(error); }
 
     }
@@ -86,6 +113,8 @@
                 userImage: profileImage,
                 text: '',
                 image: '',
+                likeList: [],
+                commentList: [],
                 showModal: false
             };
         },
@@ -116,6 +145,7 @@
 <style scoped>
     .post-container {
         width: 500px;
+        padding: 30px;
         border-radius: 10px;
         margin-bottom: 50px;
         background-color: #FAFAFA;
@@ -132,7 +162,7 @@
 
     .post-header {
         height: 40px;
-        padding: 15px;
+        margin-bottom: 20px;
 
         font-weight: 700;
 
@@ -152,14 +182,25 @@
     .post-image {
         width: 500px;
         height: 500px;
+        margin-bottom: 20px;
         background-color: black;
-        border-top: 1px solid #DDDDDD;
-        border-bottom: 1px solid #DDDDDD;
+        border: 1px solid #DDDDDD;
 
         display: none;
     }
 
     .post-content {
-        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .post-footer {
+        width: 500px;
+
+        color: #253B80;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
     }
 </style>

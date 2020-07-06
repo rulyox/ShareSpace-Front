@@ -87,11 +87,39 @@ const getFeed = (token, start) => {
     });
 };
 
+const getLike = (token, access) => {
+    return new Promise((resolve, reject) => {
+
+        axios.get(config.server + '/post/like/' + access,
+            {
+                headers: {token: token}
+            })
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+
+    });
+};
+
+const getComment = (token, access) => {
+    return new Promise((resolve, reject) => {
+
+        axios.get(config.server + '/post/comment/' + access,
+            {
+                headers: {token: token}
+            })
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+
+    });
+};
+
 export default {
     writePost,
     getPostByUser,
     getPostData,
     getPostPreview,
     getImageFile,
-    getFeed
+    getFeed,
+    getLike,
+    getComment
 };

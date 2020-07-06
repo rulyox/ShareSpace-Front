@@ -13,6 +13,8 @@ export default {
     getPostPreview: postRequests.getPostPreview,
     getImageFile: postRequests.getImageFile,
     getFeed: postRequests.getFeed,
+    getLike: postRequests.getLike,
+    getComment: postRequests.getComment,
     getFollowing: followRequests.getFollowing,
     getFollower: followRequests.getFollower
 };
