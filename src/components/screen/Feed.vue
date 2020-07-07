@@ -117,6 +117,19 @@
         overflow: auto;
     }
 
+    #feed-post-list-container::-webkit-scrollbar {
+        width: 10px;
+        background: none;
+    }
+
+    #feed-post-list-container::-webkit-scrollbar-thumb {
+        background: #253B80;
+    }
+
+    #feed-post-list-container::-webkit-scrollbar-track {
+        background: none;
+    }
+
     #feed-post-list {
         margin: 50px;
 

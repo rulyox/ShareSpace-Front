@@ -207,12 +207,27 @@
 
         width: 700px;
         margin: 0 auto;
+        max-height: 90vh;
+        overflow: auto;
 
         background-color: #FAFAFA;
         border-radius: 20px;
 
         box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
         transition: all .3s ease;
+    }
+
+    .modal-container::-webkit-scrollbar {
+        width: 5px;
+        background: none;
+    }
+
+    .modal-container::-webkit-scrollbar-thumb {
+        background: #253B80;
+    }
+
+    .modal-container::-webkit-scrollbar-track {
+        background: none;
     }
 
     /* Below are default settings */

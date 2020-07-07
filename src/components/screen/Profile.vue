@@ -235,6 +235,19 @@
         overflow: auto;
     }
 
+    #profile-post-container::-webkit-scrollbar {
+        width: 10px;
+        background: none;
+    }
+
+    #profile-post-container::-webkit-scrollbar-thumb {
+        background: #253B80;
+    }
+
+    #profile-post-container::-webkit-scrollbar-track {
+        background: none;
+    }
+
     #profile-post-list {
         margin: 50px;
 
