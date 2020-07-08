@@ -24,6 +24,25 @@
 
                         <div id="post-modal-text" v-html="showText"></div>
 
+                        <div id="post-modal-footer">
+                            <el-button type="primary" icon="el-icon-star-off">{{likeList.length}}</el-button>
+                            <span style="margin-right: 15px;"></span>
+                            <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
+                            <span>{{commentList.length}}</span>
+                        </div>
+
+                        <div id="post-modal-comment-container">
+
+                            <Comment v-for="comment in this.commentList"
+                                     v-bind:key="comment.id"
+                                     v-bind:commentId="comment.id"
+                                     v-bind:userAccess="comment.user"
+                                     v-bind:commentText="comment.comment"
+                                     v-bind:commentTime="comment.time"
+                            ></Comment>
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -33,6 +52,7 @@
 </template>
 
 <script>
+    import Comment from '../item/Comment';
     import profileImage from '../../assets/profile.png';
 
     function clickImageShift(move) {
@@ -74,6 +94,28 @@
 
             }
 
+            const likeResult = await this.$request.getLike(this.token, this.postAccess);
+
+            if(likeResult.code === 101) { // OK
+
+                const result = likeResult.result;
+
+                this.likeList = result.user;
+
+            }
+
+            const commentResult = await this.$request.getComment(this.token, this.postAccess);
+
+            if(commentResult.code === 101) { // OK
+
+                const result = commentResult.result;
+
+                this.commentList = result.comment;
+
+                if(this.commentList.length > 0) this.commentElement.style.display = 'block';
+
+            }
+
         } catch(error) { console.log(error); }
 
     }
@@ -112,7 +154,9 @@
                 userImage: profileImage,
                 text: '',
                 imageList: [],
-                currentImageIndex: 0
+                currentImageIndex: 0,
+                likeList: [],
+                commentList: []
             }
         },
 
@@ -120,6 +164,7 @@
             token() { return this.$store.getters.token; },
             showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
             imageElement() { return document.getElementById('post-modal-image-container'); },
+            commentElement() { return document.getElementById('post-modal-comment-container'); },
             currentImageFile() { return this.imageList[this.currentImageIndex]; }
         },
 
@@ -133,6 +178,10 @@
             getImages,
             clickImageShift,
             clickHeader
+        },
+
+        components: {
+            Comment
         }
     };
 </script>
@@ -155,7 +204,7 @@
 
     #post-modal-header {
         height: 40px;
-        padding: 15px;
+        margin-bottom: 30px;
 
         font-weight: 700;
 
@@ -174,7 +223,6 @@
 
     #post-modal-image-container {
         align-self: center;
-        margin-top: 30px;
         margin-bottom: 30px;
 
         display: none;
@@ -198,8 +246,19 @@
     }
 
     #post-modal-text {
-        margin-left: 15px;
-        margin-right: 15px;
+        margin-bottom: 30px;
+    }
+
+    #post-modal-footer {
+        color: #253B80;
+    }
+
+    #post-modal-comment-container {
+        display: none;
+
+        margin-top: 30px;
+        background-color: #EEEEEE;
+        border-radius: 10px;
     }
 
     .modal-container {
