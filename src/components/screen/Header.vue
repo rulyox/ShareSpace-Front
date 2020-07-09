@@ -5,11 +5,17 @@
 
         <el-dropdown id="header-profile" trigger="click">
 
-            <img class="el-dropdown-link" id="header-profile-image" v-bind:src="profileImage" alt="profile image">
+            <img class="el-dropdown-link" id="header-profile-image"
+                 v-bind:src="profileImage"
+                 alt="profile image">
 
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-user" v-on:click.native="clickProfile">My Profile</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-switch-button" v-on:click.native="clickLogout">Logout</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-user"
+                                  v-on:click.native="clickProfile"
+                >My Profile</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-switch-button"
+                                  v-on:click.native="clickLogout"
+                >Logout</el-dropdown-item>
             </el-dropdown-menu>
 
         </el-dropdown>

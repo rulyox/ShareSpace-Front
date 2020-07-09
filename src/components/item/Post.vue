@@ -1,14 +1,23 @@
 <template>
-    <div class="post-container" v-bind:id="`post-${postAccess}`">
+    <div class="post-container"
+         v-bind:id="`post-${postAccess}`">
 
         <div v-on:click="showModal = true">
 
             <div class="post-header">
-                <img class="post-user" v-bind:src="userImage" alt="user image">
+
+                <img class="post-user"
+                     v-bind:src="userImage"
+                     alt="user image">
+
                 <span>{{userName}}</span>
+
             </div>
 
-            <img class="post-image" v-bind:id="`post-${postAccess}-image`" v-bind:src="image" alt="post image">
+            <img class="post-image"
+                 v-bind:id="`post-${postAccess}-image`"
+                 v-bind:src="image"
+                 alt="post image">
 
             <div class="post-content" v-html="showText"></div>
 
@@ -21,7 +30,9 @@
 
         </div>
 
-        <PostModal v-if="showModal" v-on:close="showModal = false" v-bind:postAccess="postAccess" />
+        <PostModal v-if="showModal"
+                   v-on:close="showModal = false"
+                   v-bind:postAccess="postAccess" />
 
     </div>
 </template>

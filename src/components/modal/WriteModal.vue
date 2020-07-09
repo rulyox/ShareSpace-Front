@@ -7,17 +7,35 @@
                     <div id="modal-title-container">Write New Post</div>
 
                     <div id="modal-image-container">
-                        <input id="input-image" type="file" accept="image/png, image/jpeg" v-on:change="uploadImage" ref="image">
-                        <el-button id="button-image" type="primary" icon="el-icon-picture" circle v-on:click="clickUpload"></el-button>
 
-                        <img class="image-preview" v-for="(image, index) in this.imagePreviewList" v-bind:key="index" v-bind:src="imagePreviewList[index]" alt="image-preview">
+                        <input id="input-image"
+                               type="file"
+                               accept="image/png, image/jpeg"
+                               v-on:change="uploadImage"
+                               ref="image">
+
+                        <el-button id="button-image"
+                                   type="primary"
+                                   icon="el-icon-picture" circle
+                                   v-on:click="clickUpload"></el-button>
+
+                        <img class="image-preview"
+                             v-for="(image, index) in this.imagePreviewList"
+                             v-bind:key="index"
+                             v-bind:src="imagePreviewList[index]"
+                             alt="image-preview">
+
                     </div>
 
                     <el-input type="textarea" autosize placeholder="Enter text" v-model="text"></el-input>
 
                     <div id="modal-button-container">
-                        <el-button type="success" v-on:click="clickWrite">Post</el-button>
-                        <el-button type="danger" v-on:click="$emit('close')">Close</el-button>
+                        <el-button type="success"
+                                   v-on:click="clickWrite"
+                        >Post</el-button>
+                        <el-button type="danger"
+                                   v-on:click="$emit('close')"
+                        >Close</el-button>
                     </div>
 
                 </div>

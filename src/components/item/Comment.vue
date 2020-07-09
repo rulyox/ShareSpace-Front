@@ -1,9 +1,13 @@
 <template>
-    <div class="comment-container" v-bind:id="`user-${userAccess}`" v-on:click="clickUser">
+    <div class="comment-container"
+         v-bind:id="`user-${userAccess}`"
+         v-on:click="clickUser">
 
         <div class="comment-header">
 
-            <img class="comment-image" v-bind:src="userImage" alt="user image">
+            <img class="comment-image"
+                 v-bind:src="userImage"
+                 alt="user image">
 
             <div class="comment-name">{{userName}}</div>
 

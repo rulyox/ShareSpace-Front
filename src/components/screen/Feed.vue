@@ -5,7 +5,9 @@
 
             <div id="feed-post-list">
 
-                <Post v-for="post in this.postList" v-bind:key="post" v-bind:postAccess="post"></Post>
+                <Post v-for="post in this.postList"
+                      v-bind:key="post"
+                      v-bind:postAccess="post"></Post>
 
                 <div v-if="isLoadingPost" class="loading-indicator"></div>
 

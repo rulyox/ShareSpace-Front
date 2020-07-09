@@ -4,28 +4,51 @@
             <div class="modal-wrapper">
                 <div class="modal-container">
 
-                    <i id="post-modal-close" class="el-icon-close" v-on:click="$emit('close')"></i>
+                    <i id="post-modal-close" class="el-icon-close"
+                       v-on:click="$emit('close')"></i>
 
                     <div id="post-modal-content">
 
-                        <div id="post-modal-header" v-on:click="clickHeader">
-                            <img id="post-modal-user" v-bind:src="userImage" alt="user image">
+                        <div id="post-modal-header"
+                             v-on:click="clickHeader">
+
+                            <img id="post-modal-user"
+                                 v-bind:src="userImage"
+                                 alt="user image">
+
                             <span>{{userName}}</span>
+
                         </div>
 
                         <div id="post-modal-image-container">
-                            <img id="post-modal-image" v-bind:src="currentImageFile" alt="post image">
+
+                            <img id="post-modal-image"
+                                 v-bind:src="currentImageFile"
+                                 alt="post image">
+
                             <div>
-                                <el-button id="post-modal-image-shift-left" icon="el-icon-arrow-left" circle v-bind:disabled="currentImageIndex <= 0" v-on:click="clickImageShift(-1)"></el-button>
+                                <el-button id="post-modal-image-shift-left"
+                                           icon="el-icon-arrow-left" circle
+                                           v-bind:disabled="currentImageIndex <= 0"
+                                           v-on:click="clickImageShift(-1)"
+                                ></el-button>
                                 <span id="post-modal-image-counter">{{currentImageIndex + 1}} / {{imageList.length}}</span>
-                                <el-button id="post-modal-image-shift-right" icon="el-icon-arrow-right" circle v-bind:disabled="currentImageIndex >= imageList.length-1" v-on:click="clickImageShift(1)"></el-button>
+                                <el-button id="post-modal-image-shift-right"
+                                           icon="el-icon-arrow-right" circle
+                                           v-bind:disabled="currentImageIndex >= imageList.length-1"
+                                           v-on:click="clickImageShift(1)"
+                                ></el-button>
                             </div>
+
                         </div>
 
                         <div id="post-modal-text" v-html="showText"></div>
 
                         <div id="post-modal-footer">
-                            <el-button type="primary" v-bind:icon="userLiked?'el-icon-star-on':'el-icon-star-off'" v-on:click="clickLike">{{likeList.length}}</el-button>
+                            <el-button type="primary"
+                                       v-bind:icon="userLiked?'el-icon-star-on':'el-icon-star-off'"
+                                       v-on:click="clickLike"
+                            >{{likeList.length}}</el-button>
                             <span style="margin-right: 15px;"></span>
                             <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
                             <span>{{commentList.length}}</span>

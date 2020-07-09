@@ -3,12 +3,21 @@
 
         <div id="profile-info-container">
 
-            <img id="profile-info-image" v-bind:src="profileImage" alt="user image">
+            <img id="profile-info-image"
+                 v-bind:src="profileImage"
+                 alt="user image">
 
             <div id="profile-info-name">{{ profileName }}</div>
 
-            <el-button class="profile-info-follow-button" type="primary" v-on:click="[showFollowModal = true, followModalList = followingList]">Following {{followingList.length}}</el-button>
-            <el-button class="profile-info-follow-button" type="primary" v-on:click="[showFollowModal = true, followModalList = followerList]">Followers {{followerList.length}}</el-button>
+            <el-button class="profile-info-follow-button"
+                       type="primary"
+                       v-on:click="[showFollowModal = true, followModalList = followingList]"
+            >Following {{followingList.length}}</el-button>
+
+            <el-button class="profile-info-follow-button"
+                       type="primary"
+                       v-on:click="[showFollowModal = true, followModalList = followerList]"
+            >Followers {{followerList.length}}</el-button>
 
         </div>
 
@@ -16,7 +25,9 @@
 
             <div id="profile-post-list">
 
-                <Post v-for="post in this.postList" v-bind:key="post" v-bind:postAccess="post"></Post>
+                <Post v-for="post in this.postList"
+                      v-bind:key="post"
+                      v-bind:postAccess="post"></Post>
 
                 <div v-if="isLoadingPost" class="loading-indicator"></div>
 
@@ -24,11 +35,16 @@
 
         </div>
 
-        <a id="add-button" v-on:click="showWriteModal = true"><i class="el-icon-plus"></i></a>
+        <a id="add-button"
+           v-on:click="showWriteModal = true"
+        ><i class="el-icon-plus"></i></a>
 
-        <WriteModal v-if="showWriteModal" v-on:close="[showWriteModal = false, getPosts()]" />
+        <WriteModal v-if="showWriteModal"
+                    v-on:close="[showWriteModal = false, getPosts()]" />
 
-        <FollowModal v-if="showFollowModal" v-on:close="showFollowModal = false" v-bind:list="followModalList" />
+        <FollowModal v-if="showFollowModal"
+                     v-on:close="showFollowModal = false"
+                     v-bind:list="followModalList" />
 
     </div>
 </template>

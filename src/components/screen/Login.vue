@@ -5,8 +5,16 @@
 
             <a class="dialog-title">ShareSpace</a>
 
-            <el-input class="dialog-input" placeholder="Enter email" v-model="email" v-on:keydown.native.enter="clickLogin" />
-            <el-input class="dialog-input" placeholder="Enter password" v-model="password" show-password v-on:keydown.native.enter="clickLogin" />
+            <el-input class="dialog-input"
+                      placeholder="Enter email"
+                      v-model="email"
+                      v-on:keydown.native.enter="clickLogin" />
+
+            <el-input class="dialog-input"
+                      placeholder="Enter password"
+                      v-model="password"
+                      show-password
+                      v-on:keydown.native.enter="clickLogin" />
 
             <div class="dialog-button">
                 <el-button v-on:click.prevent="clickLogin">Login</el-button>

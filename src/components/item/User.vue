@@ -1,7 +1,11 @@
 <template>
-    <div class="user-container" v-bind:id="`user-${userAccess}`" v-on:click="clickUser">
+    <div class="user-container"
+         v-bind:id="`user-${userAccess}`"
+         v-on:click="clickUser">
 
-        <img class="user-image" v-bind:src="userImage" alt="user image">
+        <img class="user-image"
+             v-bind:src="userImage"
+             alt="user image">
 
         <div class="user-name">{{userName}}</div>
 
