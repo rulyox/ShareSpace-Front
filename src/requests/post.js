@@ -100,6 +100,21 @@ export const getLike = (token, access) => {
     });
 };
 
+export const likePost = (token, access, type) => {
+    return new Promise((resolve, reject) => {
+
+        axios.post(config.server + '/post/like/' + access,
+            {
+                type: type
+            }, {
+                headers: {token: token}
+            })
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+
+    });
+};
+
 export const getComment = (token, access) => {
     return new Promise((resolve, reject) => {
 

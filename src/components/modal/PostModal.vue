@@ -25,7 +25,7 @@
                         <div id="post-modal-text" v-html="showText"></div>
 
                         <div id="post-modal-footer">
-                            <el-button type="primary" icon="el-icon-star-off">{{likeList.length}}</el-button>
+                            <el-button type="primary" v-bind:icon="userLiked?'el-icon-star-on':'el-icon-star-off'" v-on:click="clickLike">{{likeList.length}}</el-button>
                             <span style="margin-right: 15px;"></span>
                             <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
                             <span>{{commentList.length}}</span>
@@ -70,6 +70,31 @@
 
     }
 
+    async function clickLike() {
+
+        try {
+
+            if(this.userLiked) await this.$request.likePost(this.token, this.postAccess, false);
+            else await this.$request.likePost(this.token, this.postAccess, true);
+
+            // get data
+            const likeResult = await this.$request.getLike(this.token, this.postAccess);
+
+            if(likeResult.code === 101) { // OK
+
+                const result = likeResult.result;
+
+                this.likeList = result.user;
+
+                // if account user has clicked like
+                this.userLiked = this.likeList.includes(this.accountUserAccess);
+
+            }
+
+        } catch(error) { console.log(error); }
+
+    }
+
     async function getPostData() {
 
         try {
@@ -101,6 +126,9 @@
                 const result = likeResult.result;
 
                 this.likeList = result.user;
+
+                // if account user has clicked like
+                this.userLiked = this.likeList.includes(this.accountUserAccess);
 
             }
 
@@ -156,12 +184,15 @@
                 imageList: [],
                 currentImageIndex: 0,
                 likeList: [],
+                userLiked: false,
                 commentList: []
             }
         },
 
         computed: {
             token() { return this.$store.getters.token; },
+            accountUserData() { return this.$store.getters.userData; },
+            accountUserAccess() { return this.accountUserData.access },
             showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
             imageElement() { return document.getElementById('post-modal-image-container'); },
             commentElement() { return document.getElementById('post-modal-comment-container'); },
@@ -177,7 +208,8 @@
             getProfileImage,
             getImages,
             clickImageShift,
-            clickHeader
+            clickHeader,
+            clickLike
         },
 
         components: {
