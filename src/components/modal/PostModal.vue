@@ -45,13 +45,23 @@
                         <div id="post-modal-text" v-html="showText"></div>
 
                         <div id="post-modal-footer">
+
                             <el-button type="primary"
+                                       style="margin-right: 15px;"
                                        v-bind:icon="userLiked?'el-icon-star-on':'el-icon-star-off'"
                                        v-on:click="clickLike"
                             >{{likeList.length}}</el-button>
-                            <span style="margin-right: 15px;"></span>
+
                             <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
-                            <span>{{commentList.length}}</span>
+                            <span style="margin-right: 15px;">{{commentList.length}}</span>
+
+                            <el-input placeholder="Write comment"
+                                      v-model="commentText"
+                                      v-on:keydown.native.enter="clickCommentWrite">
+                                <el-button slot="append" icon="el-icon-edit"
+                                           v-on:click="clickCommentWrite"></el-button>
+                            </el-input>
+
                         </div>
 
                         <div id="post-modal-comment-container">
@@ -100,19 +110,25 @@
             if(this.userLiked) await this.$request.likePost(this.token, this.postAccess, false);
             else await this.$request.likePost(this.token, this.postAccess, true);
 
-            // get data
-            const likeResult = await this.$request.getLike(this.token, this.postAccess);
+            await this.getPostLike();
 
-            if(likeResult.code === 101) { // OK
+        } catch(error) { console.log(error); }
 
-                const result = likeResult.result;
+    }
 
-                this.likeList = result.user;
+    async function clickCommentWrite() {
 
-                // if account user has clicked like
-                this.userLiked = this.likeList.includes(this.accountUserAccess);
+        const commentText = this.commentText;
 
-            }
+        if(commentText === '') return;
+
+        this.commentText = '';
+
+        try {
+
+            await this.$request.writeComment(this.token, this.postAccess, commentText);
+
+            await this.getPostComment();
 
         } catch(error) { console.log(error); }
 
@@ -142,6 +158,14 @@
 
             }
 
+        } catch(error) { console.log(error); }
+
+    }
+
+    async function getPostLike() {
+
+        try {
+
             const likeResult = await this.$request.getLike(this.token, this.postAccess);
 
             if(likeResult.code === 101) { // OK
@@ -154,6 +178,14 @@
                 this.userLiked = this.likeList.includes(this.accountUserAccess);
 
             }
+
+        } catch(error) { console.log(error); }
+
+    }
+
+    async function getPostComment() {
+
+        try {
 
             const commentResult = await this.$request.getComment(this.token, this.postAccess);
 
@@ -208,6 +240,7 @@
                 currentImageIndex: 0,
                 likeList: [],
                 userLiked: false,
+                commentText: '',
                 commentList: []
             }
         },
@@ -224,15 +257,20 @@
 
         mounted() {
             this.getPostData();
+            this.getPostLike();
+            this.getPostComment();
         },
 
         methods: {
             getPostData,
+            getPostLike,
+            getPostComment,
             getProfileImage,
             getImages,
             clickImageShift,
             clickHeader,
-            clickLike
+            clickLike,
+            clickCommentWrite
         },
 
         components: {
@@ -306,6 +344,10 @@
 
     #post-modal-footer {
         color: #253B80;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     #post-modal-comment-container {

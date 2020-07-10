@@ -127,3 +127,18 @@ export const getComment = (token, access) => {
 
     });
 };
+
+export const writeComment = (token, access, comment) => {
+    return new Promise((resolve, reject) => {
+
+        axios.post(config.server + '/post/comment/' + access,
+            {
+                comment: comment
+            }, {
+                headers: {token: token}
+            })
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+
+    });
+};
