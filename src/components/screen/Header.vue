@@ -3,6 +3,13 @@
 
         <a id="header-title" v-on:click="clickHome">ShareSpace</a>
 
+        <el-input class="header-search" placeholder="Search user"
+                  v-model="searchText"
+                  v-on:keydown.native.enter="clickSearch">
+            <el-button slot="append" icon="el-icon-search"
+                       v-on:click="clickSearch"></el-button>
+        </el-input>
+
         <el-dropdown id="header-profile" trigger="click">
 
             <img class="el-dropdown-link" id="header-profile-image"
@@ -30,6 +37,10 @@
 
         const path = '/';
         if(this.$router.currentRoute.path !== path) this.$router.push(path);
+
+    }
+
+    function clickSearch() {
 
     }
 
@@ -64,7 +75,8 @@
     export default {
         data() {
             return {
-                profileImage: profileImage
+                profileImage: profileImage,
+                searchText: ''
             }
         },
 
@@ -79,6 +91,7 @@
 
         methods: {
             clickHome,
+            clickSearch,
             clickProfile,
             getUserData,
             clickLogout
@@ -108,6 +121,11 @@
 
         cursor: pointer;
 
+        margin-left: 30px;
+    }
+
+    .header-search {
+        width: 300px;
         margin-left: 30px;
     }
 
