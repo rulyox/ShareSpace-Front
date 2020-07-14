@@ -55,7 +55,8 @@
                             <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
                             <span style="margin-right: 15px;">{{commentList.length}}</span>
 
-                            <el-input placeholder="Write comment"
+                            <el-input class="post-modal-comment-input"
+                                      placeholder="Write comment"
                                       v-model="commentText"
                                       v-on:keydown.native.enter="clickCommentWrite">
                                 <el-button slot="append" icon="el-icon-edit"
@@ -352,6 +353,10 @@
         align-items: center;
     }
 
+    .post-modal-comment-input {
+        width: 500px;
+    }
+
     #post-modal-comment-container {
         display: none;
 
@@ -366,7 +371,8 @@
         width: 700px;
         margin: 0 auto;
         max-height: 90vh;
-        overflow: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
 
         background-color: #FAFAFA;
         border-radius: 20px;
