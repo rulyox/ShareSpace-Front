@@ -20,6 +20,7 @@
 
 <script>
     import User from '../item/User';
+    import * as request from '../../requests';
 
     async function searchUser() {
 
@@ -27,7 +28,7 @@
 
         try {
 
-            const userList = (await this.$request.searchUser(this.query)).result;
+            const userList = (await request.searchUser(this.query)).result;
             this.addToUserList(userList);
 
         } catch(error) { console.log(error); }

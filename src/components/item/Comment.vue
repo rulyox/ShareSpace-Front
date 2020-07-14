@@ -24,6 +24,8 @@
 
 <script>
     import profileImage from '../../assets/profile.png';
+    import * as request from '../../requests';
+    import * as utility from '../../utility';
 
     function clickUser() {
 
@@ -39,7 +41,7 @@
 
         try {
 
-            const userResult = (await this.$request.getProfile(this.userAccess)).result;
+            const userResult = (await request.getProfile(this.userAccess)).result;
 
             // set profile name
             this.userName = userResult.name;
@@ -56,8 +58,8 @@
 
     async function getProfileImage() {
 
-        const image = await this.$request.getProfileImageFile(this.userAccess);
-        this.userImage = this.$utility.imageToBase64(image);
+        const image = await request.getProfileImageFile(this.userAccess);
+        this.userImage = utility.imageToBase64(image);
 
     }
 

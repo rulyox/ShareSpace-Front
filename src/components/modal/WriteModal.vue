@@ -45,6 +45,9 @@
 </template>
 
 <script>
+    import * as request from '../../requests';
+    import * as utility from '../../utility';
+
     function clickUpload() {
 
         document.getElementById('input-image').click()
@@ -60,7 +63,7 @@
             this.imageList.push(imageFile);
 
             // add to preview
-            const imageBase64 = await this.$utility.fileToBase64(imageFile);
+            const imageBase64 = await utility.fileToBase64(imageFile);
             this.imagePreviewList.push(imageBase64);
 
         } catch(error) { console.log(error); }
@@ -71,7 +74,7 @@
 
         try {
 
-            await this.$request.writePost(this.token, this.text, this.imageList);
+            await request.writePost(this.token, this.text, this.imageList);
 
             // close modal
             this.$emit('close');

@@ -39,6 +39,8 @@
 
 <script>
     import PostModal from '../modal/PostModal';
+    import * as request from '../../requests';
+    import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
     async function getPostData() {
@@ -48,7 +50,7 @@
 
         try {
 
-            const postDataResult = await this.$request.getPostPreview(this.token, this.postAccess);
+            const postDataResult = await request.getPostPreview(this.token, this.postAccess);
 
             if(postDataResult.code === 101) { // OK
 
@@ -71,7 +73,7 @@
 
             }
 
-            const likeResult = await this.$request.getLike(this.token, this.postAccess);
+            const likeResult = await request.getLike(this.token, this.postAccess);
 
             if(likeResult.code === 101) { // OK
 
@@ -81,7 +83,7 @@
 
             }
 
-            const commentResult = await this.$request.getComment(this.token, this.postAccess);
+            const commentResult = await request.getComment(this.token, this.postAccess);
 
             if(commentResult.code === 101) { // OK
 
@@ -97,15 +99,15 @@
 
     async function getProfileImage() {
 
-        const image = await this.$request.getProfileImageFile(this.userAccess);
-        this.userImage = this.$utility.imageToBase64(image);
+        const image = await request.getProfileImageFile(this.userAccess);
+        this.userImage = utility.imageToBase64(image);
 
     }
 
     async function getImage(imageName) {
 
-        const imageFile = await this.$request.getImageFile(this.token, this.postAccess, imageName);
-        this.image = this.$utility.imageToBase64(imageFile);
+        const imageFile = await request.getImageFile(this.token, this.postAccess, imageName);
+        this.image = utility.imageToBase64(imageFile);
 
         // show image element
         this.imageElement.style.display = 'block';

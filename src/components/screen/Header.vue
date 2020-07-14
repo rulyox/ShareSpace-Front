@@ -31,6 +31,8 @@
 </template>
 
 <script>
+    import * as request from '../../requests';
+    import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
     function clickHome() {
@@ -68,8 +70,8 @@
         try {
 
             // get profile image
-            const image = await this.$request.getProfileImageFile(this.userAccess);
-            this.profileImage = this.$utility.imageToBase64(image);
+            const image = await request.getProfileImageFile(this.userAccess);
+            this.profileImage = utility.imageToBase64(image);
 
         } catch(error) { console.log(error); }
 

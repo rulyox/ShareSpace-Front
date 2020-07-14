@@ -53,13 +53,15 @@
     import Post from '../item/Post';
     import WriteModal from '../modal/WriteModal';
     import FollowModal from '../modal/FollowModal';
+    import * as request from '../../requests';
+    import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
     async function getProfileInfo() {
 
         try {
 
-            const profileResult = (await this.$request.getProfile(this.profileAccess)).result;
+            const profileResult = (await request.getProfile(this.profileAccess)).result;
 
             // set profile name
             this.profileName = profileResult.name;
@@ -68,11 +70,11 @@
             if(profileResult.image !== null) await this.getProfileImage();
 
             //get following list
-            const followingResult = (await this.$request.getFollowing(this.profileAccess)).result;
+            const followingResult = (await request.getFollowing(this.profileAccess)).result;
             this.followingList = followingResult.user;
 
             //get follower list
-            const followerResult = (await this.$request.getFollower(this.profileAccess)).result;
+            const followerResult = (await request.getFollower(this.profileAccess)).result;
             this.followerList = followerResult.user;
 
         } catch(error) { console.log(error); }
@@ -81,8 +83,8 @@
 
     async function getProfileImage() {
 
-        const image = await this.$request.getProfileImageFile(this.profileAccess);
-        this.profileImage = this.$utility.imageToBase64(image);
+        const image = await request.getProfileImageFile(this.profileAccess);
+        this.profileImage = utility.imageToBase64(image);
 
     }
 
@@ -97,7 +99,7 @@
 
         try {
 
-            const postResult = await this.$request.getPostByUser(this.token, this.profileAccess, this.postNumber);
+            const postResult = await request.getPostByUser(this.token, this.profileAccess, this.postNumber);
 
             if(postResult.code === 101) { // OK
 

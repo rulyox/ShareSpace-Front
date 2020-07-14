@@ -86,6 +86,8 @@
 
 <script>
     import Comment from '../item/Comment';
+    import * as request from '../../requests';
+    import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
     function clickImageShift(move) {
@@ -107,8 +109,8 @@
 
         try {
 
-            if(this.userLiked) await this.$request.likePost(this.token, this.postAccess, false);
-            else await this.$request.likePost(this.token, this.postAccess, true);
+            if(this.userLiked) await request.likePost(this.token, this.postAccess, false);
+            else await request.likePost(this.token, this.postAccess, true);
 
             await this.getPostLike();
 
@@ -126,7 +128,7 @@
 
         try {
 
-            await this.$request.writeComment(this.token, this.postAccess, commentText);
+            await request.writeComment(this.token, this.postAccess, commentText);
 
             await this.getPostComment();
 
@@ -138,7 +140,7 @@
 
         try {
 
-            const postDataResult = await this.$request.getPostData(this.token, this.postAccess);
+            const postDataResult = await request.getPostData(this.token, this.postAccess);
 
             if(postDataResult.code === 101) { // OK
 
@@ -166,7 +168,7 @@
 
         try {
 
-            const likeResult = await this.$request.getLike(this.token, this.postAccess);
+            const likeResult = await request.getLike(this.token, this.postAccess);
 
             if(likeResult.code === 101) { // OK
 
@@ -187,7 +189,7 @@
 
         try {
 
-            const commentResult = await this.$request.getComment(this.token, this.postAccess);
+            const commentResult = await request.getComment(this.token, this.postAccess);
 
             if(commentResult.code === 101) { // OK
 
@@ -205,8 +207,8 @@
 
     async function getProfileImage() {
 
-        const image = await this.$request.getProfileImageFile(this.userAccess);
-        this.userImage = this.$utility.imageToBase64(image);
+        const image = await request.getProfileImageFile(this.userAccess);
+        this.userImage = utility.imageToBase64(image);
 
     }
 
@@ -215,8 +217,8 @@
         for(let i = 0; i < imageList.length; i++) {
 
             // save base64 image to list
-            const image = await this.$request.getImageFile(this.token, this.postAccess, imageList[i]);
-            this.imageList.push(this.$utility.imageToBase64(image));
+            const image = await request.getImageFile(this.token, this.postAccess, imageList[i]);
+            this.imageList.push(utility.imageToBase64(image));
 
         }
 

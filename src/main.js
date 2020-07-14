@@ -4,12 +4,8 @@ import './theme/index.css';
 import App from './App';
 import router from './router';
 import store from './store';
-import * as request from './requests';
-import * as utility from './utility';
 
 Vue.use(ElementUI);
-Vue.prototype.$request = request;
-Vue.prototype.$utility = utility;
 Vue.config.productionTip = false;
 
 new Vue({

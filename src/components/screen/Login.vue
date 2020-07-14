@@ -27,6 +27,8 @@
 </template>
 
 <script>
+    import * as request from '../../requests';
+
     async function clickLogin() {
 
         if(this.email === '' || this.password === '') {
@@ -36,7 +38,7 @@
 
         try {
 
-            const tokenResult = await this.$request.getToken(this.email, this.password);
+            const tokenResult = await request.getToken(this.email, this.password);
 
             if(tokenResult.code === 101) { // OK
 
