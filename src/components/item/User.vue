@@ -34,8 +34,9 @@
             // set profile name
             this.userName = userResult.name;
 
-            // show element
-            this.element.style.display = 'flex';
+            // loading done
+            this.element.style.display = 'flex'; // show element
+            this.$store.commit('decreaseUserLoadingNumber');
 
             // get profile image
             if(userResult.image !== null) await this.getProfileImage();

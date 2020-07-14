@@ -42,6 +42,9 @@
 
     function clickSearch() {
 
+        const path = '/search/' + this.searchText;
+        if(this.$router.currentRoute.path !== path) this.$router.push(path);
+
     }
 
     function clickProfile() {

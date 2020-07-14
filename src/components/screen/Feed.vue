@@ -23,8 +23,7 @@
 
     async function getFeed() {
 
-        // reset loadingPostNumber
-        this.$store.commit('resetLoadingNumber');
+        this.$store.commit('resetPostLoadingNumber');
 
         this.isGettingPost = true;
 
@@ -53,7 +52,7 @@
 
         for(const post of postList) {
 
-            this.$store.commit('increaseLoadingNumber'); // increase loadingPostNumber
+            this.$store.commit('increasePostLoadingNumber');
             this.postList.push(post);
 
         }
@@ -84,7 +83,7 @@
         computed: {
             token() { return this.$store.getters.token; },
             postListElement() { return document.getElementById('feed-post-list-container'); },
-            isLoadingPost() { return (this.$store.getters.loadingPostNumber > 0); }
+            isLoadingPost() { return (this.$store.getters.postLoadingNumber > 0); }
         },
 
         mounted() {

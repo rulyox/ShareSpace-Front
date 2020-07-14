@@ -7,16 +7,21 @@ const store = new Vuex.Store({
 
     state: {
         token: null,
+
         userAccess: null,
         userEmail: null,
         userName: null,
-        loadingPostNumber: 0
+
+        postLoadingNumber: 0,
+
+        userLoadingNumber: 0
     },
 
     getters: {
         token: state => {
             return state.token;
         },
+
         userData: state => {
             return {
                 access: state.userAccess,
@@ -24,8 +29,13 @@ const store = new Vuex.Store({
                 name: state.userName
             };
         },
-        loadingPostNumber: state => {
-            return state.loadingPostNumber;
+
+        postLoadingNumber: state => {
+            return state.postLoadingNumber;
+        },
+
+        userLoadingNumber: state => {
+            return state.userLoadingNumber;
         }
     },
 
@@ -36,6 +46,7 @@ const store = new Vuex.Store({
         deleteToken(state) {
             state.token = null;
         },
+
         setAccess(state, access) {
             state.userAccess = access;
         },
@@ -54,14 +65,25 @@ const store = new Vuex.Store({
         deleteName(state) {
             state.userName = null;
         },
-        increaseLoadingNumber(state) {
-            state.loadingPostNumber += 1;
+
+        increasePostLoadingNumber(state) {
+            state.postLoadingNumber += 1;
         },
-        decreaseLoadingNumber(state) {
-            state.loadingPostNumber -= 1;
+        decreasePostLoadingNumber(state) {
+            state.postLoadingNumber -= 1;
         },
-        resetLoadingNumber(state) {
-            state.loadingPostNumber = 0;
+        resetPostLoadingNumber(state) {
+            state.postLoadingNumber = 0;
+        },
+
+        increaseUserLoadingNumber(state) {
+            state.userLoadingNumber += 1;
+        },
+        decreaseUserLoadingNumber(state) {
+            state.userLoadingNumber -= 1;
+        },
+        resetUserLoadingNumber(state) {
+            state.userLoadingNumber = 0;
         }
     },
 

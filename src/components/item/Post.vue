@@ -60,7 +60,7 @@
 
                 // loading done
                 this.element.style.display = 'block'; // show element
-                this.$store.commit('decreaseLoadingNumber'); // decrease loadingPostNumber
+                this.$store.commit('decreasePostLoadingNumber');
 
                 // get profile image
                 if(result.profile !== null) await this.getProfileImage();

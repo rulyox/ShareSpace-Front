@@ -50,3 +50,13 @@ export const getProfileImageFile = (access) => {
 
     });
 };
+
+export const searchUser = (query) => {
+    return new Promise((resolve, reject) => {
+
+        axios.get(config.server + '/user/search/' + query)
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+
+    });
+};
