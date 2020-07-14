@@ -46,6 +46,15 @@
 
     }
 
+    function reset() {
+
+        // reset all data
+        Object.assign(this.$data, this.$options.data());
+
+        this.searchUser();
+
+    }
+
     export default {
         props: {
             query: String
@@ -66,11 +75,13 @@
         },
 
         watch: {
+            query() { this.reset(); }
         },
 
         methods: {
             searchUser,
-            addToUserList
+            addToUserList,
+            reset
         },
 
         components: {
