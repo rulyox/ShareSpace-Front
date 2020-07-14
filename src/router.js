@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import LoginComponent from './components/screen/Login';
-import HomeComponent from './components/screen/Home';
-import FeedComponent from './components/screen/Feed';
-import ProfileComponent from './components/screen/Profile';
+import Login from './components/screen/Login';
+import Home from './components/screen/Home';
+import Feed from './components/screen/Feed';
+import Profile from './components/screen/Profile';
+import Search from './components/screen/Search';
 import * as request from './requests';
 import store from './store';
 
@@ -15,19 +16,28 @@ const router = new VueRouter({
         {
             path: '/',
             components: {
-                'appContent': HomeComponent
+                'appContent': Home
             },
             children: [
                 {
                     path: '/',
                     components: {
-                        'homeContent': FeedComponent
+                        'homeContent': Feed
                     },
                 },
                 {
                     path: '/profile/:profileAccess',
                     components: {
-                        'homeContent': ProfileComponent
+                        'homeContent': Profile
+                    },
+                    props: {
+                        'homeContent': true
+                    }
+                },
+                {
+                    path: '/search/:query',
+                    components: {
+                        'homeContent': Search
                     },
                     props: {
                         'homeContent': true
@@ -38,7 +48,7 @@ const router = new VueRouter({
         {
             path: '/login',
             components: {
-                'appContent': LoginComponent
+                'appContent': Login
             }
         }
     ]
