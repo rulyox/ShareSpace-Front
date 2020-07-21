@@ -61,21 +61,41 @@
 
         try {
 
-            const profileResult = (await request.getProfile(this.profileAccess)).result;
+            const getProfile = await request.getProfile(this.profileAccess);
 
-            // set profile name
-            this.profileName = profileResult.name;
+            if(getProfile.code === 101) {
 
-            // get profile image
-            if(profileResult.image !== null) await this.getProfileImage();
+                const result = getProfile.result;
+
+                // set profile name
+                this.profileName = result.name;
+
+                // get profile image
+                if(result.image !== null) await this.getProfileImage();
+
+            } else console.log(getProfile);
 
             //get following list
-            const followingResult = (await request.getFollowing(this.profileAccess)).result;
-            this.followingList = followingResult.user;
+            const getFollowing = await request.getFollowing(this.profileAccess);
+
+            if(getFollowing.code === 101) {
+
+                const result = getFollowing.result;
+
+                this.followingList = result.user;
+
+            } else console.log(getFollowing);
 
             //get follower list
-            const followerResult = (await request.getFollower(this.profileAccess)).result;
-            this.followerList = followerResult.user;
+            const getFollower = await request.getFollower(this.profileAccess);
+
+            if(getFollower.code === 101) {
+
+                const result = getFollower.result;
+
+                this.followerList = result.user;
+
+            } else console.log(getFollower);
 
         } catch(error) { console.log(error); }
 
@@ -99,11 +119,11 @@
 
         try {
 
-            const postResult = await request.getPostByUser(this.token, this.profileAccess, this.postNumber);
+            const getPostByUser = await request.getPostByUser(this.token, this.profileAccess, this.postNumber);
 
-            if(postResult.code === 101) { // OK
+            if(getPostByUser.code === 101) {
 
-                const result = postResult.result;
+                const result = getPostByUser.result;
 
                 this.postTotal = result.total;
                 this.postNumber += result.list.length;
@@ -111,7 +131,7 @@
                 // post loading start
                 this.addToPostList(result.list);
 
-            }
+            } else console.log(getPostByUser);
 
         } catch(error) { console.log(error); }
 

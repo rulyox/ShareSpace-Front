@@ -38,11 +38,11 @@
 
         try {
 
-            const tokenResult = await request.getToken(this.email, this.password);
+            const getToken = await request.getToken(this.email, this.password);
 
-            if(tokenResult.code === 101) { // OK
+            if(getToken.code === 101) {
 
-                const result = tokenResult.result;
+                const result = getToken.result;
 
                 // save token
                 const token = result.token;
@@ -51,8 +51,9 @@
                 // go to home
                 await this.$router.push('/');
 
-            } else if(tokenResult.code === 201) alert('Login failed. Wrong email.');
-            else if(tokenResult.code === 202) alert('Login failed. Wrong password.');
+            } else if(getToken.code === 201) alert('Login failed. Wrong email.');
+            else if(getToken.code === 202) alert('Login failed. Wrong password.');
+            else console.log(getToken);
 
         } catch(error) { console.log(error); }
 

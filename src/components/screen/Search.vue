@@ -28,8 +28,15 @@
 
         try {
 
-            const userList = (await request.searchUser(this.query)).result;
-            this.addToUserList(userList);
+            const searchUser = await request.searchUser(this.query);
+
+            if(searchUser.code === 101) {
+
+                const result = searchUser.result;
+
+                this.addToUserList(result);
+
+            } else console.log(searchUser);
 
         } catch(error) { console.log(error); }
 

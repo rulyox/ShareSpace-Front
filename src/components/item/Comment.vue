@@ -41,16 +41,22 @@
 
         try {
 
-            const userResult = (await request.getProfile(this.userAccess)).result;
+            const getProfile = await request.getProfile(this.userAccess);
 
-            // set profile name
-            this.userName = userResult.name;
+            if(getProfile.code === 101) {
 
-            // show element
-            this.element.style.display = 'flex';
+                const result = getProfile.result;
 
-            // get profile image
-            if(userResult.image !== null) await this.getProfileImage();
+                // set profile name
+                this.userName = result.name;
+
+                // show element
+                this.element.style.display = 'flex';
+
+                // get profile image
+                if(result.image !== null) await this.getProfileImage();
+
+            } else console.log(getProfile);
 
         } catch(error) { console.log(error); }
 

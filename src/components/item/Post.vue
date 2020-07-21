@@ -50,11 +50,11 @@
 
         try {
 
-            const postDataResult = await request.getPostPreview(this.token, this.postAccess);
+            const getPostPreview = await request.getPostPreview(this.token, this.postAccess);
 
-            if(postDataResult.code === 101) { // OK
+            if(getPostPreview.code === 101) {
 
-                const result = postDataResult.result;
+                const result = getPostPreview.result;
 
                 this.userAccess = result.user;
                 this.userName = result.name;
@@ -71,27 +71,27 @@
                 const image = result.image;
                 if(image !== null) await this.getImage(image);
 
-            }
+            } else console.log(getPostPreview);
 
-            const likeResult = await request.getLike(this.token, this.postAccess);
+            const getLike = await request.getLike(this.token, this.postAccess);
 
-            if(likeResult.code === 101) { // OK
+            if(getLike.code === 101) {
 
-                const result = likeResult.result;
+                const result = getLike.result;
 
                 this.likeList = result.user;
 
-            }
+            } else console.log(getLike);
 
-            const commentResult = await request.getComment(this.token, this.postAccess);
+            const getComment = await request.getComment(this.token, this.postAccess);
 
-            if(commentResult.code === 101) { // OK
+            if(getComment.code === 101) {
 
-                const result = commentResult.result;
+                const result = getComment.result;
 
                 this.commentList = result.comment;
 
-            }
+            } else console.log(getComment);
 
         } catch(error) { console.log(error); }
 
@@ -106,8 +106,8 @@
 
     async function getImage(imageName) {
 
-        const imageFile = await request.getImageFile(this.token, this.postAccess, imageName);
-        this.image = utility.imageToBase64(imageFile);
+        const image = await request.getImageFile(this.token, this.postAccess, imageName);
+        this.image = utility.imageToBase64(image);
 
         // show image element
         this.imageElement.style.display = 'block';

@@ -31,17 +31,23 @@
 
         try {
 
-            const userResult = (await request.getProfile(this.userAccess)).result;
+            const getProfile = await request.getProfile(this.userAccess);
 
-            // set profile name
-            this.userName = userResult.name;
+            if(getProfile.code === 101) {
 
-            // loading done
-            this.element.style.display = 'flex'; // show element
-            this.$store.commit('decreaseUserLoadingNumber');
+                const result = getProfile.result;
 
-            // get profile image
-            if(userResult.image !== null) await this.getProfileImage();
+                // set profile name
+                this.userName = result.name;
+
+                // loading done
+                this.element.style.display = 'flex'; // show element
+                this.$store.commit('decreaseUserLoadingNumber');
+
+                // get profile image
+                if(result.image !== null) await this.getProfileImage();
+
+            } else console.log(getProfile);
 
         } catch(error) { console.log(error); }
 

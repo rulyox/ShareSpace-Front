@@ -30,18 +30,18 @@
 
         try {
 
-            const feedResult = await request.getFeed(this.token, this.postNumber);
+            const getFeed = await request.getFeed(this.token, this.postNumber);
 
-            if(feedResult.code === 101) {
+            if(getFeed.code === 101) {
 
-                const result = feedResult.result;
+                const result = getFeed.result;
 
                 this.postNumber += result.post.length;
 
                 // post loading start
                 this.addToPostList(result.post);
 
-            }
+            } else console.log(getFeed);
 
         } catch(error) { console.log(error); }
 

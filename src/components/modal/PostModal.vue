@@ -141,11 +141,11 @@
 
         try {
 
-            const postDataResult = await request.getPostData(this.token, this.postAccess);
+            const getPostData = await request.getPostData(this.token, this.postAccess);
 
-            if(postDataResult.code === 101) { // OK
+            if(getPostData.code === 101) {
 
-                const result = postDataResult.result;
+                const result = getPostData.result;
 
                 this.userAccess = result.user;
                 this.userName = result.name;
@@ -159,7 +159,7 @@
                 const imageList = result.image;
                 await this.getImages(imageList);
 
-            }
+            } else console.log(getPostData);
 
         } catch(error) { console.log(error); }
 
@@ -169,18 +169,18 @@
 
         try {
 
-            const likeResult = await request.getLike(this.token, this.postAccess);
+            const getLike = await request.getLike(this.token, this.postAccess);
 
-            if(likeResult.code === 101) { // OK
+            if(getLike.code === 101) {
 
-                const result = likeResult.result;
+                const result = getLike.result;
 
                 this.likeList = result.user;
 
                 // if account user has clicked like
                 this.userLiked = this.likeList.includes(this.accountUserAccess);
 
-            }
+            } else console.log(getLike);
 
         } catch(error) { console.log(error); }
 
@@ -190,17 +190,17 @@
 
         try {
 
-            const commentResult = await request.getComment(this.token, this.postAccess);
+            const getComment = await request.getComment(this.token, this.postAccess);
 
-            if(commentResult.code === 101) { // OK
+            if(getComment.code === 101) {
 
-                const result = commentResult.result;
+                const result = getComment.result;
 
                 this.commentList = result.comment;
 
                 if(this.commentList.length > 0) this.commentElement.style.display = 'block';
 
-            }
+            } else console.log(getComment);
 
         } catch(error) { console.log(error); }
 
