@@ -1,6 +1,8 @@
 import axios from 'axios';
 import config from '../config.json';
 
+const server = config.server;
+
 export const writePost = (token, text, imageList) => {
     return new Promise((resolve, reject) => {
 
@@ -8,7 +10,7 @@ export const writePost = (token, text, imageList) => {
         formData.append('text', text);
         for(let i = 0; i < imageList.length; i++) formData.append('file_' + i, imageList[i]);
 
-        axios.post(config.server + '/post', formData,
+        axios.post(server + '/post', formData,
             {
                 headers: {
                     token: token,
@@ -24,7 +26,7 @@ export const writePost = (token, text, imageList) => {
 export const getPostByUser = (token, user, start) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/post/user/' + user + '?start=' + start + '&count=10',
+        axios.get(server + '/post/user/' + user + '?start=' + start + '&count=10',
             {
                 headers: {token: token}
             })
@@ -37,7 +39,7 @@ export const getPostByUser = (token, user, start) => {
 export const getPostData = (token, access) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/post/data/' + access,
+        axios.get(server + '/post/data/' + access,
             {
                 headers: {token: token}
             })
@@ -50,7 +52,7 @@ export const getPostData = (token, access) => {
 export const getPostPreview = (token, access) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/post/preview/' + access,
+        axios.get(server + '/post/preview/' + access,
             {
                 headers: {token: token}
             })
@@ -63,7 +65,7 @@ export const getPostPreview = (token, access) => {
 export const getImageFile = (token, post, image) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/post/image/' + post + '/' + image,
+        axios.get(server + '/post/image/' + post + '/' + image,
             {
                 responseType: 'arraybuffer',
                 headers: {token: token}
@@ -77,7 +79,7 @@ export const getImageFile = (token, post, image) => {
 export const getFeed = (token, start) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/post/feed?start=' + start + '&count=10',
+        axios.get(server + '/post/feed?start=' + start + '&count=10',
             {
                 headers: {token: token}
             })
@@ -90,7 +92,7 @@ export const getFeed = (token, start) => {
 export const getLike = (token, access) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/post/like/' + access,
+        axios.get(server + '/post/like/' + access,
             {
                 headers: {token: token}
             })
@@ -103,7 +105,7 @@ export const getLike = (token, access) => {
 export const likePost = (token, access, type) => {
     return new Promise((resolve, reject) => {
 
-        axios.post(config.server + '/post/like/' + access,
+        axios.post(server + '/post/like/' + access,
             {
                 type: type
             }, {
@@ -118,7 +120,7 @@ export const likePost = (token, access, type) => {
 export const getComment = (token, access) => {
     return new Promise((resolve, reject) => {
 
-        axios.get(config.server + '/post/comment/' + access,
+        axios.get(server + '/post/comment/' + access,
             {
                 headers: {token: token}
             })
@@ -131,7 +133,7 @@ export const getComment = (token, access) => {
 export const writeComment = (token, access, comment) => {
     return new Promise((resolve, reject) => {
 
-        axios.post(config.server + '/post/comment/' + access,
+        axios.post(server + '/post/comment/' + access,
             {
                 comment: comment
             }, {

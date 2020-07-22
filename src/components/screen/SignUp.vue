@@ -1,23 +1,28 @@
 <template>
-    <div class="login-container">
+    <div class="signup-container">
 
-        <div class="login-dialog">
+        <div class="signup-dialog">
 
-            <a class="dialog-title">ShareSpace</a>
+            <a class="dialog-title">Sign Up</a>
+
+            <el-input class="dialog-input"
+                      placeholder="Enter name"
+                      v-model="name"
+                      v-on:keydown.native.enter="clickSignUp" />
 
             <el-input class="dialog-input"
                       placeholder="Enter email"
                       v-model="email"
-                      v-on:keydown.native.enter="clickLogin" />
+                      v-on:keydown.native.enter="clickSignUp" />
 
             <el-input class="dialog-input"
                       placeholder="Enter password"
                       v-model="password"
                       show-password
-                      v-on:keydown.native.enter="clickLogin" />
+                      v-on:keydown.native.enter="clickSignUp" />
 
             <div class="dialog-button">
-                <el-button v-on:click.prevent="clickLogin">Login</el-button>
+                <el-button v-on:click.prevent="clickBack">Back To Login</el-button>
                 <el-button v-on:click.prevent="clickSignUp">Sign Up</el-button>
             </div>
 
@@ -29,60 +34,54 @@
 <script>
     import * as request from '../../requests';
 
-    async function clickLogin() {
+    function clickBack() {
 
-        if(this.email === '' || this.password === '') {
-            alert('Empty email or password!');
+        const path = '/login';
+        if(this.$router.currentRoute.path !== path) this.$router.push(path);
+
+    }
+
+    async function clickSignUp() {
+
+        if(this.name === '' || this.email === '' || this.password === '') {
+            alert('Empty name or email or password!');
             return;
         }
 
         try {
 
-            const getToken = await request.getToken(this.email, this.password);
+            const signUp = await request.signUp(this.name, this.email, this.password);
 
-            if(getToken.code === 101) {
-
-                const result = getToken.result;
-
-                // save token
-                const token = result.token;
-                localStorage.setItem('token', token);
+            if(signUp.code === 101) {
 
                 // go to home
                 await this.$router.push('/');
 
-            } else if(getToken.code === 201) alert('Login failed. Wrong email.');
-            else if(getToken.code === 202) alert('Login failed. Wrong password.');
-            else console.log(getToken);
+            } else if(signUp.code === 201) alert('Sign Up failed. Email exists.');
+            else console.log(signUp);
 
         } catch(error) { console.log(error); }
-
-    }
-
-    function clickSignUp() {
-
-        const path = '/signup';
-        if(this.$router.currentRoute.path !== path) this.$router.push(path);
 
     }
 
     export default {
         data() {
             return {
+                name: '',
                 email: '',
                 password: ''
             };
         },
 
         methods: {
-            clickLogin,
+            clickBack,
             clickSignUp
         }
     };
 </script>
 
 <style scoped>
-    .login-container {
+    .signup-container {
         height: 100%;
         width: 100%;
         background-color: #FAFAFA;
@@ -93,9 +92,9 @@
         justify-content: center;
     }
 
-    .login-dialog {
+    .signup-dialog {
         width: 500px;
-        height: 350px;
+        height: 400px;
         background-color: #253B80;
         border-radius: 30px;
 

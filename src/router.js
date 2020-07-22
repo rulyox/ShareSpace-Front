@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from './components/screen/Login';
+import SignUp from './components/screen/SignUp';
 import Home from './components/screen/Home';
 import Feed from './components/screen/Feed';
 import Profile from './components/screen/Profile';
@@ -50,6 +51,12 @@ const router = new VueRouter({
             components: {
                 'appContent': Login
             }
+        },
+        {
+            path: '/signup',
+            components: {
+                'appContent': SignUp
+            }
         }
     ]
 });
@@ -61,7 +68,7 @@ router.beforeEach(async (to, from, next) => {
 
     if(token === undefined || token === null) { // no token
 
-        if(to.path === '/login') next();
+        if(to.path === '/login' || to.path === '/signup') next();
         else next( {path: '/login'} );
 
     } else {
@@ -80,7 +87,7 @@ router.beforeEach(async (to, from, next) => {
                 name: result.name
             });
 
-            if(to.path === '/login') next( {path: '/'} );
+            if(to.path === '/login' || to.path === '/signup') next( {path: '/'} );
             else next();
 
         } catch(error) {
