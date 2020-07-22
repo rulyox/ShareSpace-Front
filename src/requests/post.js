@@ -89,6 +89,19 @@ export const getFeed = (token, start) => {
     });
 };
 
+export const deletePost = (token, access) => {
+    return new Promise((resolve, reject) => {
+
+        axios.delete(server + '/post/' + access,
+            {
+                headers: {token: token}
+            })
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+
+    });
+};
+
 export const getLike = (token, access) => {
     return new Promise((resolve, reject) => {
 

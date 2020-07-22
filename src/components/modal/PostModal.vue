@@ -9,14 +9,18 @@
 
                     <div id="post-modal-content">
 
-                        <div id="post-modal-header"
-                             v-on:click="clickHeader">
+                        <div id="post-modal-header">
 
                             <img id="post-modal-user"
                                  v-bind:src="userImage"
-                                 alt="user image">
+                                 alt="user image"
+                                 v-on:click="clickHeader">
 
-                            <span>{{userName}}</span>
+                            <span v-on:click="clickHeader">{{userName}}</span>
+
+                            <i id="post-modal-delete" class="el-icon-delete-solid"
+                                v-if="userAccess === accountUserAccess"
+                                v-on:click="clickDelete"></i>
 
                         </div>
 
@@ -132,6 +136,22 @@
             await request.writeComment(this.token, this.postAccess, commentText);
 
             await this.getPostComment();
+
+        } catch(error) { console.log(error); }
+
+    }
+
+    async function clickDelete() {
+
+        try {
+
+            const deletePost = await request.deletePost(this.token, this.postAccess);
+
+            if(deletePost.code === 101) {
+
+                this.$emit('close');
+
+            } else console.log(deletePost);
 
         } catch(error) { console.log(error); }
 
@@ -273,7 +293,8 @@
             clickImageShift,
             clickHeader,
             clickLike,
-            clickCommentWrite
+            clickCommentWrite,
+            clickDelete
         },
 
         components: {
@@ -315,6 +336,11 @@
         border-radius: 20px;
         margin-right: 15px;
         background-color: black;
+    }
+
+    #post-modal-delete {
+        font-size: 20px;
+        margin-left: auto;
     }
 
     #post-modal-image-container {
