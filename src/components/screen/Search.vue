@@ -7,9 +7,9 @@
 
                 <User v-for="user in this.userList"
                       v-bind:key="user"
-                      v-bind:userAccess="user"></User>
+                      v-bind:userAccess="user" />
 
-                <div v-if="isLoadingUser" class="loading-indicator"></div>
+                <div v-if="isLoadingUser" class="loading-indicator" />
 
             </div>
 

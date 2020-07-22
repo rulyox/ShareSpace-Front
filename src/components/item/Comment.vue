@@ -17,7 +17,7 @@
 
         <span>{{commentText}}</span>
 
-        <div class="comment-divider"></div>
+        <div class="comment-divider" />
 
     </div>
 </template>

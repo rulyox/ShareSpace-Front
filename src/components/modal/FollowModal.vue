@@ -5,13 +5,13 @@
                 <div class="modal-container">
 
                     <i id="follow-modal-close" class="el-icon-close"
-                       v-on:click="$emit('close')"></i>
+                       v-on:click="$emit('close')" />
 
                     <div id="follow-modal-content">
 
                         <User v-for="user in this.list"
                               v-bind:key="user"
-                              v-bind:userAccess="user"></User>
+                              v-bind:userAccess="user" />
 
                     </div>
 

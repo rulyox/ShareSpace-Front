@@ -20,7 +20,7 @@
 
                             <i id="post-modal-delete" class="el-icon-delete-solid"
                                 v-if="userAccess === accountUserAccess"
-                                v-on:click="clickDelete"></i>
+                                v-on:click="clickDelete" />
 
                         </div>
 
@@ -34,14 +34,12 @@
                                 <el-button id="post-modal-image-shift-left"
                                            icon="el-icon-arrow-left" circle
                                            v-bind:disabled="currentImageIndex <= 0"
-                                           v-on:click="clickImageShift(-1)"
-                                ></el-button>
+                                           v-on:click="clickImageShift(-1)" />
                                 <span id="post-modal-image-counter">{{currentImageIndex + 1}} / {{imageList.length}}</span>
                                 <el-button id="post-modal-image-shift-right"
                                            icon="el-icon-arrow-right" circle
                                            v-bind:disabled="currentImageIndex >= imageList.length-1"
-                                           v-on:click="clickImageShift(1)"
-                                ></el-button>
+                                           v-on:click="clickImageShift(1)" />
                             </div>
 
                         </div>
@@ -64,7 +62,7 @@
                                       v-model="commentText"
                                       v-on:keydown.native.enter="clickCommentWrite">
                                 <el-button slot="append" icon="el-icon-edit"
-                                           v-on:click="clickCommentWrite"></el-button>
+                                           v-on:click="clickCommentWrite" />
                             </el-input>
 
                         </div>
@@ -76,8 +74,7 @@
                                      v-bind:commentId="comment.id"
                                      v-bind:userAccess="comment.user"
                                      v-bind:commentText="comment.comment"
-                                     v-bind:commentTime="comment.time"
-                            ></Comment>
+                                     v-bind:commentTime="comment.time" />
 
                         </div>
 

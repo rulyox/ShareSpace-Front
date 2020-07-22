@@ -22,9 +22,9 @@
             <div class="post-content" v-html="showText"></div>
 
             <div class="post-footer">
-                <i class="el-icon-star-off" style="margin-right: 5px;"></i>
+                <i class="el-icon-star-off" style="margin-right: 5px;" />
                 <span style="margin-right: 15px;">{{likeList.length}}</span>
-                <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
+                <i class="el-icon-chat-line-square" style="margin-right: 5px;" />
                 <span>{{commentList.length}}</span>
             </div>
 

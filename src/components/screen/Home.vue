@@ -1,10 +1,10 @@
 <template>
     <div class="home-container">
 
-        <Header></Header>
+        <Header />
 
         <div class="content">
-            <router-view name="homeContent"></router-view>
+            <router-view name="homeContent" />
         </div>
 
     </div>

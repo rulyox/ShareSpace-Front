@@ -11,13 +11,15 @@
 
             <el-button class="profile-info-follow-button"
                        type="primary"
-                       v-on:click="[showFollowModal = true, followModalList = followingList]"
-            >Following {{followingList.length}}</el-button>
+                       v-on:click="[showFollowModal = true, followModalList = followingList]">
+                Following {{followingList.length}}
+            </el-button>
 
             <el-button class="profile-info-follow-button"
                        type="primary"
-                       v-on:click="[showFollowModal = true, followModalList = followerList]"
-            >Followers {{followerList.length}}</el-button>
+                       v-on:click="[showFollowModal = true, followModalList = followerList]">
+                Followers {{followerList.length}}
+            </el-button>
 
         </div>
 
@@ -27,17 +29,18 @@
 
                 <Post v-for="post in this.postList"
                       v-bind:key="post"
-                      v-bind:postAccess="post"></Post>
+                      v-bind:postAccess="post" />
 
-                <div v-if="isLoadingPost" class="loading-indicator"></div>
+                <div v-if="isLoadingPost" class="loading-indicator" />
 
             </div>
 
         </div>
 
         <a id="add-button"
-           v-on:click="showWriteModal = true"
-        ><i class="el-icon-plus"></i></a>
+           v-on:click="showWriteModal = true">
+            <i class="el-icon-plus" />
+        </a>
 
         <WriteModal v-if="showWriteModal"
                     v-on:close="[showWriteModal = false, getPosts()]" />

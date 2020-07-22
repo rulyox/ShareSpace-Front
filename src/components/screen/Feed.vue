@@ -7,9 +7,9 @@
 
                 <Post v-for="post in this.postList"
                       v-bind:key="post"
-                      v-bind:postAccess="post"></Post>
+                      v-bind:postAccess="post" />
 
-                <div v-if="isLoadingPost" class="loading-indicator"></div>
+                <div v-if="isLoadingPost" class="loading-indicator" />
 
             </div>
 

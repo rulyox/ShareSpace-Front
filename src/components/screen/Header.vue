@@ -7,7 +7,7 @@
                   v-model="searchText"
                   v-on:keydown.native.enter="clickSearch">
             <el-button slot="append" icon="el-icon-search"
-                       v-on:click="clickSearch"></el-button>
+                       v-on:click="clickSearch" />
         </el-input>
 
         <el-dropdown id="header-profile" trigger="click">
@@ -18,11 +18,13 @@
 
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item icon="el-icon-user"
-                                  v-on:click.native="clickProfile"
-                >My Profile</el-dropdown-item>
+                                  v-on:click.native="clickProfile">
+                    My Profile
+                </el-dropdown-item>
                 <el-dropdown-item icon="el-icon-switch-button"
-                                  v-on:click.native="clickLogout"
-                >Logout</el-dropdown-item>
+                                  v-on:click.native="clickLogout">
+                    Logout
+                </el-dropdown-item>
             </el-dropdown-menu>
 
         </el-dropdown>

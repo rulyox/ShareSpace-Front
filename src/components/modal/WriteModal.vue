@@ -17,7 +17,7 @@
                         <el-button id="button-image"
                                    type="primary"
                                    icon="el-icon-picture" circle
-                                   v-on:click="clickUpload"></el-button>
+                                   v-on:click="clickUpload" />
 
                         <img class="image-preview"
                              v-for="(image, index) in this.imagePreviewList"
@@ -31,11 +31,13 @@
 
                     <div id="modal-button-container">
                         <el-button type="success"
-                                   v-on:click="clickWrite"
-                        >Post</el-button>
+                                   v-on:click="clickWrite">
+                            Post
+                        </el-button>
                         <el-button type="danger"
-                                   v-on:click="$emit('close')"
-                        >Close</el-button>
+                                   v-on:click="$emit('close')">
+                            Close
+                        </el-button>
                     </div>
 
                 </div>
