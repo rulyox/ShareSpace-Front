@@ -16,7 +16,14 @@
                                  alt="user image"
                                  v-on:click="clickHeader">
 
-                            <span v-on:click="clickHeader">{{userName}}</span>
+                            <span id="post-modal-user-name"
+                                  v-on:click="clickHeader">
+                                {{userName}}
+                            </span>
+
+                            <span id="post-modal-time">
+                                {{time}}
+                            </span>
 
                             <i id="post-modal-delete" class="el-icon-delete-solid"
                                 v-if="userAccess === accountUserAccess"
@@ -74,7 +81,8 @@
                                      v-bind:commentId="comment.id"
                                      v-bind:userAccess="comment.user"
                                      v-bind:commentText="comment.comment"
-                                     v-bind:commentTime="comment.time" />
+                                     v-bind:commentTime="comment.time"
+                                     v-on:delete="getPostComment" />
 
                         </div>
 
@@ -167,6 +175,7 @@
                 this.userAccess = result.user;
                 this.userName = result.name;
                 this.text = result.text;
+                this.time = result.time;
 
                 // get profile image
                 const profileImage = result.profile;
@@ -256,6 +265,7 @@
                 userName: '',
                 userImage: profileImage,
                 text: '',
+                time: '',
                 imageList: [],
                 currentImageIndex: 0,
                 likeList: [],
@@ -320,8 +330,6 @@
         height: 40px;
         margin-bottom: 30px;
 
-        font-weight: 700;
-
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -335,9 +343,17 @@
         background-color: black;
     }
 
+    #post-modal-user-name {
+        font-weight: 700;
+    }
+
+    #post-modal-time {
+        margin-left: auto;
+    }
+
     #post-modal-delete {
         font-size: 20px;
-        margin-left: auto;
+        margin-left: 20px;
     }
 
     #post-modal-image-container {

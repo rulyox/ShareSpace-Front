@@ -9,15 +9,21 @@
                  v-bind:src="userImage"
                  alt="user image">
 
-            <div class="comment-name">{{userName}}</div>
+            <span class="comment-name">
+                {{userName}}
+            </span>
 
-            <div class="comment-time">{{commentTime}}</div>
+            <span class="comment-time">
+                {{commentTime}}
+            </span>
+
+            <i class="el-icon-delete-solid comment-delete"
+               v-if="userAccess === accountUserAccess"
+               v-on:click="clickDelete" />
 
         </div>
 
         <span>{{commentText}}</span>
-
-        <div class="comment-divider" />
 
     </div>
 </template>
@@ -31,6 +37,22 @@
 
         const path = '/profile/' + this.userAccess;
         if(this.$router.currentRoute.path !== path) this.$router.push(path);
+
+    }
+
+    async function clickDelete() {
+
+        try {
+
+            const deleteComment = await request.deleteComment(this.token, this.commentId);
+
+            if(deleteComment.code === 101) {
+
+                this.$emit('delete');
+
+            } else console.log(deleteComment);
+
+        } catch(error) { console.log(error); }
 
     }
 
@@ -85,7 +107,10 @@
         },
 
         computed: {
-            element() { return document.getElementById(`user-${this.userAccess}`); }
+            element() { return document.getElementById(`user-${this.userAccess}`); },
+            token() { return this.$store.getters.token; },
+            accountUserData() { return this.$store.getters.userData; },
+            accountUserAccess() { return this.accountUserData.access }
         },
 
         mounted() {
@@ -94,6 +119,7 @@
 
         methods: {
             clickUser,
+            clickDelete,
             getUserData,
             getProfileImage
         }
@@ -102,7 +128,7 @@
 
 <style scoped>
     .comment-container {
-        padding: 15px 15px 0 15px;
+        padding: 15px;
 
         display: flex;
         flex-direction: column;
@@ -128,16 +154,12 @@
     }
 
     .comment-time {
-        flex: 1;
         text-align: right;
         font-size: 15px;
+        margin-left: auto;
     }
 
-    .comment-divider {
-        width: 100%;
-        height: 1px;
-        margin-top: 15px;
-        align-self: center;
-        background-color: #DDDDDD;
+    .comment-delete {
+        margin-left: 20px;
     }
 </style>
