@@ -32,6 +32,7 @@
 
         <PostModal v-if="showModal"
                    v-on:close="showModal = false"
+                   v-on:delete="[showModal = false, $emit('delete')]"
                    v-bind:postAccess="postAccess" />
 
     </div>

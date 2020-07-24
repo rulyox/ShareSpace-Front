@@ -79,7 +79,7 @@
             await request.writePost(this.token, this.text, this.imageList);
 
             // close modal
-            this.$emit('close');
+            this.$emit('write');
 
         } catch(error) { console.log(error); }
 

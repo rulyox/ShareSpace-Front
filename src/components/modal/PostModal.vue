@@ -154,7 +154,7 @@
 
             if(deletePost.code === 101) {
 
-                this.$emit('close');
+                this.$emit('delete');
 
             } else console.log(deletePost);
 

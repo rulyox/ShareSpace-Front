@@ -29,7 +29,8 @@
 
                 <Post v-for="post in this.postList"
                       v-bind:key="post"
-                      v-bind:postAccess="post" />
+                      v-bind:postAccess="post"
+                      v-on:delete="reset" />
 
                 <div v-if="isLoadingPost" class="loading-indicator" />
 
@@ -43,7 +44,8 @@
         </a>
 
         <WriteModal v-if="showWriteModal"
-                    v-on:close="[showWriteModal = false, getPosts()]" />
+                    v-on:close="showWriteModal = false"
+                    v-on:write="[showWriteModal = false, reset]" />
 
         <FollowModal v-if="showFollowModal"
                      v-on:close="showFollowModal = false"
