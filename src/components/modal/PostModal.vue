@@ -4,46 +4,46 @@
             <div class="modal-wrapper">
                 <div class="modal-container">
 
-                    <i id="post-modal-close" class="el-icon-close"
+                    <i id="post-modal__close" class="el-icon-close"
                        v-on:click="$emit('close')"></i>
 
-                    <div id="post-modal-content">
+                    <div id="post-modal__content">
 
-                        <div id="post-modal-header">
+                        <div id="post-modal__content__header">
 
-                            <img id="post-modal-user"
+                            <img id="post-modal__content__header__user"
                                  v-bind:src="userImage"
                                  alt="user image"
                                  v-on:click="clickHeader">
 
-                            <span id="post-modal-user-name"
+                            <span id="post-modal__content__header__name"
                                   v-on:click="clickHeader">
                                 {{userName}}
                             </span>
 
-                            <span id="post-modal-time">
+                            <span id="post-modal__content__header__time">
                                 {{time}}
                             </span>
 
-                            <i id="post-modal-delete" class="el-icon-delete-solid"
-                                v-if="userAccess === accountUserAccess"
-                                v-on:click="clickDelete" />
+                            <i id="post-modal__content__header__delete" class="el-icon-delete-solid"
+                               v-if="userAccess === accountUserAccess"
+                               v-on:click="clickDelete" />
 
                         </div>
 
-                        <div id="post-modal-image-container">
+                        <div id="post-modal__content__image-container">
 
-                            <img id="post-modal-image"
+                            <img id="post-modal__content__image"
                                  v-bind:src="currentImageFile"
                                  alt="post image">
 
                             <div>
-                                <el-button id="post-modal-image-shift-left"
+                                <el-button id="post-modal__content__image__shift-left"
                                            icon="el-icon-arrow-left" circle
                                            v-bind:disabled="currentImageIndex <= 0"
                                            v-on:click="clickImageShift(-1)" />
-                                <span id="post-modal-image-counter">{{currentImageIndex + 1}} / {{imageList.length}}</span>
-                                <el-button id="post-modal-image-shift-right"
+                                <span id="post-modal__content__image__counter">{{currentImageIndex + 1}} / {{imageList.length}}</span>
+                                <el-button id="post-modal__content__image__shift-right"
                                            icon="el-icon-arrow-right" circle
                                            v-bind:disabled="currentImageIndex >= imageList.length-1"
                                            v-on:click="clickImageShift(1)" />
@@ -51,20 +51,23 @@
 
                         </div>
 
-                        <div id="post-modal-text" v-html="showText"></div>
+                        <div id="post-modal__content__text" v-html="showText"></div>
 
-                        <div id="post-modal-footer">
+                        <div id="post-modal__content__footer">
 
                             <el-button type="primary"
                                        style="margin-right: 15px;"
                                        v-bind:icon="userLiked?'el-icon-star-on':'el-icon-star-off'"
-                                       v-on:click="clickLike"
-                            >{{likeList.length}}</el-button>
+                                       v-on:click="clickLike">
+                                {{likeList.length}}
+                            </el-button>
 
                             <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
-                            <span style="margin-right: 15px;">{{commentList.length}}</span>
+                            <span style="margin-right: 15px;">
+                                {{commentList.length}}
+                            </span>
 
-                            <el-input class="post-modal-comment-input"
+                            <el-input class="post-modal__content__footer__comment-input"
                                       placeholder="Write comment"
                                       v-model="commentText"
                                       v-on:keydown.native.enter="clickCommentWrite">
@@ -74,7 +77,7 @@
 
                         </div>
 
-                        <div id="post-modal-comment-container">
+                        <div id="post-modal__content__comment-container">
 
                             <Comment v-for="comment in this.commentList"
                                      v-bind:key="comment.id"
@@ -280,8 +283,8 @@
             accountUserData() { return this.$store.getters.userData; },
             accountUserAccess() { return this.accountUserData.access },
             showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
-            imageElement() { return document.getElementById('post-modal-image-container'); },
-            commentElement() { return document.getElementById('post-modal-comment-container'); },
+            imageElement() { return document.getElementById('post-modal__content__image-container'); },
+            commentElement() { return document.getElementById('post-modal__content__comment-container'); },
             currentImageFile() { return this.imageList[this.currentImageIndex]; }
         },
 
@@ -311,7 +314,7 @@
 </script>
 
 <style scoped>
-    #post-modal-close {
+    #post-modal__close {
         position: absolute;
         top: 15px;
         right: 15px;
@@ -319,14 +322,14 @@
         font-size: 20px;
     }
 
-    #post-modal-content {
+    #post-modal__content {
         padding: 50px;
 
         display: flex;
         flex-direction: column;
     }
 
-    #post-modal-header {
+    #post-modal__content__header {
         height: 40px;
         margin-bottom: 30px;
 
@@ -335,7 +338,7 @@
         align-items: center;
     }
 
-    #post-modal-user {
+    #post-modal__content__header__user {
         width: 40px;
         height: 40px;
         border-radius: 20px;
@@ -343,20 +346,20 @@
         background-color: black;
     }
 
-    #post-modal-user-name {
+    #post-modal__content__header__name {
         font-weight: 700;
     }
 
-    #post-modal-time {
+    #post-modal__content__header__time {
         margin-left: auto;
     }
 
-    #post-modal-delete {
+    #post-modal__content__header__delete {
         font-size: 20px;
         margin-left: 20px;
     }
 
-    #post-modal-image-container {
+    #post-modal__content__image-container {
         align-self: center;
         margin-bottom: 30px;
 
@@ -365,7 +368,7 @@
         align-items: center;
     }
 
-    #post-modal-image {
+    #post-modal__content__image {
         width: 500px;
         height: 500px;
         margin-bottom: 15px;
@@ -375,16 +378,16 @@
         border-radius: 10px;
     }
 
-    #post-modal-image-counter {
+    #post-modal__content__image__counter {
         margin-left: 15px;
         margin-right: 15px;
     }
 
-    #post-modal-text {
+    #post-modal__content__text {
         margin-bottom: 30px;
     }
 
-    #post-modal-footer {
+    #post-modal__content__footer {
         color: #253B80;
 
         display: flex;
@@ -392,11 +395,11 @@
         align-items: center;
     }
 
-    .post-modal-comment-input {
+    .post-modal__content__footer__comment-input {
         width: 500px;
     }
 
-    #post-modal-comment-container {
+    #post-modal__content__comment-container {
         display: none;
 
         margin-top: 30px;

@@ -1,9 +1,9 @@
 <template>
     <div id="search-container">
 
-        <div id="search-user-list-container">
+        <div id="search__user-container">
 
-            <div id="search-user-list">
+            <div id="search__user-list">
 
                 <User v-for="user in this.userList"
                       v-bind:key="user"
@@ -107,25 +107,25 @@
         flex-direction: column;
     }
 
-    #search-user-list-container {
+    #search__user-container {
         flex: 1;
         overflow: auto;
     }
 
-    #search-user-list-container::-webkit-scrollbar {
+    #search__user-container::-webkit-scrollbar {
         width: 10px;
         background: none;
     }
 
-    #search-user-list-container::-webkit-scrollbar-thumb {
+    #search__user-container::-webkit-scrollbar-thumb {
         background: #253B80;
     }
 
-    #search-user-list-container::-webkit-scrollbar-track {
+    #search__user-container::-webkit-scrollbar-track {
         background: none;
     }
 
-    #search-user-list {
+    #search__user-list {
         margin: 50px;
 
         display: flex;

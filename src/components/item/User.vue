@@ -3,11 +3,13 @@
          v-bind:id="`user-${userAccess}`"
          v-on:click="clickUser">
 
-        <img class="user-image"
+        <img class="user__image"
              v-bind:src="userImage"
              alt="user image">
 
-        <div class="user-name">{{userName}}</div>
+        <div class="user__name">
+            {{userName}}
+        </div>
 
     </div>
 </template>
@@ -109,7 +111,7 @@
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 
-    .user-image {
+    .user__image {
         width: 40px;
         height: 40px;
         border-radius: 20px;
@@ -117,7 +119,7 @@
         background-color: black;
     }
 
-    .user-name {
+    .user__name {
         font-weight: 700;
     }
 </style>

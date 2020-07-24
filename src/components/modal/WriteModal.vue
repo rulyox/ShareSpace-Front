@@ -4,22 +4,24 @@
             <div class="modal-wrapper">
                 <div class="modal-container">
 
-                    <div id="modal-title-container">Write New Post</div>
+                    <div id="write-modal__title">
+                        Write New Post
+                    </div>
 
-                    <div id="modal-image-container">
+                    <div id="write-modal__image-container">
 
-                        <input id="input-image"
+                        <input id="write-modal__image-input"
                                type="file"
                                accept="image/png, image/jpeg"
                                v-on:change="uploadImage"
                                ref="image">
 
-                        <el-button id="button-image"
+                        <el-button id="write-modal__image-button"
                                    type="primary"
                                    icon="el-icon-picture" circle
                                    v-on:click="clickUpload" />
 
-                        <img class="image-preview"
+                        <img class="write-modal__image-preview"
                              v-for="(image, index) in this.imagePreviewList"
                              v-bind:key="index"
                              v-bind:src="imagePreviewList[index]"
@@ -27,15 +29,14 @@
 
                     </div>
 
-                    <el-input type="textarea" autosize placeholder="Enter text" v-model="text"></el-input>
+                    <el-input type="textarea" autosize placeholder="Enter text" v-model="text" />
 
-                    <div id="modal-button-container">
-                        <el-button type="success"
+                    <div id="write-modal__button-container">
+                        <el-button type="primary"
                                    v-on:click="clickWrite">
                             Post
                         </el-button>
-                        <el-button type="danger"
-                                   v-on:click="$emit('close')">
+                        <el-button v-on:click="$emit('close')">
                             Close
                         </el-button>
                     </div>
@@ -52,7 +53,7 @@
 
     function clickUpload() {
 
-        document.getElementById('input-image').click()
+        document.getElementById('write-modal__image-input').click()
 
     }
 
@@ -79,6 +80,7 @@
             await request.writePost(this.token, this.text, this.imageList);
 
             // close modal
+            this.$emit('close');
             this.$emit('write');
 
         } catch(error) { console.log(error); }
@@ -107,14 +109,14 @@
 </script>
 
 <style scoped>
-    #modal-title-container {
+    #write-modal__title {
         font-size: 20px;
         font-weight: 700;
 
         margin-bottom: 30px;
     }
 
-    #modal-image-container {
+    #write-modal__image-container {
         width: 100%;
         margin-left: 15px;
         margin-right: 15px;
@@ -125,15 +127,15 @@
         align-items: center;
     }
 
-    #input-image {
+    #write-modal__image-input {
         display: none;
     }
 
-    #button-image {
+    #write-modal__image-button {
         margin-right: 15px;
     }
 
-    .image-preview {
+    .write-modal__image-preview {
         width: 100px;
         height: 100px;
         margin-right: 15px;
@@ -142,7 +144,7 @@
         border: 1px solid #DDDDDD;
     }
 
-    #modal-button-container {
+    #write-modal__button-container {
         margin-top: 30px;
     }
 

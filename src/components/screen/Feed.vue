@@ -1,9 +1,9 @@
 <template>
     <div id="feed-container">
 
-        <div id="feed-post-list-container">
+        <div id="feed__post-container">
 
-            <div id="feed-post-list">
+            <div id="feed__post__list">
 
                 <Post v-for="post in this.postList"
                       v-bind:key="post"
@@ -83,7 +83,7 @@
 
         computed: {
             token() { return this.$store.getters.token; },
-            postListElement() { return document.getElementById('feed-post-list-container'); },
+            postListElement() { return document.getElementById('feed__post-container'); },
             isLoadingPost() { return (this.$store.getters.postLoadingNumber > 0); }
         },
 
@@ -114,25 +114,25 @@
         flex-direction: column;
     }
 
-    #feed-post-list-container {
+    #feed__post-container {
         flex: 1;
         overflow: auto;
     }
 
-    #feed-post-list-container::-webkit-scrollbar {
+    #feed__post-container::-webkit-scrollbar {
         width: 10px;
         background: none;
     }
 
-    #feed-post-list-container::-webkit-scrollbar-thumb {
+    #feed__post-container::-webkit-scrollbar-thumb {
         background: #253B80;
     }
 
-    #feed-post-list-container::-webkit-scrollbar-track {
+    #feed__post-container::-webkit-scrollbar-track {
         background: none;
     }
 
-    #feed-post-list {
+    #feed__post__list {
         margin: 50px;
 
         display: flex;

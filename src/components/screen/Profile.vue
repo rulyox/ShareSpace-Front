@@ -1,21 +1,23 @@
 <template>
     <div id="profile-container">
 
-        <div id="profile-info-container">
+        <div id="profile__info-container">
 
-            <img id="profile-info-image"
+            <img id="profile__info__image"
                  v-bind:src="profileImage"
                  alt="user image">
 
-            <div id="profile-info-name">{{ profileName }}</div>
+            <span id="profile__info__name">
+                {{ profileName }}
+            </span>
 
-            <el-button class="profile-info-follow-button"
+            <el-button class="profile__info__follow-button"
                        type="primary"
                        v-on:click="[showFollowModal = true, followModalList = followingList]">
                 Following {{followingList.length}}
             </el-button>
 
-            <el-button class="profile-info-follow-button"
+            <el-button class="profile__info__follow-button"
                        type="primary"
                        v-on:click="[showFollowModal = true, followModalList = followerList]">
                 Followers {{followerList.length}}
@@ -23,9 +25,9 @@
 
         </div>
 
-        <div id="profile-post-container">
+        <div id="profile__post-container">
 
-            <div id="profile-post-list">
+            <div id="profile__post__list">
 
                 <Post v-for="post in this.postList"
                       v-bind:key="post"
@@ -38,14 +40,14 @@
 
         </div>
 
-        <a id="add-button"
+        <a id="profile__add-button"
            v-on:click="showWriteModal = true">
             <i class="el-icon-plus" />
         </a>
 
         <WriteModal v-if="showWriteModal"
                     v-on:close="showWriteModal = false"
-                    v-on:write="[showWriteModal = false, reset]" />
+                    v-on:write="reset" />
 
         <FollowModal v-if="showFollowModal"
                      v-on:close="showFollowModal = false"
@@ -200,7 +202,7 @@
 
         computed: {
             token() { return this.$store.getters.token; },
-            postListElement() { return document.getElementById('profile-post-container'); },
+            postListElement() { return document.getElementById('profile__post-container'); },
             isLoadingPost() { return (this.$store.getters.postLoadingNumber > 0); }
         },
 
@@ -241,7 +243,7 @@
         flex-direction: row;
     }
 
-    #profile-info-container {
+    #profile__info-container {
         padding: 30px;
         background-color: #FAFAFA;
 
@@ -252,45 +254,45 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     }
 
-    #profile-info-image {
+    #profile__info__image {
         width: 300px;
         height: 300px;
         border-radius: 30px;
         margin-bottom: 30px;
     }
 
-    #profile-info-name {
+    #profile__info__name {
         font-size: 25px;
         font-weight: 700;
 
         margin-bottom: 30px;
     }
 
-    .profile-info-follow-button {
+    .profile__info__follow-button {
         width: 200px;
         margin-left: 0;
         margin-bottom: 10px;
     }
 
-    #profile-post-container {
+    #profile__post-container {
         flex: 1;
         overflow: auto;
     }
 
-    #profile-post-container::-webkit-scrollbar {
+    #profile__post-container::-webkit-scrollbar {
         width: 10px;
         background: none;
     }
 
-    #profile-post-container::-webkit-scrollbar-thumb {
+    #profile__post-container::-webkit-scrollbar-thumb {
         background: #253B80;
     }
 
-    #profile-post-container::-webkit-scrollbar-track {
+    #profile__post-container::-webkit-scrollbar-track {
         background: none;
     }
 
-    #profile-post-list {
+    #profile__post__list {
         margin: 50px;
 
         display: flex;
@@ -298,7 +300,7 @@
         align-items: center;
     }
 
-    #add-button {
+    #profile__add-button {
         position: fixed;
 
         width: 60px;
@@ -319,7 +321,7 @@
         transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     }
 
-    #add-button:hover {
+    #profile__add-button:hover {
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 </style>

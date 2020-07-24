@@ -3,25 +3,25 @@
 
         <div class="signup-dialog">
 
-            <a class="dialog-title">Sign Up</a>
+            <a class="signup__dialog__title">Sign Up</a>
 
-            <el-input class="dialog-input"
+            <el-input class="signup__dialog__input"
                       placeholder="Enter name"
                       v-model="name"
                       v-on:keydown.native.enter="clickSignUp" />
 
-            <el-input class="dialog-input"
+            <el-input class="signup__dialog__input"
                       placeholder="Enter email"
                       v-model="email"
                       v-on:keydown.native.enter="clickSignUp" />
 
-            <el-input class="dialog-input"
+            <el-input class="signup__dialog__input"
                       placeholder="Enter password"
                       v-model="password"
                       show-password
                       v-on:keydown.native.enter="clickSignUp" />
 
-            <div class="dialog-button">
+            <div class="signup__dialog__button-container">
                 <el-button v-on:click.prevent="clickBack">Back To Login</el-button>
                 <el-button v-on:click.prevent="clickSignUp">Sign Up</el-button>
             </div>
@@ -106,19 +106,19 @@
         box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
     }
 
-    .dialog-title {
+    .signup__dialog__title {
         font-size: 30px;
         font-weight: bolder;
         color: #FAFAFA;
         margin-bottom: 30px;
     }
 
-    .dialog-input {
+    .signup__dialog__input {
         width: 400px;
         margin-bottom: 30px;
     }
 
-    .dialog-button {
+    .signup__dialog__button-container {
         display: flex;
         flex-direction: row;
     }

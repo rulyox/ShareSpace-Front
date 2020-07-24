@@ -3,27 +3,29 @@
          v-bind:id="`user-${userAccess}`"
          v-on:click="clickUser">
 
-        <div class="comment-header">
+        <div class="comment__header">
 
-            <img class="comment-image"
+            <img class="comment__header__image"
                  v-bind:src="userImage"
                  alt="user image">
 
-            <span class="comment-name">
+            <span class="comment__header__name">
                 {{userName}}
             </span>
 
-            <span class="comment-time">
+            <span class="comment__header__time">
                 {{commentTime}}
             </span>
 
-            <i class="el-icon-delete-solid comment-delete"
+            <i class="el-icon-delete-solid comment__header__delete"
                v-if="userAccess === accountUserAccess"
                v-on:click="clickDelete" />
 
         </div>
 
-        <span>{{commentText}}</span>
+        <span>
+            {{commentText}}
+        </span>
 
     </div>
 </template>
@@ -134,14 +136,14 @@
         flex-direction: column;
     }
 
-    .comment-header {
+    .comment__header {
         margin-bottom: 15px;
         display: flex;
         flex-direction: row;
         align-items: center;
     }
 
-    .comment-image {
+    .comment__header__image {
         width: 40px;
         height: 40px;
         border-radius: 20px;
@@ -149,17 +151,17 @@
         background-color: black;
     }
 
-    .comment-name {
+    .comment__header__name {
         font-weight: 700;
     }
 
-    .comment-time {
+    .comment__header__time {
         text-align: right;
         font-size: 15px;
         margin-left: auto;
     }
 
-    .comment-delete {
+    .comment__header__delete {
         margin-left: 20px;
     }
 </style>

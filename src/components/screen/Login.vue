@@ -1,22 +1,22 @@
 <template>
     <div class="login-container">
 
-        <div class="login-dialog">
+        <div class="login__dialog">
 
-            <a class="dialog-title">ShareSpace</a>
+            <a class="login__dialog__title">ShareSpace</a>
 
-            <el-input class="dialog-input"
+            <el-input class="login__dialog__input"
                       placeholder="Enter email"
                       v-model="email"
                       v-on:keydown.native.enter="clickLogin" />
 
-            <el-input class="dialog-input"
+            <el-input class="login__dialog__input"
                       placeholder="Enter password"
                       v-model="password"
                       show-password
                       v-on:keydown.native.enter="clickLogin" />
 
-            <div class="dialog-button">
+            <div class="login__dialog__button-container">
                 <el-button v-on:click.prevent="clickLogin">Login</el-button>
                 <el-button v-on:click.prevent="clickSignUp">Sign Up</el-button>
             </div>
@@ -93,7 +93,7 @@
         justify-content: center;
     }
 
-    .login-dialog {
+    .login__dialog {
         width: 500px;
         height: 350px;
         background-color: #253B80;
@@ -107,19 +107,19 @@
         box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
     }
 
-    .dialog-title {
+    .login__dialog__title {
         font-size: 30px;
         font-weight: bolder;
         color: #FAFAFA;
         margin-bottom: 30px;
     }
 
-    .dialog-input {
+    .login__dialog__input {
         width: 400px;
         margin-bottom: 30px;
     }
 
-    .dialog-button {
+    .login__dialog__button-container {
         display: flex;
         flex-direction: row;
     }

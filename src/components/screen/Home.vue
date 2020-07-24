@@ -3,7 +3,7 @@
 
         <Header />
 
-        <div class="content">
+        <div class="home__content">
             <router-view name="homeContent" />
         </div>
 
@@ -29,7 +29,7 @@
         flex-direction: column;
     }
 
-    .content {
+    .home__content {
         flex: 1;
 
         overflow: hidden;

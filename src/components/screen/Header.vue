@@ -1,18 +1,18 @@
 <template>
     <div class="header-container">
 
-        <a id="header-title" v-on:click="clickHome">ShareSpace</a>
+        <a id="header__title" v-on:click="clickHome">ShareSpace</a>
 
-        <el-input class="header-search" placeholder="Search user"
+        <el-input class="header__search" placeholder="Search user"
                   v-model="searchText"
                   v-on:keydown.native.enter="clickSearch">
             <el-button slot="append" icon="el-icon-search"
                        v-on:click="clickSearch" />
         </el-input>
 
-        <el-dropdown id="header-profile" trigger="click">
+        <el-dropdown id="header__profile" trigger="click">
 
-            <img class="el-dropdown-link" id="header-profile-image"
+            <img class="el-dropdown-link" id="header__profile__image"
                  v-bind:src="profileImage"
                  alt="profile image">
 
@@ -120,7 +120,7 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     }
 
-    #header-title {
+    #header__title {
         font-size: 20px;
         font-weight: 700;
         text-decoration: none;
@@ -131,12 +131,12 @@
         margin-left: 30px;
     }
 
-    .header-search {
+    .header__search {
         width: 300px;
         margin-left: 30px;
     }
 
-    #header-profile {
+    #header__profile {
         font-size: 15px;
 
         cursor: pointer;
@@ -145,7 +145,7 @@
         margin-right: 30px;
     }
 
-    #header-profile-image {
+    #header__profile__image {
         width: 50px;
         height: 50px;
         background-color: black;

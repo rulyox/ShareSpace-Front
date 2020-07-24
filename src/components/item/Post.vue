@@ -4,24 +4,26 @@
 
         <div v-on:click="showModal = true">
 
-            <div class="post-header">
+            <div class="post__header">
 
-                <img class="post-user"
+                <img class="post__header__user"
                      v-bind:src="userImage"
                      alt="user image">
 
-                <span>{{userName}}</span>
+                <span>
+                    {{userName}}
+                </span>
 
             </div>
 
-            <img class="post-image"
+            <img class="post__image"
                  v-bind:id="`post-${postAccess}-image`"
                  v-bind:src="image"
                  alt="post image">
 
-            <div class="post-content" v-html="showText"></div>
+            <div class="post__content" v-html="showText" />
 
-            <div class="post-footer">
+            <div class="post__footer">
                 <i class="el-icon-star-off" style="margin-right: 5px;" />
                 <span style="margin-right: 15px;">{{likeList.length}}</span>
                 <i class="el-icon-chat-line-square" style="margin-right: 5px;" />
@@ -172,7 +174,7 @@
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 
-    .post-header {
+    .post__header {
         height: 40px;
         margin-bottom: 20px;
 
@@ -183,7 +185,7 @@
         align-items: center;
     }
 
-    .post-user {
+    .post__header__user {
         width: 40px;
         height: 40px;
         border-radius: 20px;
@@ -191,7 +193,7 @@
         background-color: black;
     }
 
-    .post-image {
+    .post__image {
         width: 500px;
         height: 500px;
         margin-bottom: 20px;
@@ -201,11 +203,11 @@
         display: none;
     }
 
-    .post-content {
+    .post__content {
         margin-bottom: 20px;
     }
 
-    .post-footer {
+    .post__footer {
         width: 500px;
 
         color: #253B80;
