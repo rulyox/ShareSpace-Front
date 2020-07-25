@@ -81,7 +81,7 @@
 
                             <Comment v-for="comment in this.commentList"
                                      v-bind:key="comment.id"
-                                     v-bind:commentId="comment.id"
+                                     v-bind:commentAccess="comment.access"
                                      v-bind:userAccess="comment.user"
                                      v-bind:commentText="comment.comment"
                                      v-bind:commentTime="comment.time"

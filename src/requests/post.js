@@ -158,10 +158,10 @@ export const writeComment = (token, access, comment) => {
     });
 };
 
-export const deleteComment = (token, id) => {
+export const deleteComment = (token, access) => {
     return new Promise((resolve, reject) => {
 
-        axios.delete(server + '/post/comment/' + id,
+        axios.delete(server + '/post/comment/' + access,
             {
                 headers: {token: token}
             })

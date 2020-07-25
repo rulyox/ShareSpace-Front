@@ -46,7 +46,7 @@
 
         try {
 
-            const deleteComment = await request.deleteComment(this.token, this.commentId);
+            const deleteComment = await request.deleteComment(this.token, this.commentAccess);
 
             if(deleteComment.code === 101) {
 
@@ -95,7 +95,7 @@
 
     export default {
         props: {
-            commentId: Number,
+            commentAccess: String,
             userAccess: String,
             commentText: String,
             commentTime: String
