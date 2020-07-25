@@ -13,6 +13,13 @@
 
             <el-button class="profile__info__follow-button"
                        type="primary"
+                       v-if="userAccess !== profileAccess"
+                       v-on:click="clickFollow">
+                {{isFollowing ? "Unfollow" : "Follow"}}
+            </el-button>
+
+            <el-button class="profile__info__follow-button"
+                       type="primary"
                        v-on:click="[showFollowModal = true, followModalList = followingList]">
                 Following {{followingList.length}}
             </el-button>
@@ -81,6 +88,17 @@
                 if(result.image !== null) await this.getProfileImage();
 
             } else console.log(getProfile);
+
+            // check follow
+            const checkFollow = await request.checkFollow(this.userAccess, this.profileAccess);
+
+            if(checkFollow.code === 101) {
+
+                const result = checkFollow.result;
+
+                this.isFollowing = result.following;
+
+            } else console.log(checkFollow);
 
             //get following list
             const getFollowing = await request.getFollowing(this.profileAccess);
@@ -157,6 +175,18 @@
 
     }
 
+    async function clickFollow() {
+
+        try {
+
+            await request.follow(this.token, this.profileAccess, !this.isFollowing);
+
+            await this.getProfileInfo();
+
+        } catch(error) { console.log(error); }
+
+    }
+
     function watchScroll(element) {
 
         element.onscroll = () => {
@@ -188,6 +218,7 @@
             return {
                 profileName: '',
                 profileImage: profileImage,
+                isFollowing: false,
                 followingList: [],
                 followerList: [],
                 followModalList: [],
@@ -202,6 +233,8 @@
 
         computed: {
             token() { return this.$store.getters.token; },
+            userData() { return this.$store.getters.userData; },
+            userAccess() { return this.userData.access },
             postListElement() { return document.getElementById('profile__post-container'); },
             isLoadingPost() { return (this.$store.getters.postLoadingNumber > 0); }
         },
@@ -221,6 +254,7 @@
             getProfileImage,
             getPosts,
             addToPostList,
+            clickFollow,
             watchScroll,
             reset
         },
