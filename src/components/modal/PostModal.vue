@@ -9,83 +9,90 @@
 
                     <div id="post-modal__content">
 
-                        <div id="post-modal__content__header">
+                        <div id="post-modal__content-left">
 
-                            <img id="post-modal__content__header__user"
-                                 v-bind:src="userImage"
-                                 alt="user image"
-                                 v-on:click="clickHeader">
+                            <div id="post-modal__content__header">
 
-                            <span id="post-modal__content__header__name"
-                                  v-on:click="clickHeader">
+                                <img id="post-modal__content__header__user"
+                                     v-bind:src="userImage"
+                                     alt="user image"
+                                     v-on:click="clickHeader">
+
+                                <span id="post-modal__content__header__name"
+                                      v-on:click="clickHeader">
                                 {{userName}}
                             </span>
 
-                            <span id="post-modal__content__header__time">
+                                <span id="post-modal__content__header__time">
                                 {{time}}
                             </span>
 
-                            <i id="post-modal__content__header__delete" class="el-icon-delete-solid"
-                               v-if="userAccess === accountUserAccess"
-                               v-on:click="clickDelete" />
+                                <i id="post-modal__content__header__delete" class="el-icon-delete-solid"
+                                   v-if="userAccess === accountUserAccess"
+                                   v-on:click="clickDelete" />
 
-                        </div>
-
-                        <div id="post-modal__content__image-container">
-
-                            <img id="post-modal__content__image"
-                                 v-bind:src="currentImageFile"
-                                 alt="post image">
-
-                            <div>
-                                <el-button id="post-modal__content__image__shift-left"
-                                           icon="el-icon-arrow-left" circle
-                                           v-bind:disabled="currentImageIndex <= 0"
-                                           v-on:click="clickImageShift(-1)" />
-                                <span id="post-modal__content__image__counter">{{currentImageIndex + 1}} / {{imageList.length}}</span>
-                                <el-button id="post-modal__content__image__shift-right"
-                                           icon="el-icon-arrow-right" circle
-                                           v-bind:disabled="currentImageIndex >= imageList.length-1"
-                                           v-on:click="clickImageShift(1)" />
                             </div>
 
+                            <div id="post-modal__content__image-container">
+
+                                <img id="post-modal__content__image"
+                                     v-bind:src="currentImageFile"
+                                     alt="post image">
+
+                                <div>
+                                    <el-button id="post-modal__content__image__shift-left"
+                                               icon="el-icon-arrow-left" circle
+                                               v-bind:disabled="currentImageIndex <= 0"
+                                               v-on:click="clickImageShift(-1)" />
+                                    <span id="post-modal__content__image__counter">{{currentImageIndex + 1}} / {{imageList.length}}</span>
+                                    <el-button id="post-modal__content__image__shift-right"
+                                               icon="el-icon-arrow-right" circle
+                                               v-bind:disabled="currentImageIndex >= imageList.length-1"
+                                               v-on:click="clickImageShift(1)" />
+                                </div>
+
+                            </div>
+
+                            <div v-html="showText"></div>
+
                         </div>
 
-                        <div id="post-modal__content__text" v-html="showText"></div>
+                        <div id="post-modal__content-right">
 
-                        <div id="post-modal__content__footer">
+                            <div id="post-modal__content__footer">
 
-                            <el-button type="primary"
-                                       style="margin-right: 15px;"
-                                       v-bind:icon="userLiked?'el-icon-star-on':'el-icon-star-off'"
-                                       v-on:click="clickLike">
-                                {{likeList.length}}
-                            </el-button>
+                                <el-button type="primary"
+                                           style="margin-right: 15px;"
+                                           v-bind:icon="userLiked?'el-icon-star-on':'el-icon-star-off'"
+                                           v-on:click="clickLike">
+                                    {{likeList.length}}
+                                </el-button>
 
-                            <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
-                            <span style="margin-right: 15px;">
+                                <i class="el-icon-chat-line-square" style="margin-right: 5px;"></i>
+                                <span style="margin-right: 15px;">
                                 {{commentList.length}}
                             </span>
 
-                            <el-input class="post-modal__content__footer__comment-input"
-                                      placeholder="Write comment"
-                                      v-model="commentText"
-                                      v-on:keydown.native.enter="clickCommentWrite">
-                                <el-button slot="append" icon="el-icon-edit"
-                                           v-on:click="clickCommentWrite" />
-                            </el-input>
+                                <el-input placeholder="Write comment"
+                                          v-model="commentText"
+                                          v-on:keydown.native.enter="clickCommentWrite">
+                                    <el-button slot="append" icon="el-icon-edit"
+                                               v-on:click="clickCommentWrite" />
+                                </el-input>
 
-                        </div>
+                            </div>
 
-                        <div id="post-modal__content__comment-container">
+                            <div id="post-modal__content__comment-container">
 
-                            <Comment v-for="comment in this.commentList"
-                                     v-bind:key="comment.id"
-                                     v-bind:commentAccess="comment.access"
-                                     v-bind:userAccess="comment.user"
-                                     v-bind:commentText="comment.comment"
-                                     v-bind:commentTime="comment.time"
-                                     v-on:delete="getPostComment" />
+                                <Comment v-for="comment in this.commentList"
+                                         v-bind:key="comment.id"
+                                         v-bind:commentAccess="comment.access"
+                                         v-bind:userAccess="comment.user"
+                                         v-bind:commentText="comment.comment"
+                                         v-bind:commentTime="comment.time"
+                                         v-on:delete="getPostComment" />
+
+                            </div>
 
                         </div>
 
@@ -323,10 +330,20 @@
     }
 
     #post-modal__content {
-        padding: 50px;
+        width: 1150px;
 
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+    }
+
+    #post-modal__content-left {
+        width: 500px;
+        margin: 50px 0 50px 50px;
+    }
+
+    #post-modal__content-right {
+        width: 500px;
+        margin: 50px;
     }
 
     #post-modal__content__header {
@@ -383,20 +400,12 @@
         margin-right: 15px;
     }
 
-    #post-modal__content__text {
-        margin-bottom: 30px;
-    }
-
     #post-modal__content__footer {
         color: #253B80;
 
         display: flex;
         flex-direction: row;
         align-items: center;
-    }
-
-    .post-modal__content__footer__comment-input {
-        width: 500px;
     }
 
     #post-modal__content__comment-container {
@@ -410,7 +419,7 @@
     .modal-container {
         position: relative;
 
-        width: 700px;
+        width: 1150px;
         margin: 0 auto;
         max-height: 90vh;
         overflow-x: hidden;
