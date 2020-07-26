@@ -73,7 +73,8 @@
                                 {{commentList.length}}
                             </span>
 
-                                <el-input placeholder="Write comment"
+                                <el-input class="post-modal__content__comment-input"
+                                          placeholder="Write comment"
                                           v-model="commentText"
                                           v-on:keydown.native.enter="clickCommentWrite">
                                     <el-button slot="append" icon="el-icon-edit"
@@ -408,6 +409,10 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+
+    .post-modal__content__comment-input {
+        width: 350px;
     }
 
     #post-modal__content__comment-container {
