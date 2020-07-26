@@ -48,7 +48,7 @@
 </template>
 
 <script>
-    import * as request from '../../requests';
+    import request from '../../requests';
     import * as utility from '../../utility';
 
     function clickUpload() {
@@ -77,7 +77,7 @@
 
         try {
 
-            await request.writePost(this.token, this.text, this.imageList);
+            await request.post.write(this.token, this.text, this.imageList);
 
             // close modal
             this.$emit('close');

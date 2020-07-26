@@ -42,7 +42,7 @@
 </template>
 
 <script>
-    import * as request from '../../requests';
+    import request from '../../requests';
     import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
@@ -52,7 +52,7 @@
 
         try {
 
-            const getProfile = await request.getProfile(this.userData.access);
+            const getProfile = await request.user.getProfile(this.userData.access);
 
             if(getProfile.code === 101) {
 
@@ -69,7 +69,7 @@
 
     async function getProfileImage() {
 
-        const image = await request.getProfileImageFile(this.userData.access);
+        const image = await request.user.getProfileImage(this.userData.access);
         this.userImage = utility.imageToBase64(image);
 
     }
@@ -98,9 +98,9 @@
 
         try {
 
-            await request.uploadProfileImage(this.token, this.imageFile);
+            await request.user.uploadProfileImage(this.token, this.imageFile);
 
-            await request.edit(this.token, this.userName, this.userPassword);
+            await request.user.edit(this.token, this.userName, this.userPassword);
 
             // reload page
             this.$router.go(0);

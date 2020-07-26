@@ -72,7 +72,7 @@ export const getProfile = (profileAccess) => {
     });
 };
 
-export const getProfileImageFile = (access) => {
+export const getProfileImage = (access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(server + '/user/image/' + access,
@@ -104,7 +104,7 @@ export const uploadProfileImage = (token, image) => {
     });
 };
 
-export const searchUser = (query) => {
+export const search = (query) => {
     return new Promise((resolve, reject) => {
 
         axios.get(server + '/user/search/' + query)

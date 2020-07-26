@@ -7,7 +7,7 @@ import Feed from './components/screen/Feed';
 import Profile from './components/screen/Profile';
 import Search from './components/screen/Search';
 import Settings from './components/screen/Settings';
-import * as request from './requests';
+import request from './requests';
 import store from './store';
 
 Vue.use(VueRouter);
@@ -82,7 +82,7 @@ router.beforeEach(async (to, from, next) => {
 
         try {
 
-            const loginResult = await request.login(token);
+            const loginResult = await request.user.login(token);
 
             const result = loginResult.result;
 

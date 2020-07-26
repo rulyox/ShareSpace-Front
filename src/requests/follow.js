@@ -23,7 +23,7 @@ export const getFollower = (access) => {
     });
 };
 
-export const checkFollow = (follower, following) => {
+export const check = (follower, following) => {
     return new Promise((resolve, reject) => {
 
         axios.get(server + '/follow/check/' + follower + '/' + following)

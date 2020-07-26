@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import * as request from '../../requests';
+    import request from '../../requests';
     import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
@@ -26,7 +26,7 @@
 
         try {
 
-            const getProfile = await request.getProfile(this.userAccess);
+            const getProfile = await request.user.getProfile(this.userAccess);
 
             if(getProfile.code === 101) {
 
@@ -50,7 +50,7 @@
 
     async function getProfileImage() {
 
-        const image = await request.getProfileImageFile(this.userAccess);
+        const image = await request.user.getProfileImage(this.userAccess);
         this.userImage = utility.imageToBase64(image);
 
     }

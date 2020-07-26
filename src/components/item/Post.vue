@@ -42,7 +42,7 @@
 
 <script>
     import PostModal from '../modal/PostModal';
-    import * as request from '../../requests';
+    import request from '../../requests';
     import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
@@ -53,7 +53,7 @@
 
         try {
 
-            const getPostPreview = await request.getPostPreview(this.token, this.postAccess);
+            const getPostPreview = await request.post.getPreview(this.token, this.postAccess);
 
             if(getPostPreview.code === 101) {
 
@@ -76,7 +76,7 @@
 
             } else console.log(getPostPreview);
 
-            const getLike = await request.getLike(this.token, this.postAccess);
+            const getLike = await request.post.getLike(this.token, this.postAccess);
 
             if(getLike.code === 101) {
 
@@ -86,7 +86,7 @@
 
             } else console.log(getLike);
 
-            const getComment = await request.getComment(this.token, this.postAccess);
+            const getComment = await request.post.getComment(this.token, this.postAccess);
 
             if(getComment.code === 101) {
 
@@ -102,14 +102,14 @@
 
     async function getProfileImage() {
 
-        const image = await request.getProfileImageFile(this.userAccess);
+        const image = await request.user.getProfileImage(this.userAccess);
         this.userImage = utility.imageToBase64(image);
 
     }
 
     async function getImage(imageName) {
 
-        const image = await request.getImageFile(this.token, this.postAccess, imageName);
+        const image = await request.post.getImages(this.token, this.postAccess, imageName);
         this.image = utility.imageToBase64(image);
 
         // show image element

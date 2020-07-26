@@ -3,7 +3,7 @@ import config from '../config.json';
 
 const server = config.server;
 
-export const writePost = (token, text, imageList) => {
+export const write = (token, text, imageList) => {
     return new Promise((resolve, reject) => {
 
         const formData = new FormData();
@@ -36,7 +36,7 @@ export const getPostByUser = (token, user, start) => {
     });
 };
 
-export const getPostData = (token, access) => {
+export const getData = (token, access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(server + '/post/data/' + access,
@@ -49,7 +49,7 @@ export const getPostData = (token, access) => {
     });
 };
 
-export const getPostPreview = (token, access) => {
+export const getPreview = (token, access) => {
     return new Promise((resolve, reject) => {
 
         axios.get(server + '/post/preview/' + access,
@@ -62,7 +62,7 @@ export const getPostPreview = (token, access) => {
     });
 };
 
-export const getImageFile = (token, post, image) => {
+export const getImages = (token, post, image) => {
     return new Promise((resolve, reject) => {
 
         axios.get(server + '/post/image/' + post + '/' + image,
@@ -115,7 +115,7 @@ export const getLike = (token, access) => {
     });
 };
 
-export const likePost = (token, access, type) => {
+export const like = (token, access, type) => {
     return new Promise((resolve, reject) => {
 
         axios.post(server + '/post/like/' + access,

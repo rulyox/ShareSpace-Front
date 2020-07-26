@@ -32,7 +32,7 @@
 </template>
 
 <script>
-    import * as request from '../../requests';
+    import request from '../../requests';
 
     function clickBack() {
 
@@ -50,7 +50,7 @@
 
         try {
 
-            const signUp = await request.signUp(this.name, this.email, this.password);
+            const signUp = await request.user.signUp(this.name, this.email, this.password);
 
             if(signUp.code === 101) {
 

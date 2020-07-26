@@ -20,7 +20,7 @@
 
 <script>
     import Post from '../item/Post';
-    import * as request from '../../requests';
+    import request from '../../requests';
 
     async function getFeed() {
 
@@ -30,7 +30,7 @@
 
         try {
 
-            const getFeed = await request.getFeed(this.token, this.postNumber);
+            const getFeed = await request.post.getFeed(this.token, this.postNumber);
 
             if(getFeed.code === 101) {
 

@@ -20,7 +20,7 @@
 
 <script>
     import User from '../item/User';
-    import * as request from '../../requests';
+    import request from '../../requests';
 
     async function searchUser() {
 
@@ -28,7 +28,7 @@
 
         try {
 
-            const searchUser = await request.searchUser(this.query);
+            const searchUser = await request.user.search(this.query);
 
             if(searchUser.code === 101) {
 

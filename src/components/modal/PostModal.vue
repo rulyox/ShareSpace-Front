@@ -106,7 +106,7 @@
 
 <script>
     import Comment from '../item/Comment';
-    import * as request from '../../requests';
+    import request from '../../requests';
     import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
@@ -114,7 +114,7 @@
 
         try {
 
-            const getPostData = await request.getPostData(this.token, this.postAccess);
+            const getPostData = await request.post.getData(this.token, this.postAccess);
 
             if(getPostData.code === 101) {
 
@@ -143,7 +143,7 @@
 
         try {
 
-            const getLike = await request.getLike(this.token, this.postAccess);
+            const getLike = await request.post.getLike(this.token, this.postAccess);
 
             if(getLike.code === 101) {
 
@@ -164,7 +164,7 @@
 
         try {
 
-            const getComment = await request.getComment(this.token, this.postAccess);
+            const getComment = await request.post.getComment(this.token, this.postAccess);
 
             if(getComment.code === 101) {
 
@@ -182,7 +182,7 @@
 
     async function getProfileImage() {
 
-        const image = await request.getProfileImageFile(this.userAccess);
+        const image = await request.user.getProfileImage(this.userAccess);
         this.userImage = utility.imageToBase64(image);
 
     }
@@ -192,7 +192,7 @@
         for(let i = 0; i < imageList.length; i++) {
 
             // save base64 image to list
-            const image = await request.getImageFile(this.token, this.postAccess, imageList[i]);
+            const image = await request.post.getImages(this.token, this.postAccess, imageList[i]);
             this.imageList.push(utility.imageToBase64(image));
 
         }
@@ -221,8 +221,8 @@
 
         try {
 
-            if(this.userLiked) await request.likePost(this.token, this.postAccess, false);
-            else await request.likePost(this.token, this.postAccess, true);
+            if(this.userLiked) await request.post.like(this.token, this.postAccess, false);
+            else await request.post.like(this.token, this.postAccess, true);
 
             await this.getPostLike();
 
@@ -240,7 +240,7 @@
 
         try {
 
-            await request.writeComment(this.token, this.postAccess, commentText);
+            await request.post.writeComment(this.token, this.postAccess, commentText);
 
             await this.getPostComment();
 
@@ -252,7 +252,7 @@
 
         try {
 
-            const deletePost = await request.deletePost(this.token, this.postAccess);
+            const deletePost = await request.post.deletePost(this.token, this.postAccess);
 
             if(deletePost.code === 101) {
 

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-    import * as request from '../../requests';
+    import request from '../../requests';
     import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
@@ -46,7 +46,7 @@
         try {
 
             // get profile image
-            const image = await request.getProfileImageFile(this.userData.access);
+            const image = await request.user.getProfileImage(this.userData.access);
             this.profileImage = utility.imageToBase64(image);
 
         } catch(error) { console.log(error); }

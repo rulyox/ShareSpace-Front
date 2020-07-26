@@ -67,7 +67,7 @@
     import Post from '../item/Post';
     import WriteModal from '../modal/WriteModal';
     import FollowModal from '../modal/FollowModal';
-    import * as request from '../../requests';
+    import request from '../../requests';
     import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
@@ -75,7 +75,7 @@
 
         try {
 
-            const getProfile = await request.getProfile(this.profileAccess);
+            const getProfile = await request.user.getProfile(this.profileAccess);
 
             if(getProfile.code === 101) {
 
@@ -87,7 +87,7 @@
             } else console.log(getProfile);
 
             // check follow
-            const checkFollow = await request.checkFollow(this.userData.access, this.profileAccess);
+            const checkFollow = await request.follow.check(this.userData.access, this.profileAccess);
 
             if(checkFollow.code === 101) {
 
@@ -98,7 +98,7 @@
             } else console.log(checkFollow);
 
             //get following list
-            const getFollowing = await request.getFollowing(this.profileAccess);
+            const getFollowing = await request.follow.getFollowing(this.profileAccess);
 
             if(getFollowing.code === 101) {
 
@@ -109,7 +109,7 @@
             } else console.log(getFollowing);
 
             //get follower list
-            const getFollower = await request.getFollower(this.profileAccess);
+            const getFollower = await request.follow.getFollower(this.profileAccess);
 
             if(getFollower.code === 101) {
 
@@ -125,7 +125,7 @@
 
     async function getProfileImage() {
 
-        const image = await request.getProfileImageFile(this.profileAccess);
+        const image = await request.user.getProfileImage(this.profileAccess);
         this.profileImage = utility.imageToBase64(image);
 
     }
@@ -141,7 +141,7 @@
 
         try {
 
-            const getPostByUser = await request.getPostByUser(this.token, this.profileAccess, this.postNumber);
+            const getPostByUser = await request.post.getPostByUser(this.token, this.profileAccess, this.postNumber);
 
             if(getPostByUser.code === 101) {
 
@@ -176,7 +176,7 @@
 
         try {
 
-            await request.follow(this.token, this.profileAccess, !this.isFollowing);
+            await request.follow.follow(this.token, this.profileAccess, !this.isFollowing);
 
             await this.getProfileInfo();
 
