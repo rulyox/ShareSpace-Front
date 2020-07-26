@@ -31,32 +31,9 @@
 </template>
 
 <script>
-    import profileImage from '../../assets/profile.png';
     import * as request from '../../requests';
     import * as utility from '../../utility';
-
-    function clickUser() {
-
-        const path = '/profile/' + this.userAccess;
-        if(this.$router.currentRoute.path !== path) this.$router.push(path);
-
-    }
-
-    async function clickDelete() {
-
-        try {
-
-            const deleteComment = await request.deleteComment(this.token, this.commentAccess);
-
-            if(deleteComment.code === 101) {
-
-                this.$emit('delete');
-
-            } else console.log(deleteComment);
-
-        } catch(error) { console.log(error); }
-
-    }
+    import profileImage from '../../assets/profile.png';
 
     async function getUserData() {
 
@@ -93,6 +70,29 @@
 
     }
 
+    function clickUser() {
+
+        const path = '/profile/' + this.userAccess;
+        if(this.$router.currentRoute.path !== path) this.$router.push(path);
+
+    }
+
+    async function clickDelete() {
+
+        try {
+
+            const deleteComment = await request.deleteComment(this.token, this.commentAccess);
+
+            if(deleteComment.code === 101) {
+
+                this.$emit('delete');
+
+            } else console.log(deleteComment);
+
+        } catch(error) { console.log(error); }
+
+    }
+
     export default {
         props: {
             commentAccess: String,
@@ -109,9 +109,10 @@
         },
 
         computed: {
-            element() { return document.getElementById(`user-${this.userAccess}`); },
             token() { return this.$store.getters.token; },
-            accountUserData() { return this.$store.getters.userData; }
+            accountUserData() { return this.$store.getters.userData; },
+
+            element() { return document.getElementById(`user-${this.userAccess}`); }
         },
 
         mounted() {
@@ -119,10 +120,11 @@
         },
 
         methods: {
-            clickUser,
-            clickDelete,
             getUserData,
-            getProfileImage
+            getProfileImage,
+
+            clickUser,
+            clickDelete
         }
     };
 </script>

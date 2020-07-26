@@ -42,9 +42,9 @@
 </template>
 
 <script>
-    import profileImage from '../../assets/profile.png';
     import * as request from '../../requests';
     import * as utility from '../../utility';
+    import profileImage from '../../assets/profile.png';
 
     async function getProfileInfo() {
 
@@ -120,6 +120,7 @@
         computed: {
             token() { return this.$store.getters.token; },
             userData() { return this.$store.getters.userData; },
+
             imageInputElement() { return document.getElementById('settings__list__image-input'); }
         },
 
@@ -130,6 +131,7 @@
         methods: {
             getProfileInfo,
             getProfileImage,
+
             clickUpload,
             uploadImage,
             clickSave

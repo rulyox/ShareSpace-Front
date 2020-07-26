@@ -98,6 +98,7 @@
 
         computed: {
             token() { return this.$store.getters.token; },
+
             imageInputElement() { return document.getElementById('write-modal__image-input'); }
         },
 

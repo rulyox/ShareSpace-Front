@@ -110,68 +110,6 @@
     import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
-    function clickImageShift(move) {
-
-        const targetIndex = this.currentImageIndex + move;
-
-        if(targetIndex >= 0 && targetIndex < this.imageList.length) this.currentImageIndex = targetIndex;
-
-    }
-
-    function clickHeader() {
-
-        const path = '/profile/' + this.userAccess;
-        if(this.$router.currentRoute.path !== path) this.$router.push(path);
-
-    }
-
-    async function clickLike() {
-
-        try {
-
-            if(this.userLiked) await request.likePost(this.token, this.postAccess, false);
-            else await request.likePost(this.token, this.postAccess, true);
-
-            await this.getPostLike();
-
-        } catch(error) { console.log(error); }
-
-    }
-
-    async function clickCommentWrite() {
-
-        const commentText = this.commentText;
-
-        if(commentText === '') return;
-
-        this.commentText = '';
-
-        try {
-
-            await request.writeComment(this.token, this.postAccess, commentText);
-
-            await this.getPostComment();
-
-        } catch(error) { console.log(error); }
-
-    }
-
-    async function clickDelete() {
-
-        try {
-
-            const deletePost = await request.deletePost(this.token, this.postAccess);
-
-            if(deletePost.code === 101) {
-
-                this.$emit('delete');
-
-            } else console.log(deletePost);
-
-        } catch(error) { console.log(error); }
-
-    }
-
     async function getPostData() {
 
         try {
@@ -264,6 +202,68 @@
 
     }
 
+    function clickImageShift(move) {
+
+        const targetIndex = this.currentImageIndex + move;
+
+        if(targetIndex >= 0 && targetIndex < this.imageList.length) this.currentImageIndex = targetIndex;
+
+    }
+
+    function clickHeader() {
+
+        const path = '/profile/' + this.userAccess;
+        if(this.$router.currentRoute.path !== path) this.$router.push(path);
+
+    }
+
+    async function clickLike() {
+
+        try {
+
+            if(this.userLiked) await request.likePost(this.token, this.postAccess, false);
+            else await request.likePost(this.token, this.postAccess, true);
+
+            await this.getPostLike();
+
+        } catch(error) { console.log(error); }
+
+    }
+
+    async function clickCommentWrite() {
+
+        const commentText = this.commentText;
+
+        if(commentText === '') return;
+
+        this.commentText = '';
+
+        try {
+
+            await request.writeComment(this.token, this.postAccess, commentText);
+
+            await this.getPostComment();
+
+        } catch(error) { console.log(error); }
+
+    }
+
+    async function clickDelete() {
+
+        try {
+
+            const deletePost = await request.deletePost(this.token, this.postAccess);
+
+            if(deletePost.code === 101) {
+
+                this.$emit('delete');
+
+            } else console.log(deletePost);
+
+        } catch(error) { console.log(error); }
+
+    }
+
     export default {
         props: {
             postAccess: String
@@ -288,9 +288,11 @@
         computed: {
             token() { return this.$store.getters.token; },
             accountUserData() { return this.$store.getters.userData; },
-            showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
+
             imageElement() { return document.getElementById('post-modal__content__image-container'); },
             commentElement() { return document.getElementById('post-modal__content__comment-container'); },
+
+            showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
             currentImageFile() { return this.imageList[this.currentImageIndex]; }
         },
 
@@ -306,6 +308,7 @@
             getPostComment,
             getProfileImage,
             getImages,
+
             clickImageShift,
             clickHeader,
             clickLike,

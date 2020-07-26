@@ -41,6 +41,18 @@
     import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
+    async function getUserData() {
+
+        try {
+
+            // get profile image
+            const image = await request.getProfileImageFile(this.userData.access);
+            this.profileImage = utility.imageToBase64(image);
+
+        } catch(error) { console.log(error); }
+
+    }
+
     function clickHome() {
 
         const path = '/';
@@ -57,7 +69,7 @@
 
     function clickProfile() {
 
-        const path = '/profile/' + this.userAccess;
+        const path = '/profile/' + this.userData.access;
         if(this.$router.currentRoute.path !== path) this.$router.push(path);
 
     }
@@ -78,18 +90,6 @@
 
     }
 
-    async function getUserData() {
-
-        try {
-
-            // get profile image
-            const image = await request.getProfileImageFile(this.userAccess);
-            this.profileImage = utility.imageToBase64(image);
-
-        } catch(error) { console.log(error); }
-
-    }
-
     export default {
         data() {
             return {
@@ -99,8 +99,7 @@
         },
 
         computed: {
-            userData() { return this.$store.getters.userData; },
-            userAccess() { return this.userData.access }
+            userData() { return this.$store.getters.userData; }
         },
 
         mounted() {
@@ -108,11 +107,12 @@
         },
 
         methods: {
+            getUserData,
+
             clickHome,
             clickSearch,
             clickProfile,
             clickSettings,
-            getUserData,
             clickLogout
         }
     };

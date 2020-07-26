@@ -137,9 +137,11 @@
 
         computed: {
             token() { return this.$store.getters.token; },
-            showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
+
             element() { return document.getElementById(`post-${this.postAccess}`); },
-            imageElement() { return document.getElementById(`post-${this.postAccess}-image`) }
+            imageElement() { return document.getElementById(`post-${this.postAccess}-image`) },
+
+            showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); }
         },
 
         mounted() {

@@ -233,7 +233,9 @@
         computed: {
             token() { return this.$store.getters.token; },
             userData() { return this.$store.getters.userData; },
+
             postListElement() { return document.getElementById('profile__post-container'); },
+
             isLoadingPost() { return (this.$store.getters.postLoadingNumber > 0); }
         },
 
@@ -252,7 +254,9 @@
             getProfileImage,
             getPosts,
             addToPostList,
+
             clickFollow,
+
             watchScroll,
             reset
         },

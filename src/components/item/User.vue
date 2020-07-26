@@ -19,13 +19,6 @@
     import * as utility from '../../utility';
     import profileImage from '../../assets/profile.png';
 
-    function clickUser() {
-
-        const path = '/profile/' + this.userAccess;
-        if(this.$router.currentRoute.path !== path) this.$router.push(path);
-
-    }
-
     async function getUserData() {
 
         // hide element
@@ -62,6 +55,13 @@
 
     }
 
+    function clickUser() {
+
+        const path = '/profile/' + this.userAccess;
+        if(this.$router.currentRoute.path !== path) this.$router.push(path);
+
+    }
+
     export default {
         props: {
             userAccess: String
@@ -83,9 +83,10 @@
         },
 
         methods: {
-            clickUser,
             getUserData,
-            getProfileImage
+            getProfileImage,
+
+            clickUser
         }
     };
 </script>

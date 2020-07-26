@@ -83,7 +83,9 @@
 
         computed: {
             token() { return this.$store.getters.token; },
+
             postListElement() { return document.getElementById('feed__post-container'); },
+
             isLoadingPost() { return (this.$store.getters.postLoadingNumber > 0); }
         },
 
