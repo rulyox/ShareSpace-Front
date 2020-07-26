@@ -100,6 +100,8 @@
 
             await request.uploadProfileImage(this.token, this.imageFile);
 
+            await request.edit(this.token, this.userName, this.userPassword);
+
             // reload page
             this.$router.go(0);
 

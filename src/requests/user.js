@@ -45,6 +45,23 @@ export const signUp = (name, email, pw) => {
     });
 };
 
+export const edit = (token, name, pw) => {
+    return new Promise((resolve, reject) => {
+
+        axios.put(server + '/user',
+            {
+                name: name,
+                pw: pw
+            },
+            {
+                headers: {token: token}
+            })
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+
+    });
+};
+
 export const getProfile = (profileAccess) => {
     return new Promise((resolve, reject) => {
 
