@@ -18,7 +18,7 @@
             </span>
 
             <i class="el-icon-delete-solid comment__header__delete"
-               v-if="userAccess === accountUserAccess"
+               v-if="userAccess === accountUserData.access"
                v-on:click="clickDelete" />
 
         </div>
@@ -111,8 +111,7 @@
         computed: {
             element() { return document.getElementById(`user-${this.userAccess}`); },
             token() { return this.$store.getters.token; },
-            accountUserData() { return this.$store.getters.userData; },
-            accountUserAccess() { return this.accountUserData.access }
+            accountUserData() { return this.$store.getters.userData; }
         },
 
         mounted() {

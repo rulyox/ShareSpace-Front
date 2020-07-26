@@ -60,7 +60,7 @@ const store = new Vuex.Store({
             state.userEmail = null;
         },
         setName(state, name) {
-            state.userEmail = name;
+            state.userName = name;
         },
         deleteName(state) {
             state.userName = null;

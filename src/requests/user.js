@@ -68,6 +68,25 @@ export const getProfileImageFile = (access) => {
     });
 };
 
+export const uploadProfileImage = (token, image) => {
+    return new Promise((resolve, reject) => {
+
+        const formData = new FormData();
+        formData.append('file', image);
+
+        axios.post(server + '/user/image', formData,
+            {
+                headers: {
+                    token: token,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+
+    });
+};
+
 export const searchUser = (query) => {
     return new Promise((resolve, reject) => {
 

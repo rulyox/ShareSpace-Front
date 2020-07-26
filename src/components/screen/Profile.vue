@@ -8,12 +8,12 @@
                  alt="user image">
 
             <span id="profile__info__name">
-                {{ profileName }}
+                {{ userData.name }}
             </span>
 
             <el-button class="profile__info__follow-button"
                        type="primary"
-                       v-if="userAccess !== profileAccess"
+                       v-if="userData.access !== profileAccess"
                        v-on:click="clickFollow">
                 {{isFollowing ? "Unfollow" : "Follow"}}
             </el-button>
@@ -81,16 +81,13 @@
 
                 const result = getProfile.result;
 
-                // set profile name
-                this.profileName = result.name;
-
                 // get profile image
                 if(result.image !== null) await this.getProfileImage();
 
             } else console.log(getProfile);
 
             // check follow
-            const checkFollow = await request.checkFollow(this.userAccess, this.profileAccess);
+            const checkFollow = await request.checkFollow(this.userData.access, this.profileAccess);
 
             if(checkFollow.code === 101) {
 
@@ -216,16 +213,18 @@
 
         data() {
             return {
-                profileName: '',
                 profileImage: profileImage,
+
                 isFollowing: false,
                 followingList: [],
                 followerList: [],
                 followModalList: [],
+
                 isGettingPost: false,
                 postTotal: 1, // to be bigger than postNumber
                 postNumber: 0,
                 postList: [],
+
                 showWriteModal: false,
                 showFollowModal: false
             };
@@ -234,7 +233,6 @@
         computed: {
             token() { return this.$store.getters.token; },
             userData() { return this.$store.getters.userData; },
-            userAccess() { return this.userData.access },
             postListElement() { return document.getElementById('profile__post-container'); },
             isLoadingPost() { return (this.$store.getters.postLoadingNumber > 0); }
         },

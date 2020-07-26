@@ -6,6 +6,7 @@ import Home from './components/screen/Home';
 import Feed from './components/screen/Feed';
 import Profile from './components/screen/Profile';
 import Search from './components/screen/Search';
+import Settings from './components/screen/Settings';
 import * as request from './requests';
 import store from './store';
 
@@ -24,7 +25,7 @@ const router = new VueRouter({
                     path: '/',
                     components: {
                         'homeContent': Feed
-                    },
+                    }
                 },
                 {
                     path: '/profile/:profileAccess',
@@ -42,6 +43,12 @@ const router = new VueRouter({
                     },
                     props: {
                         'homeContent': true
+                    }
+                },
+                {
+                    path: '/settings',
+                    components: {
+                        'homeContent': Settings
                     }
                 }
             ]

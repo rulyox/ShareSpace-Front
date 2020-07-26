@@ -21,6 +21,10 @@
                                   v-on:click.native="clickProfile">
                     My Profile
                 </el-dropdown-item>
+                <el-dropdown-item icon="el-icon-setting"
+                                  v-on:click.native="clickSettings">
+                    Settings
+                </el-dropdown-item>
                 <el-dropdown-item icon="el-icon-switch-button"
                                   v-on:click.native="clickLogout">
                     Logout
@@ -54,6 +58,13 @@
     function clickProfile() {
 
         const path = '/profile/' + this.userAccess;
+        if(this.$router.currentRoute.path !== path) this.$router.push(path);
+
+    }
+
+    function clickSettings() {
+
+        const path = '/settings';
         if(this.$router.currentRoute.path !== path) this.$router.push(path);
 
     }
@@ -100,6 +111,7 @@
             clickHome,
             clickSearch,
             clickProfile,
+            clickSettings,
             getUserData,
             clickLogout
         }

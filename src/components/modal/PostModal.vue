@@ -28,7 +28,7 @@
                             </span>
 
                                 <i id="post-modal__content__header__delete" class="el-icon-delete-solid"
-                                   v-if="userAccess === accountUserAccess"
+                                   v-if="userAccess === accountUserData.access"
                                    v-on:click="clickDelete" />
 
                             </div>
@@ -214,7 +214,7 @@
                 this.likeList = result.user;
 
                 // if account user has clicked like
-                this.userLiked = this.likeList.includes(this.accountUserAccess);
+                this.userLiked = this.likeList.includes(this.accountUserData.access);
 
             } else console.log(getLike);
 
@@ -288,7 +288,6 @@
         computed: {
             token() { return this.$store.getters.token; },
             accountUserData() { return this.$store.getters.userData; },
-            accountUserAccess() { return this.accountUserData.access },
             showText() { return this.text.replace(/(?:\r\n|\r|\n)/g, '<br>'); },
             imageElement() { return document.getElementById('post-modal__content__image-container'); },
             commentElement() { return document.getElementById('post-modal__content__comment-container'); },
