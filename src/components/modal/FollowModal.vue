@@ -1,7 +1,7 @@
 <template>
     <transition name="modal">
         <div class="modal-mask">
-            <div class="modal-wrapper">
+            <div class="modal-wrapper" v-on:click.self="$emit('close')">
                 <div class="modal-container">
 
                     <i id="follow-modal__close" class="el-icon-close"
